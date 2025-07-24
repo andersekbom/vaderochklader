@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useWeatherOutfit } from '../context/WeatherOutfitContext';
 import { useWeather } from './useWeather';
 import { 
@@ -7,17 +7,28 @@ import {
   evaluateOutfitChoice,
   OutfitItems 
 } from '../utils/outfitMatcher';
+import { getCustomClothingItems } from '../utils/customClothingManager';
 
 export function useOutfitLogic() {
   const { state, actions } = useWeatherOutfit();
   const { weather, getCurrentTimeOfDay } = useWeather();
+  const [customItems, setCustomItems] = useState({});
+  
+  // Load custom items on mount
+  useEffect(() => {
+    loadCustomItems();
+  }, []);
+  
+  const loadCustomItems = async () => {
+    try {
+      const items = await getCustomClothingItems();
+      setCustomItems(items);
+    } catch (error) {
+      console.error('Fel vid laddning av anpassade klädesplagg:', error);
+    }
+  };
 
   const updateOutfitItem = useCallback((bodyPart, item) => {
-    const newOutfit = {
-      ...state.outfit,
-      [bodyPart]: item,
-    };
-    
     actions.updateOutfit({ [bodyPart]: item });
     
     // Evaluate the new outfit choice
@@ -54,7 +65,7 @@ export function useOutfitLogic() {
     const suggestions = suggestOutfit();
     if (suggestions) {
       actions.updateOutfit(suggestions);
-      actions.setAvatarReaction('happy', 'Perfect! This outfit is great for today\'s weather!');
+      actions.setAvatarReaction('happy', 'Perfekt! Den här outfiten är fantastisk för dagens väder!');
     }
   }, [suggestOutfit, actions]);
 
@@ -78,8 +89,12 @@ export function useOutfitLogic() {
   }, [actions]);
 
   const getAvailableItems = useCallback((bodyPart) => {
-    return OutfitItems[bodyPart] || {};
-  }, []);
+    const defaultItems = OutfitItems[bodyPart] || {};
+    const customBodyPartItems = customItems[bodyPart] || {};
+    
+    // Combine default and custom items
+    return { ...defaultItems, ...customBodyPartItems };
+  }, [customItems]);
 
   const getOutfitSummary = useCallback(() => {
     const { outfit } = state;
@@ -91,7 +106,7 @@ export function useOutfitLogic() {
       }
     });
     
-    return wornItems.length > 0 ? wornItems.join(', ') : 'No clothes selected';
+    return wornItems.length > 0 ? wornItems.join(', ') : 'Inga kläder valda';
   }, [state.outfit]);
 
   // Auto-suggest outfit when weather data becomes available
@@ -118,6 +133,7 @@ export function useOutfitLogic() {
     clearOutfit,
     getAvailableItems,
     getOutfitSummary,
+    loadCustomItems,
     hasWeatherData: !!(weather.condition && weather.temperature !== null),
   };
 }

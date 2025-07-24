@@ -16,7 +16,7 @@ export function useWeather() {
       
       return weatherData;
     } catch (error) {
-      console.error('Error fetching weather:', error);
+      console.error('Fel vid hämtning av väder:', error);
       actions.setWeatherError(error.message);
       return null;
     }

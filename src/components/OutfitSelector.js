@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import Sizes from '../constants/Sizes';
@@ -19,10 +19,10 @@ const OutfitSelector = ({ style }) => {
   const [selectedBodyPart, setSelectedBodyPart] = useState('torso');
   
   const bodyParts = [
-    { key: 'head', name: 'Head', emoji: '👤' },
-    { key: 'torso', name: 'Torso', emoji: '👕' },
-    { key: 'legs', name: 'Legs', emoji: '👖' },
-    { key: 'feet', name: 'Feet', emoji: '👟' },
+    { key: 'head', name: 'Huvud', emoji: '👤' },
+    { key: 'torso', name: 'Kropp', emoji: '👕' },
+    { key: 'legs', name: 'Ben', emoji: '👖' },
+    { key: 'feet', name: 'Fötter', emoji: '👟' },
   ];
 
   const renderBodyPartSelector = () => (
@@ -68,7 +68,7 @@ const OutfitSelector = ({ style }) => {
         >
           <View style={styles.clothingItemContent}>
             <Text style={styles.clothingEmoji}>❌</Text>
-            <Text style={styles.clothingName}>None</Text>
+            <Text style={styles.clothingName}>Inget</Text>
           </View>
         </TouchableOpacity>
         
@@ -83,7 +83,15 @@ const OutfitSelector = ({ style }) => {
             onPress={() => updateOutfitItem(selectedBodyPart, item)}
           >
             <View style={styles.clothingItemContent}>
-              <Text style={styles.clothingEmoji}>{item.emoji}</Text>
+              {item.isCustom && item.imageUri ? (
+                <Image 
+                  source={{ uri: item.imageUri }} 
+                  style={styles.customItemImage}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Text style={styles.clothingEmoji}>{item.emoji}</Text>
+              )}
               <Text style={styles.clothingName}>{item.name}</Text>
             </View>
           </TouchableOpacity>
@@ -96,21 +104,21 @@ const OutfitSelector = ({ style }) => {
 
   return (
     <Card style={[styles.container, style]} padding="md">
-      <Text style={styles.title}>Choose Your Outfit</Text>
+      <Text style={styles.title}>Välj din outfit</Text>
       
       {renderBodyPartSelector()}
       {renderClothingItems()}
       
       <View style={styles.actionButtons}>
         <Button
-          title="Auto Select"
+          title="Föreslå kläder"
           onPress={applySuggestedOutfit}
           variant="primary"
           size="small"
           style={styles.actionButton}
         />
         <Button
-          title="Clear All"
+          title="Rensa allt"
           onPress={clearOutfit}
           variant="secondary"
           size="small"
@@ -204,6 +212,13 @@ const styles = StyleSheet.create({
     color: Colors.text,
     textAlign: 'center',
     fontWeight: Fonts.weight.medium,
+  },
+  
+  customItemImage: {
+    width: 40,
+    height: 40,
+    borderRadius: Sizes.borderRadius.small,
+    marginBottom: Sizes.margin.xs,
   },
   
   actionButtons: {

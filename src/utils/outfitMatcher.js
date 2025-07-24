@@ -1,61 +1,60 @@
 export const OutfitItems = {
   head: {
     cap: { id: 'cap', name: 'Keps', emoji: '🧢', icon: { name: 'hat-cap', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['sunny'], temperature: [15, 35] },
-    beanie: { id: 'beanie', name: 'Mössa', emoji: '🧤', icon: { name: 'winter-hat', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['cloudy', 'snowy'], temperature: [-10, 10] },
-    hood: { id: 'hood', name: 'Luva', emoji: '🩴', icon: { name: 'hoodie', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['rainy', 'stormy'], temperature: [0, 20] },
-    none: { id: 'none', name: 'Ingen huvudbonad', emoji: '🚫', icon: { name: 'cancel', library: 'MaterialCommunityIcons', color: '#9E9E9E' }, weather: ['sunny', 'cloudy'], temperature: [20, 35] },
+    beanie: { id: 'beanie', name: 'Mössa', emoji: '🧶', icon: { name: 'hat-winter', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['cloudy', 'snowy'], temperature: [-10, 10] },
+    hood: { id: 'hood', name: 'Luva', emoji: '🧥', icon: { name: 'hoodie', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['rainy', 'stormy'], temperature: [0, 20] },
   },
   
   torso: {
     t_shirt: { id: 't_shirt', name: 'T-shirt', emoji: '👕', icon: { name: 'tshirt-crew-outline', library: 'MaterialCommunityIcons', color: '#4CAF50' }, weather: ['sunny'], temperature: [20, 35] },
-    long_sleeve: { id: 'long_sleeve', name: 'Långärmad', emoji: '👔', icon: { name: 'tshirt-v-outline', library: 'MaterialCommunityIcons', color: '#FF9800' }, weather: ['cloudy', 'sunny'], temperature: [15, 25] },
+    long_sleeve: { id: 'long_sleeve', name: 'Långärmad', emoji: '👕', icon: { name: 'tshirt-crew-outline', library: 'MaterialCommunityIcons', color: '#FF9800' }, weather: ['cloudy', 'sunny'], temperature: [15, 25] },
     sweater: { id: 'sweater', name: 'Tjöja', emoji: '🧥', icon: { name: 'sweater-outline', library: 'MaterialCommunityIcons', color: '#9C27B0' }, weather: ['cloudy', 'rainy'], temperature: [5, 15] },
-    jacket: { id: 'jacket', name: 'Jacka', emoji: '🧥', icon: { name: 'coat-rack', library: 'MaterialCommunityIcons', color: '#3F51B5' }, weather: ['rainy', 'stormy', 'snowy'], temperature: [-5, 15] },
-    rain_coat: { id: 'rain_coat', name: 'Regnjacka', emoji: '🌧️', icon: { name: 'umbrella', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['rainy', 'stormy'], temperature: [5, 20] },
-    winter_coat: { id: 'winter_coat', name: 'Vinterjacka', emoji: '🧥', icon: { name: 'coat-rack', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy'], temperature: [-20, 5] },
+    jacket: { id: 'jacket', name: 'Jacka', emoji: '🧥', icon: { name: 'jacket', library: 'MaterialCommunityIcons', color: '#3F51B5' }, weather: ['rainy', 'stormy', 'snowy'], temperature: [-5, 15] },
+    rain_coat: { id: 'rain_coat', name: 'Regnjacka', emoji: '🧥', icon: { name: 'raincoat', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['rainy', 'stormy'], temperature: [5, 20] },
+    winter_coat: { id: 'winter_coat', name: 'Vinterjacka', emoji: '🧥', icon: { name: 'coat', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy'], temperature: [-20, 5] },
   },
   
   legs: {
-    shorts: { id: 'shorts', name: 'Shorts', emoji: '🩳', icon: { name: 'human-male', library: 'MaterialCommunityIcons', color: '#FF5722' }, weather: ['sunny'], temperature: [20, 35] },
+    shorts: { id: 'shorts', name: 'Shorts', emoji: '🩳', icon: { name: 'shorts', library: 'MaterialCommunityIcons', color: '#FF5722' }, weather: ['sunny'], temperature: [20, 35] },
     pants: { id: 'pants', name: 'Byxor', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['cloudy', 'rainy', 'sunny'], temperature: [10, 25] },
     jeans: { id: 'jeans', name: 'Jeans', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#3F51B5' }, weather: ['cloudy', 'rainy'], temperature: [5, 20] },
     warm_pants: { id: 'warm_pants', name: 'Varma byxor', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy', 'stormy'], temperature: [-10, 10] },
   },
   
   feet: {
-    sandals: { id: 'sandals', name: 'Sandals', emoji: '🩴', icon: { name: 'shoe-heel', library: 'MaterialCommunityIcons', color: '#FF9800' }, weather: ['sunny'], temperature: [22, 35] },
-    sneakers: { id: 'sneakers', name: 'Sneakers', emoji: '👟', icon: { name: 'shoe-sneaker', library: 'MaterialCommunityIcons', color: '#4CAF50' }, weather: ['sunny', 'cloudy'], temperature: [15, 30] },
-    shoes: { id: 'shoes', name: 'Shoes', emoji: '👞', icon: { name: 'shoe-formal', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['cloudy', 'rainy'], temperature: [10, 25] },
-    rain_boots: { id: 'rain_boots', name: 'Rain Boots', emoji: '🥾', icon: { name: 'boot', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['rainy', 'stormy'], temperature: [5, 20] },
-    winter_boots: { id: 'winter_boots', name: 'Winter Boots', emoji: '🥾', icon: { name: 'snowshoe', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy'], temperature: [-20, 5] },
+    sandals: { id: 'sandals', name: 'Sandaler', emoji: '🩴', icon: { name: 'flip-flops', library: 'MaterialCommunityIcons', color: '#FF9800' }, weather: ['sunny'], temperature: [22, 35] },
+    sneakers: { id: 'sneakers', name: 'Skor', emoji: '👟', icon: { name: 'shoe-sneaker', library: 'MaterialCommunityIcons', color: '#4CAF50' }, weather: ['sunny', 'cloudy'], temperature: [15, 30] },
+    shoes: { id: 'shoes', name: 'Finskor', emoji: '👞', icon: { name: 'shoe-formal', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['cloudy', 'rainy'], temperature: [10, 25] },
+    rain_boots: { id: 'rain_boots', name: 'Regnstövlar', emoji: '🥾', icon: { name: 'boot', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['rainy', 'stormy'], temperature: [5, 20] },
+    winter_boots: { id: 'winter_boots', name: 'Vinterstövlar', emoji: '🥾', icon: { name: 'snowshoe', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy'], temperature: [-20, 5] },
   },
 };
 
 export const OutfitReactions = {
   perfect: [
-    "Perfect choice! You'll be comfortable outside!",
-    "Great outfit for this weather!",
-    "You're all set for today's weather!",
-    "That's exactly what I would choose!",
+    "Perfekt val! Du kommer att vara bekväm utomhus!",
+    "Bra outfit för det här vädret!",
+    "Du är helt redo för dagens väder!",
+    "Det är precis vad jag skulle välja!",
   ],
   
   good: [
-    "That's a good choice!",
-    "Nice outfit selection!",
-    "You'll be comfortable in that!",
+    "Det är ett bra val!",
+    "Bra outfitval!",
+    "Du kommer att vara bekväm i det!",
   ],
   
   warning: [
-    "Hmm, that might not be the best choice...",
-    "Are you sure about that outfit?",
-    "That might be a bit uncomfortable...",
+    "Hmm, det kanske inte är det bästa valet...",
+    "Är du säker på den här outfiten?",
+    "Det kan bli lite obekvämt...",
   ],
   
   poor: [
-    "Oops! Your feet might get wet with those sandals in the rain!",
-    "Brrr! You might get cold without a jacket!",
-    "You might get too hot in that winter coat on a sunny day!",
-    "Those shorts might not keep you warm enough!",
+    "Oops! Dina fötter kan bli blöta med de sandalerna i regnet!",
+    "Brrr! Du kan bli kall utan jacka!",
+    "Du kan bli för varm i den vinterjackan en solig dag!",
+    "De shortsen kanske inte håller dig tillräckligt varm!",
   ],
 };
 
@@ -79,7 +78,7 @@ export function suggestOutfitForWeather(condition, temperature, timeOfDay = 'day
   } else if (condition === 'sunny' && temperature > 20) {
     suggestions.head = OutfitItems.head.cap;
   } else {
-    suggestions.head = OutfitItems.head.none;
+    suggestions.head = null; // No head covering needed
   }
 
   // Torso suggestions
@@ -167,11 +166,11 @@ export function evaluateOutfitChoice(outfitItem, condition, temperature) {
   // Add specific feedback for poor choices
   if (rating === 'poor') {
     if (condition === 'rainy' && outfitItem.id === 'sandals') {
-      message = "Oops! Your feet might get wet with those sandals in the rain!";
+      message = "Oj, det blir kanske blött om fötterna med de sandalerna i regnet!";
     } else if (condition === 'snowy' && ['sandals', 't_shirt', 'shorts'].includes(outfitItem.id)) {
-      message = "Brrr! You might get cold with that choice in the snow!";
+      message = "Brrr! Du kan bli kall med det valet i snön!";
     } else if (temperature > 25 && outfitItem.id === 'winter_coat') {
-      message = "You might get too hot in that winter coat on such a warm day!";
+      message = "Du kan bli för varm i den vinterjackan en så varm dag!";
     }
   }
 

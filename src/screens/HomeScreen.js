@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+/**
+ * HomeScreen Component
+ * 
+ * Main screen of the weather clothes app for kindergarten children.
+ * Displays weather information and allows outfit selection based on conditions.
+ */
+
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Dimensions, Animated } from 'react-native';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import Sizes from '../constants/Sizes';
+import { BODY_PARTS } from '../constants/BodyParts';
 import { useWeatherOutfit } from '../context/WeatherOutfitContext';
 import { useLocation } from '../hooks/useLocation';
 import { useWeather } from '../hooks/useWeather';
@@ -12,90 +19,34 @@ import Button from '../components/ui/Button';
 import WeatherDisplay from '../components/WeatherDisplay';
 import OutfitSelectionModal from '../components/OutfitSelectionModal';
 import MessageBubble from '../components/MessageBubble';
+import OutfitIcon from '../components/OutfitIcon';
 
 const HomeScreen = () => {
+  // Context and hooks
   const { state } = useWeatherOutfit();
   const { isLoading: locationLoading, error: locationError } = useLocation();
   const { weather, isLoading: weatherLoading, error: weatherError, refetchWeather } = useWeather();
   const { avatarReaction } = useOutfitLogic();
   
+  // Local state
   const [showOutfitModal, setShowOutfitModal] = useState(false);
   const [selectedBodyPart, setSelectedBodyPart] = useState(null);
   
-  // Get screen dimensions for responsive design
-  const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-  const isSmallScreen = screenHeight < 700;
-  const isMediumScreen = screenHeight < 800; // Fairphone 4 and similar
+  // Memoized screen dimensions for performance
+  const screenDimensions = useMemo(() => {
+    const { width, height } = Dimensions.get('window');
+    return {
+      width,
+      height,
+      isSmallScreen: height < 700,
+      isMediumScreen: height < 800
+    };
+  }, []);
   
-  const bodyParts = {
-    head: { name: 'Huvud', emoji: '🎩', icon: { name: 'face-man', library: 'MaterialCommunityIcons', color: Colors.primary } },
-    torso: { name: 'Kropp', emoji: '👕', icon: { name: 'tshirt-crew', library: 'MaterialCommunityIcons', color: Colors.primary } },
-    legs: { name: 'Ben', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: Colors.primary } },
-    feet: { name: 'Fötter', emoji: '👟', icon: { name: 'shoe-sneaker', library: 'MaterialCommunityIcons', color: Colors.primary } },
-  };
-  
-  const handleOutfitIconPress = (bodyPart) => {
-    setSelectedBodyPart(bodyPart);
-    setShowOutfitModal(true);
-  };
-  
+  const { width: screenWidth, height: screenHeight, isSmallScreen, isMediumScreen } = screenDimensions;
 
-  const renderLoadingState = () => {
-    if (locationLoading || weatherLoading) {
-      return (
-        <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>
-            {locationLoading ? 'Hämtar din plats...' : 'Laddar väder...'}
-          </Text>
-        </View>
-      );
-    }
-    return null;
-  };
-
-  const renderErrorState = () => {
-    if (locationError || weatherError) {
-      return (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>
-            {locationError || weatherError}
-          </Text>
-          <Button 
-            title="Försök igen" 
-            onPress={refetchWeather}
-            size="small"
-            style={styles.retryButton}
-          />
-        </View>
-      );
-    }
-    return null;
-  };
-
-  if (locationLoading || weatherLoading) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.centerContent}>
-          <Text style={styles.title}>Väder & Kläder</Text>
-          {renderLoadingState()}
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  if ((locationError || weatherError) && !weather.condition) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.centerContent}>
-          <Text style={styles.title}>Väder & Kläder</Text>
-          {renderErrorState()}
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  // Create responsive styles
-  const getResponsiveStyles = () => ({
+  // Memoized responsive styles for performance - MOVED BEFORE EARLY RETURNS
+  const responsiveStyles = useMemo(() => ({
     container: {
       flex: 1,
       backgroundColor: Colors.background,
@@ -106,73 +57,45 @@ const HomeScreen = () => {
     },
     
     scrollContent: {
-      padding: isSmallScreen ? screenWidth * 0.025 : isMediumScreen ? screenWidth * 0.03 : screenWidth * 0.04,
-      paddingTop: isSmallScreen ? screenHeight * 0.015 : isMediumScreen ? screenHeight * 0.02 : screenHeight * 0.03,
-      paddingBottom: isSmallScreen ? screenHeight * 0.01 : isMediumScreen ? screenHeight * 0.015 : screenHeight * 0.02,
+      padding: isSmallScreen ? screenWidth * 0.015 : isMediumScreen ? screenWidth * 0.02 : screenWidth * 0.03,
+      paddingTop: isSmallScreen ? screenHeight * 0.01 : isMediumScreen ? screenHeight * 0.015 : screenHeight * 0.02,
+      paddingBottom: isSmallScreen ? screenHeight * 0.008 : isMediumScreen ? screenHeight * 0.01 : screenHeight * 0.015,
     },
     
     title: {
-      fontSize: isSmallScreen ? screenWidth * 0.045 : isMediumScreen ? screenWidth * 0.05 : screenWidth * 0.055,
+      fontSize: isSmallScreen ? screenWidth * 0.042 : isMediumScreen ? screenWidth * 0.048 : screenWidth * 0.055,
       fontWeight: Fonts.weight.bold,
       color: Colors.text,
-      marginBottom: isSmallScreen ? screenHeight * 0.003 : isMediumScreen ? screenHeight * 0.005 : screenHeight * 0.008,
-      marginTop: isSmallScreen ? screenHeight * 0.003 : isMediumScreen ? screenHeight * 0.005 : screenHeight * 0.008,
+      marginBottom: isSmallScreen ? screenHeight * 0.002 : isMediumScreen ? screenHeight * 0.003 : screenHeight * 0.005,
+      marginTop: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.015 : screenHeight * 0.01,
       textAlign: 'center',
     },
     
     subtitle: {
-      fontSize: isSmallScreen ? screenWidth * 0.03 : isMediumScreen ? screenWidth * 0.032 : screenWidth * 0.035,
+      fontSize: isSmallScreen ? screenWidth * 0.028 : isMediumScreen ? screenWidth * 0.03 : screenWidth * 0.035,
       fontWeight: Fonts.weight.medium,
       color: Colors.primary,
-      marginBottom: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.012,
+      marginBottom: isSmallScreen ? screenHeight * 0.003 : isMediumScreen ? screenHeight * 0.005 : screenHeight * 0.008,
       textAlign: 'center',
     },
     
     weatherDisplay: {
       width: '100%',
-      marginBottom: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.01,
-    },
-    
-    avatarSection: {
-      marginBottom: isSmallScreen ? screenHeight * 0.008 : isMediumScreen ? screenHeight * 0.01 : screenHeight * 0.02,
-    },
-    
-    avatarRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      width: '100%',
-    },
-    
-    avatarsContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    
-    arrow: {
-      marginHorizontal: screenWidth * 0.02,
-    },
-
-    forecastAvatar: {
-      transform: [{ scale: 0.7 }],
-    },
-    
-    avatarMessage: {
-      marginLeft: screenWidth * 0.03,
-      flex: 1,
+      marginBottom: isSmallScreen ? screenHeight * 0.003 : isMediumScreen ? screenHeight * 0.005 : screenHeight * 0.008,
     },
     
     clothingQuestionSection: {
       alignItems: 'center',
-      marginBottom: isSmallScreen ? screenHeight * 0.008 : isMediumScreen ? screenHeight * 0.01 : screenHeight * 0.012,
-      marginTop: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.01,
+      marginBottom: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.01,
+      marginTop: isSmallScreen ? screenHeight * 0.003 : isMediumScreen ? screenHeight * 0.005 : screenHeight * 0.008,
     },
     
     clothingQuestion: {
-      fontSize: isSmallScreen ? screenWidth * 0.032 : isMediumScreen ? screenWidth * 0.035 : screenWidth * 0.038,
+      fontSize: isSmallScreen ? screenWidth * 0.03 : isMediumScreen ? screenWidth * 0.032 : screenWidth * 0.035,
       fontWeight: Fonts.weight.medium,
       color: Colors.text,
       textAlign: 'center',
-      marginHorizontal: screenWidth * 0.05,
+      marginHorizontal: screenWidth * 0.04,
     },
     
     outfitSection: {
@@ -183,7 +106,7 @@ const HomeScreen = () => {
     },
     
     outfitIconButton: {
-      padding: isSmallScreen ? screenWidth * 0.02 : isMediumScreen ? screenWidth * 0.025 : screenWidth * 0.03,
+      padding: isSmallScreen ? screenWidth * 0.01 : isMediumScreen ? screenWidth * 0.015 : screenWidth * 0.02,
       borderRadius: Sizes.borderRadius.large,
       backgroundColor: Colors.lightBackground,
       marginBottom: isSmallScreen ? screenHeight * 0.006 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.015,
@@ -191,8 +114,8 @@ const HomeScreen = () => {
       borderColor: Colors.border,
       alignItems: 'center',
       justifyContent: 'center',
-      minWidth: isSmallScreen ? screenWidth * 0.16 : isMediumScreen ? screenWidth * 0.18 : screenWidth * 0.2,
-      minHeight: isSmallScreen ? screenWidth * 0.16 : isMediumScreen ? screenWidth * 0.18 : screenWidth * 0.2,
+      minWidth: isSmallScreen ? screenWidth * 0.18 : isMediumScreen ? screenWidth * 0.20 : screenWidth * 0.22,
+      minHeight: isSmallScreen ? screenWidth * 0.18 : isMediumScreen ? screenWidth * 0.20 : screenWidth * 0.22,
       shadowColor: Colors.shadow,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
@@ -217,9 +140,149 @@ const HomeScreen = () => {
       height: isSmallScreen ? screenWidth * 0.08 : isMediumScreen ? screenWidth * 0.09 : screenWidth * 0.12,
       borderRadius: Sizes.borderRadius.small,
     },
-  });
+  }), [isSmallScreen, isMediumScreen, screenWidth, screenHeight]);
 
-  const responsiveStyles = getResponsiveStyles();
+  // Calculate icon size for consistent usage
+  const iconSize = isSmallScreen ? screenWidth * 0.08 : isMediumScreen ? screenWidth * 0.09 : screenWidth * 0.12;
+  
+  /**
+   * Handles outfit icon press - opens selection modal for specific body part
+   * @param {string} bodyPart - The body part key (head, torso, legs, feet)
+   */
+  const handleOutfitIconPress = (bodyPart) => {
+    setSelectedBodyPart(bodyPart);
+    setShowOutfitModal(true);
+  };
+  
+
+  /**
+   * Animated Loading Component with weather-themed animations
+   */
+  const AnimatedLoadingState = () => {
+    const bounceValue = useRef(new Animated.Value(0)).current;
+    const rotateValue = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+      // Bouncing animation for weather icons
+      const bounceAnimation = Animated.loop(
+        Animated.sequence([
+          Animated.timing(bounceValue, {
+            toValue: 1,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(bounceValue, {
+            toValue: 0,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+        ])
+      );
+
+      // Rotating animation for loading
+      const rotateAnimation = Animated.loop(
+        Animated.timing(rotateValue, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        })
+      );
+
+      bounceAnimation.start();
+      rotateAnimation.start();
+
+      return () => {
+        bounceAnimation.stop();
+        rotateAnimation.stop();
+      };
+    }, [bounceValue, rotateValue]);
+
+    const bounceInterpolate = bounceValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, -20],
+    });
+
+    const rotateInterpolate = rotateValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg'],
+    });
+
+    const weatherEmojis = locationLoading ? ['📍', '🗺️'] : ['☀️', '☁️', '🌧️'];
+    const message = locationLoading ? 'Hämtar din plats...' : 'Laddar väder...';
+
+    return (
+      <View style={styles.loadingContainer}>
+        <View style={styles.loadingEmojis}>
+          {weatherEmojis.map((emoji, index) => (
+            <Animated.Text
+              key={index}
+              style={[
+                styles.loadingEmoji,
+                {
+                  transform: [
+                    { translateY: bounceInterpolate },
+                    { rotate: index === 0 ? rotateInterpolate : '0deg' }
+                  ],
+                  opacity: bounceValue.interpolate({
+                    inputRange: [0, 0.5, 1],
+                    outputRange: [0.3, 1, 0.3],
+                  }),
+                },
+              ]}
+            >
+              {emoji}
+            </Animated.Text>
+          ))}
+        </View>
+        <Text style={styles.loadingText}>{message}</Text>
+      </View>
+    );
+  };
+
+  /**
+   * Renders loading state with appropriate message
+   */
+  const renderLoadingState = () => <AnimatedLoadingState />;
+
+  /**
+   * Renders error state with retry button
+   */
+  const renderErrorState = () => (
+    <View style={styles.errorContainer}>
+      <Text style={styles.errorText}>
+        {locationError || weatherError}
+      </Text>
+      <Button 
+        title="Försök igen" 
+        onPress={refetchWeather}
+        size="small"
+        style={styles.retryButton}
+      />
+    </View>
+  );
+
+  // Early returns for loading and error states
+  if (locationLoading || weatherLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.centerContent}>
+          <Text style={styles.title}>Väder & Kläder</Text>
+          {renderLoadingState()}
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if ((locationError || weatherError) && !weather.condition) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.centerContent}>
+          <Text style={styles.title}>Väder & Kläder</Text>
+          {renderErrorState()}
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={responsiveStyles.container}>
@@ -246,121 +309,18 @@ const HomeScreen = () => {
         </View>
 
         <View style={responsiveStyles.outfitSection}>
-          <TouchableOpacity
-            style={responsiveStyles.outfitIconButton}
-            onPress={() => handleOutfitIconPress('head')}
-          >
-            {state.outfit.head ? (
-              state.outfit.head.isCustom && state.outfit.head.imageUri ? (
-                <Image 
-                  source={{ uri: state.outfit.head.imageUri }} 
-                  style={responsiveStyles.customOutfitImage}
-                  resizeMode="cover"
-                />
-              ) : state.outfit.head.emoji ? (
-                <Text style={responsiveStyles.outfitIcon}>{state.outfit.head.emoji}</Text>
-              ) : (() => {
-                const iconData = state.outfit.head.icon;
-                const IconComponent = iconData.library === 'Ionicons' ? Ionicons : MaterialCommunityIcons;
-                return (
-                  <IconComponent
-                    name={iconData.name}
-                    size={isSmallScreen ? screenWidth * 0.08 : isMediumScreen ? screenWidth * 0.09 : screenWidth * 0.12}
-                    color={iconData.color}
-                  />
-                );
-              })()
-            ) : (
-              <Text style={responsiveStyles.outfitIcon}>{bodyParts.head.emoji}</Text>
-            )}
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={responsiveStyles.outfitIconButton}
-            onPress={() => handleOutfitIconPress('torso')}
-          >
-            {state.outfit.torso ? (
-              state.outfit.torso.isCustom && state.outfit.torso.imageUri ? (
-                <Image 
-                  source={{ uri: state.outfit.torso.imageUri }} 
-                  style={responsiveStyles.customOutfitImage}
-                  resizeMode="cover"
-                />
-              ) : state.outfit.torso.emoji ? (
-                <Text style={responsiveStyles.outfitIcon}>{state.outfit.torso.emoji}</Text>
-              ) : (() => {
-                const iconData = state.outfit.torso.icon;
-                const IconComponent = iconData.library === 'Ionicons' ? Ionicons : MaterialCommunityIcons;
-                return (
-                  <IconComponent
-                    name={iconData.name}
-                    size={isSmallScreen ? screenWidth * 0.08 : isMediumScreen ? screenWidth * 0.09 : screenWidth * 0.12}
-                    color={iconData.color}
-                  />
-                );
-              })()
-            ) : (
-              <Text style={responsiveStyles.outfitIcon}>{bodyParts.torso.emoji}</Text>
-            )}
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={responsiveStyles.outfitIconButton}
-            onPress={() => handleOutfitIconPress('legs')}
-          >
-            {state.outfit.legs ? (
-              state.outfit.legs.isCustom && state.outfit.legs.imageUri ? (
-                <Image 
-                  source={{ uri: state.outfit.legs.imageUri }} 
-                  style={responsiveStyles.customOutfitImage}
-                  resizeMode="cover"
-                />
-              ) : state.outfit.legs.emoji ? (
-                <Text style={responsiveStyles.outfitIcon}>{state.outfit.legs.emoji}</Text>
-              ) : (() => {
-                const iconData = state.outfit.legs.icon;
-                const IconComponent = iconData.library === 'Ionicons' ? Ionicons : MaterialCommunityIcons;
-                return (
-                  <IconComponent
-                    name={iconData.name}
-                    size={isSmallScreen ? screenWidth * 0.08 : isMediumScreen ? screenWidth * 0.09 : screenWidth * 0.12}
-                    color={iconData.color}
-                  />
-                );
-              })()
-            ) : (
-              <Text style={responsiveStyles.outfitIcon}>{bodyParts.legs.emoji}</Text>
-            )}
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={responsiveStyles.outfitIconButton}
-            onPress={() => handleOutfitIconPress('feet')}
-          >
-            {state.outfit.feet ? (
-              state.outfit.feet.isCustom && state.outfit.feet.imageUri ? (
-                <Image 
-                  source={{ uri: state.outfit.feet.imageUri }} 
-                  style={responsiveStyles.customOutfitImage}
-                  resizeMode="cover"
-                />
-              ) : state.outfit.feet.emoji ? (
-                <Text style={responsiveStyles.outfitIcon}>{state.outfit.feet.emoji}</Text>
-              ) : (() => {
-                const iconData = state.outfit.feet.icon;
-                const IconComponent = iconData.library === 'Ionicons' ? Ionicons : MaterialCommunityIcons;
-                return (
-                  <IconComponent
-                    name={iconData.name}
-                    size={isSmallScreen ? screenWidth * 0.08 : isMediumScreen ? screenWidth * 0.09 : screenWidth * 0.12}
-                    color={iconData.color}
-                  />
-                );
-              })()
-            ) : (
-              <Text style={responsiveStyles.outfitIcon}>{bodyParts.feet.emoji}</Text>
-            )}
-          </TouchableOpacity>
+          {Object.keys(BODY_PARTS).map((bodyPartKey) => (
+            <OutfitIcon
+              key={bodyPartKey}
+              outfitItem={state.outfit[bodyPartKey]}
+              fallbackEmoji={BODY_PARTS[bodyPartKey].emoji}
+              size={iconSize}
+              buttonStyle={responsiveStyles.outfitIconButton}
+              imageStyle={responsiveStyles.customOutfitImage}
+              textStyle={responsiveStyles.outfitIcon}
+              onPress={() => handleOutfitIconPress(bodyPartKey)}
+            />
+          ))}
         </View>
 
         {/* Outfit feedback message */}
@@ -377,28 +337,22 @@ const HomeScreen = () => {
           visible={showOutfitModal}
           onClose={() => setShowOutfitModal(false)}
           bodyPart={selectedBodyPart}
-          bodyPartName={selectedBodyPart ? bodyParts[selectedBodyPart].name : ''}
-          bodyPartIcon={selectedBodyPart ? bodyParts[selectedBodyPart].icon : null}
+          bodyPartName={selectedBodyPart ? BODY_PARTS[selectedBodyPart].name : ''}
+          bodyPartIcon={selectedBodyPart ? BODY_PARTS[selectedBodyPart].icon : null}
         />
       </ScrollView>
     </SafeAreaView>
   );
 };
 
+/**
+ * Static styles for loading and error states
+ * These don't need responsive sizing as they're only used in simple loading/error screens
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-  },
-  
-  scrollView: {
-    flex: 1,
-  },
-  
-  scrollContent: {
-    padding: Sizes.padding.md,
-    paddingTop: Sizes.padding.lg,
-    paddingBottom: Sizes.padding.xl,
   },
   
   centerContent: {
@@ -417,93 +371,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   
-  subtitle: {
-    fontSize: Fonts.size.large,
-    fontWeight: Fonts.weight.medium,
-    color: Colors.primary,
-    marginBottom: Sizes.margin.lg,
-    textAlign: 'center',
-  },
-  
-  weatherDisplay: {
-    width: '100%',
-    marginBottom: Sizes.margin.sm,
-  },
-  
-  avatarSection: {
-    marginBottom: Sizes.margin.sm,
-  },
-  
-  avatarRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-  },
-  
-  outfitSection: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%',
-    marginBottom: Sizes.margin.lg,
-  },
-  
-  outfitIconButton: {
-    padding: Sizes.padding.md,
-    borderRadius: Sizes.borderRadius.large,
-    backgroundColor: Colors.lightBackground,
-    marginBottom: Sizes.margin.md,
-    borderWidth: 2,
-    borderColor: Colors.border,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 80,
-    minHeight: 80,
-    shadowColor: Colors.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  
-  outfitIcon: {
-    fontSize: 48,
-    textAlign: 'center',
-  },
-  
-  outfitFeedback: {
-    width: '100%',
-    maxWidth: '100%',
-    marginTop: Sizes.margin.md,
-    marginBottom: Sizes.margin.sm,
-  },
-  
-  avatarMessage: {
-    marginLeft: Sizes.margin.md,
-    flex: 1,
-  },
-  
-  avatarsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  
-  arrow: {
-    marginHorizontal: Sizes.margin.xs,
-  },
-
-  forecastAvatar: {
-    transform: [{ scale: 0.7 }],
-  },
-  
   loadingContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingVertical: Sizes.padding.lg,
+  },
+
+  loadingEmojis: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: Sizes.margin.lg,
+    gap: Sizes.margin.md,
+  },
+
+  loadingEmoji: {
+    fontSize: 32,
+    textAlign: 'center',
   },
   
   loadingText: {
     fontSize: Fonts.size.medium,
     color: Colors.text,
     textAlign: 'center',
+    fontWeight: Fonts.weight.medium,
   },
   
   errorContainer: {

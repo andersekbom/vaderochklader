@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Modal, TouchableOpacity, SafeAreaView, ScrollView, Image, Alert } from 'react-native';
+/**
+ * OutfitSelectionModal Component
+ * 
+ * Modal interface for selecting clothing items for a specific body part.
+ * Supports both default clothing items and custom user-uploaded photos.
+ * Includes long-press delete functionality for custom items.
+ */
+
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Modal, TouchableOpacity, SafeAreaView, ScrollView, Image, Alert, Animated } from 'react-native';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import Sizes from '../constants/Sizes';
 import Button from './ui/Button';
 import { useOutfitLogic } from '../hooks/useOutfitLogic';
 import CustomClothingCamera from './CustomClothingCamera';
-import { getCustomItemsForBodyPart, deleteCustomClothingItem } from '../utils/customClothingManager';
+import { deleteCustomClothingItem } from '../utils/customClothingManager';
 
 const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPartIcon }) => {
+  // Hooks
   const { 
     outfit, 
     updateOutfitItem, 
@@ -19,11 +29,13 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
     loadCustomItems: refreshCustomItemsCache
   } = useOutfitLogic();
 
+  // Local state
   const [showCustomCamera, setShowCustomCamera] = useState(false);
   
+  // Get available items for the selected body part
   const availableItems = bodyPart ? getAvailableItems(bodyPart) : {};
   
-  // Separate default and custom items
+  // Separate default and custom items for better organization
   const defaultItems = {};
   const customItems = {};
   
@@ -35,27 +47,154 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
     }
   });
 
+  // Categorize default items by season for better organization
+  const categorizeItems = (items) => {
+    const categories = {
+      summer: { title: '☀️ Sommarkläder', items: {} },
+      spring: { title: '🌸 Vårkläder', items: {} },
+      autumn: { title: '🍂 Höstkläder', items: {} },
+      winter: { title: '❄️ Vinterkläder', items: {} },
+      rain: { title: '🌧️ Regnkläder', items: {} }
+    };
+
+    Object.entries(items).forEach(([key, item]) => {
+      const temp = item.temperature || [0, 30];
+      const avgTemp = (temp[0] + temp[1]) / 2;
+      const weather = item.weather || [];
+
+      if (weather.includes('rainy') || weather.includes('stormy')) {
+        categories.rain.items[key] = item;
+      } else if (avgTemp >= 20) {
+        categories.summer.items[key] = item;
+      } else if (avgTemp <= 5 || weather.includes('snowy')) {
+        categories.winter.items[key] = item;
+      } else if (avgTemp >= 15) {
+        categories.spring.items[key] = item;
+      } else {
+        categories.autumn.items[key] = item;
+      }
+    });
+
+    // Remove empty categories
+    return Object.entries(categories).filter(([_, cat]) => Object.keys(cat.items).length > 0);
+  };
+
+  const categorizedItems = categorizeItems(defaultItems);
+
+  /**
+   * Handles selection of a clothing item
+   */
   const handleItemSelection = (item) => {
     updateOutfitItem(bodyPart, item);
     onClose();
   };
 
+  // Animated clothing item component
+  const AnimatedClothingItem = ({ item, isSelected, onPress, onLongPress, children }) => {
+    const [scaleValue] = useState(new Animated.Value(1));
+
+    const handlePressIn = () => {
+      // Light haptic feedback on press
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      
+      Animated.spring(scaleValue, {
+        toValue: 0.95,
+        useNativeDriver: true,
+        speed: 20,
+        bounciness: 4,
+      }).start();
+    };
+
+    const handlePressOut = () => {
+      Animated.spring(scaleValue, {
+        toValue: 1,
+        useNativeDriver: true,
+        speed: 20,
+        bounciness: 4,
+      }).start();
+    };
+
+    const handlePress = () => {
+      // Success haptic feedback
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      
+      // Success animation
+      Animated.sequence([
+        Animated.spring(scaleValue, {
+          toValue: 1.05,
+          useNativeDriver: true,
+          speed: 25,
+          bounciness: 8,
+        }),
+        Animated.spring(scaleValue, {
+          toValue: 1,
+          useNativeDriver: true,
+          speed: 25,
+          bounciness: 8,
+        })
+      ]).start();
+      
+      if (onPress) {
+        setTimeout(onPress, 100); // Slight delay for animation
+      }
+    };
+
+    return (
+      <TouchableOpacity
+        onPress={handlePress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        onLongPress={onLongPress}
+        delayLongPress={800}
+        activeOpacity={0.8}
+        style={[
+          styles.clothingItem,
+          isSelected && styles.clothingItemSelected,
+        ]}
+      >
+        <Animated.View
+          style={{
+            transform: [{ scale: scaleValue }],
+            flex: 1,
+          }}
+        >
+          {children}
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  };
+
+  /**
+   * Handles clearing the selected item (no clothing)
+   */
   const handleClearItem = () => {
     updateOutfitItem(bodyPart, null);
     onClose();
   };
   
+  /**
+   * Handles successful creation of a custom clothing item
+   */
   const handleCustomItemCreated = (newItem) => {
     setShowCustomCamera(false);
     // Refresh the global custom items cache to reload the modal
     refreshCustomItemsCache();
   };
   
+  /**
+   * Opens the custom clothing camera modal
+   */
   const handleAddCustomItem = () => {
     setShowCustomCamera(true);
   };
   
+  /**
+   * Handles deletion of a custom clothing item with confirmation
+   */
   const handleDeleteCustomItem = (item) => {
+    // Warning haptic feedback for delete action
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+    
     Alert.alert(
       'Ta bort klädesplagg',
       `Är du säker på att du vill ta bort "${item.name}"?`,
@@ -66,6 +205,8 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
           style: 'destructive',
           onPress: async () => {
             try {
+              // Error haptic feedback for deletion
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
               await deleteCustomClothingItem(bodyPart, item.id);
               // If this item was currently selected, clear it
               if (outfit[bodyPart]?.id === item.id) {
@@ -116,93 +257,107 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
         </View>
         
         <ScrollView style={styles.itemsContainer} showsVerticalScrollIndicator={false}>
-          <View style={styles.itemsGrid}>
-            {/* Clear/None option */}
-            <TouchableOpacity
-              style={[
-                styles.clothingItem,
-                !outfit[bodyPart] && styles.clothingItemSelected
-              ]}
-              onPress={handleClearItem}
-            >
-              <View style={styles.clothingItemContent}>
-                <Ionicons name="close-circle-outline" size={32} color="#9E9E9E" />
-                <Text style={styles.clothingName}>Inget</Text>
-              </View>
-            </TouchableOpacity>
-            
-            {/* Default clothing items */}
-            {Object.values(defaultItems).map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                style={[
-                  styles.clothingItem,
-                  outfit[bodyPart]?.id === item.id && styles.clothingItemSelected
-                ]}
-                onPress={() => handleItemSelection(item)}
+          {/* Clear/None option */}
+          <View style={styles.categorySection}>
+            <Text style={styles.categoryTitle}>🚫 Ingen klädsel</Text>
+            <View style={styles.categoryItems}>
+              <AnimatedClothingItem
+                isSelected={!outfit[bodyPart]}
+                onPress={handleClearItem}
               >
                 <View style={styles.clothingItemContent}>
-                  {item.emoji ? (
-                    <Text style={styles.clothingEmoji}>{item.emoji}</Text>
-                  ) : (() => {
-                    const iconData = item.icon;
-                    const IconComponent = iconData?.library === 'Ionicons' ? Ionicons : MaterialCommunityIcons;
-                    return iconData ? (
-                      <IconComponent
-                        name={iconData.name}
-                        size={32}
-                        color={iconData.color}
-                      />
-                    ) : null;
-                  })()}
-                  <Text style={styles.clothingName}>{item.name}</Text>
+                  <Ionicons name="close-circle-outline" size={32} color="#9E9E9E" />
+                  <Text style={styles.clothingName}>Inget</Text>
                 </View>
-              </TouchableOpacity>
-            ))}
+              </AnimatedClothingItem>
+            </View>
+          </View>
             
-            {/* Custom clothing items */}
-            {Object.values(customItems).map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                style={[
-                  styles.clothingItem,
-                  outfit[bodyPart]?.id === item.id && styles.clothingItemSelected
-                ]}
-                onPress={() => handleItemSelection(item)}
-                onLongPress={() => handleDeleteCustomItem(item)}
-                delayLongPress={500}
+          {/* Categorized default clothing items */}
+          {categorizedItems.map(([categoryKey, category]) => (
+            <View key={categoryKey} style={styles.categorySection}>
+              <Text style={styles.categoryTitle}>{category.title}</Text>
+              <View style={styles.categoryItems}>
+                {Object.values(category.items).map((item) => (
+                  <AnimatedClothingItem
+                    key={item.id}
+                    item={item}
+                    isSelected={outfit[bodyPart]?.id === item.id}
+                    onPress={() => handleItemSelection(item)}
+                  >
+                    <View style={styles.clothingItemContent}>
+                      {item.emoji ? (
+                        <Text style={styles.clothingEmoji}>{item.emoji}</Text>
+                      ) : (() => {
+                        const iconData = item.icon;
+                        const IconComponent = iconData?.library === 'Ionicons' ? Ionicons : MaterialCommunityIcons;
+                        return iconData ? (
+                          <IconComponent
+                            name={iconData.name}
+                            size={32}
+                            color={iconData.color}
+                          />
+                        ) : null;
+                      })()}
+                      <Text style={styles.clothingName}>{item.name}</Text>
+                    </View>
+                  </AnimatedClothingItem>
+                ))}
+              </View>
+            </View>
+          ))}
+            
+            {/* Custom clothing items section */}
+            {Object.keys(customItems).length > 0 && (
+              <View style={styles.categorySection}>
+                <Text style={styles.categoryTitle}>✨ Mina egna kläder</Text>
+                <View style={styles.categoryItems}>
+                  {Object.values(customItems).map((item) => (
+                    <AnimatedClothingItem
+                      key={item.id}
+                      item={item}
+                      isSelected={outfit[bodyPart]?.id === item.id}
+                      onPress={() => handleItemSelection(item)}
+                      onLongPress={() => handleDeleteCustomItem(item)}
+                    >
+                      <View style={styles.clothingItemContent}>
+                        {item.imageUri ? (
+                          <Image 
+                            source={{ uri: item.imageUri }} 
+                            style={styles.customItemImage}
+                            resizeMode="cover"
+                          />
+                        ) : (
+                          <Text style={styles.clothingEmoji}>{item.emoji || '📷'}</Text>
+                        )}
+                        <Text style={styles.clothingName}>{item.name}</Text>
+                        <Text style={styles.customItemBadge}>✨</Text>
+                        <Text style={styles.deleteHint}>Håll för att ta bort</Text>
+                      </View>
+                    </AnimatedClothingItem>
+                  ))}
+                </View>
+              </View>
+            )}
+            
+          {/* Add custom item section */}
+          <View style={styles.categorySection}>
+            <Text style={styles.categoryTitle}>📷 Lägg till egna kläder</Text>
+            <View style={styles.categoryItems}>
+              <AnimatedClothingItem
+                isSelected={false}
+                onPress={handleAddCustomItem}
               >
                 <View style={styles.clothingItemContent}>
-                  {item.imageUri ? (
-                    <Image 
-                      source={{ uri: item.imageUri }} 
-                      style={styles.customItemImage}
-                      resizeMode="cover"
-                    />
-                  ) : (
-                    <Text style={styles.clothingEmoji}>{item.emoji || '📷'}</Text>
-                  )}
-                  <Text style={styles.clothingName}>{item.name}</Text>
-                  <Text style={styles.customItemBadge}>✨</Text>
-                  <Text style={styles.deleteHint}>Håll för att ta bort</Text>
+                  <MaterialCommunityIcons 
+                    name="camera-plus" 
+                    size={32} 
+                    color={Colors.primary} 
+                  />
+                  <Text style={styles.addCustomText}>Lägg till egen</Text>
                 </View>
-              </TouchableOpacity>
-            ))}
-            
-            {/* Add custom item button */}
-            <TouchableOpacity
-              style={styles.addCustomItem}
-              onPress={handleAddCustomItem}
-            >
-              <View style={styles.clothingItemContent}>
-                <MaterialCommunityIcons 
-                  name="camera-plus" 
-                  size={32} 
-                  color={Colors.primary} 
-                />
-                <Text style={styles.addCustomText}>Lägg till egen</Text>
-              </View>
-            </TouchableOpacity>
+              </AnimatedClothingItem>
+            </View>
           </View>
         </ScrollView>
         
@@ -269,9 +424,10 @@ const styles = StyleSheet.create({
   },
   
   title: {
-    fontSize: Fonts.size.large,
+    fontSize: Fonts.size.extraLarge,
     fontWeight: Fonts.weight.bold,
     color: Colors.background,
+    lineHeight: Fonts.lineHeight.extraLarge,
   },
   
   closeButton: {
@@ -325,12 +481,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Sizes.padding.md,
   },
   
-  itemsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingVertical: Sizes.padding.md,
-  },
   
   clothingItem: {
     width: '48%',
@@ -339,6 +489,7 @@ const styles = StyleSheet.create({
     borderWidth: Sizes.borderWidth.medium,
     borderColor: Colors.border,
     backgroundColor: Colors.background,
+    minHeight: 120,
   },
   
   clothingItemSelected: {
@@ -347,7 +498,7 @@ const styles = StyleSheet.create({
   },
   
   clothingItemContent: {
-    padding: Sizes.padding.md,
+    padding: Sizes.padding.lg,
     alignItems: 'center',
     minHeight: 100,
     justifyContent: 'center',
@@ -359,10 +510,11 @@ const styles = StyleSheet.create({
   },
   
   clothingName: {
-    fontSize: Fonts.size.small,
+    fontSize: Fonts.size.medium,
     color: Colors.text,
     textAlign: 'center',
-    fontWeight: Fonts.weight.medium,
+    fontWeight: Fonts.weight.semibold,
+    lineHeight: Fonts.lineHeight.medium,
   },
   
   customItemImage: {
@@ -419,6 +571,28 @@ const styles = StyleSheet.create({
   actionButton: {
     flex: 1,
     marginHorizontal: Sizes.margin.xs,
+  },
+
+  categorySection: {
+    width: '100%',
+    marginBottom: Sizes.margin.lg,
+  },
+
+  categoryTitle: {
+    fontSize: Fonts.size.large,
+    fontWeight: Fonts.weight.bold,
+    color: Colors.text,
+    textAlign: 'center',
+    marginBottom: Sizes.margin.md,
+    paddingHorizontal: Sizes.padding.md,
+    lineHeight: Fonts.lineHeight.large,
+  },
+
+  categoryItems: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: Sizes.padding.md,
   },
 });
 

@@ -1,8 +1,17 @@
+/**
+ * OutfitSelector Component
+ * 
+ * Provides a horizontal outfit selection interface for selecting clothing items.
+ * This component is currently used in some parts of the app but may be deprecated
+ * in favor of the OutfitSelectionModal for a more consistent UX.
+ */
+
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import Sizes from '../constants/Sizes';
+import { BODY_PARTS_ARRAY } from '../constants/BodyParts';
 import Card from './ui/Card';
 import Button from './ui/Button';
 import { useOutfitLogic } from '../hooks/useOutfitLogic';
@@ -18,13 +27,12 @@ const OutfitSelector = ({ style }) => {
   
   const [selectedBodyPart, setSelectedBodyPart] = useState('torso');
   
-  const bodyParts = [
-    { key: 'head', name: 'Huvud', emoji: '👤' },
-    { key: 'torso', name: 'Kropp', emoji: '👕' },
-    { key: 'legs', name: 'Ben', emoji: '👖' },
-    { key: 'feet', name: 'Fötter', emoji: '👟' },
-  ];
+  // Use shared body parts configuration
+  const bodyParts = BODY_PARTS_ARRAY;
 
+  /**
+   * Renders the body part selector tabs
+   */
   const renderBodyPartSelector = () => (
     <View style={styles.bodyPartSelector}>
       {bodyParts.map((bodyPart) => (
@@ -48,6 +56,9 @@ const OutfitSelector = ({ style }) => {
     </View>
   );
 
+  /**
+   * Renders the horizontal scrolling list of clothing items for the selected body part
+   */
   const renderClothingItems = () => {
     const availableItems = getAvailableItems(selectedBodyPart);
     

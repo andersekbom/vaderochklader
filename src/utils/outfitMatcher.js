@@ -1,3 +1,15 @@
+/**
+ * Outfit Matcher Utility
+ * 
+ * Provides clothing item data and logic for matching outfits to weather conditions.
+ * Includes outfit suggestions, evaluation, and feedback messages in Swedish for
+ * kindergarten children.
+ */
+
+/**
+ * Default clothing items organized by body part
+ * Each item includes display info, weather suitability, and temperature ranges
+ */
 export const OutfitItems = {
   head: {
     cap: { id: 'cap', name: 'Keps', emoji: '🧢', icon: { name: 'hat-cap', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['sunny'], temperature: [15, 35] },
@@ -30,6 +42,10 @@ export const OutfitItems = {
   },
 };
 
+/**
+ * Feedback messages for outfit choices in Swedish
+ * Organized by rating level for appropriate responses to children
+ */
 export const OutfitReactions = {
   perfect: [
     "Perfekt val! Du kommer att vara bekväm utomhus!",
@@ -58,11 +74,23 @@ export const OutfitReactions = {
   ],
 };
 
+/**
+ * Gets a random message from an array of messages
+ * @param {Array<string>} messageArray - Array of possible messages
+ * @returns {string} Random message from the array
+ */
 function getRandomMessage(messageArray) {
   return messageArray[Math.floor(Math.random() * messageArray.length)];
 }
 
-export function suggestOutfitForWeather(condition, temperature, timeOfDay = 'day') {
+/**
+ * Suggests appropriate clothing items based on weather conditions
+ * @param {string} condition - Weather condition (sunny, cloudy, rainy, snowy, stormy)
+ * @param {number} temperature - Temperature in Celsius
+ * @param {string} timeOfDay - Time of day (currently unused, defaults to 'day')
+ * @returns {Object} Suggested outfit with items for each body part
+ */
+export function suggestOutfitForWeather(condition, temperature) {
   const suggestions = {
     head: null,
     torso: null,
@@ -123,6 +151,13 @@ export function suggestOutfitForWeather(condition, temperature, timeOfDay = 'day
   return suggestions;
 }
 
+/**
+ * Evaluates how appropriate a single clothing item is for the weather
+ * @param {Object|null} outfitItem - The clothing item to evaluate
+ * @param {string} condition - Current weather condition
+ * @param {number} temperature - Current temperature in Celsius
+ * @returns {Object} Evaluation result with rating, message, and reasons
+ */
 export function evaluateOutfitChoice(outfitItem, condition, temperature) {
   if (!outfitItem) return { rating: 'good', message: getRandomMessage(OutfitReactions.good) };
 
@@ -177,10 +212,16 @@ export function evaluateOutfitChoice(outfitItem, condition, temperature) {
   return { rating, message, reasons };
 }
 
+/**
+ * Evaluates a complete outfit (all body parts) for weather appropriateness
+ * @param {Object} outfit - Complete outfit object with items for each body part
+ * @param {string} condition - Current weather condition
+ * @param {number} temperature - Current temperature in Celsius
+ * @returns {Object} Complete evaluation with overall and individual ratings
+ */
 export function evaluateCompleteOutfit(outfit, condition, temperature) {
   const evaluations = {};
   let overallRating = 'perfect';
-  const messages = [];
 
   // Evaluate each piece
   Object.keys(outfit).forEach(bodyPart => {

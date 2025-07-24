@@ -246,7 +246,7 @@ export function WeatherOutfitProvider({ children }) {
 export function useWeatherOutfit() {
   const context = useContext(WeatherOutfitContext);
   if (context === undefined) {
-    throw new Error('useWeatherOutfit must be used within a WeatherOutfitProvider');
+    throw new Error('useWeatherOutfit måste användas inom en WeatherOutfitProvider');
   }
   return context;
 }

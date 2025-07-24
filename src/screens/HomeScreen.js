@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import Sizes from '../constants/Sizes';
@@ -10,14 +10,13 @@ import { useWeather } from '../hooks/useWeather';
 import { useOutfitLogic } from '../hooks/useOutfitLogic';
 import Button from '../components/ui/Button';
 import WeatherDisplay from '../components/WeatherDisplay';
-import Avatar from '../components/Avatar';
 import OutfitSelectionModal from '../components/OutfitSelectionModal';
 import MessageBubble from '../components/MessageBubble';
 
 const HomeScreen = () => {
   const { state } = useWeatherOutfit();
   const { isLoading: locationLoading, error: locationError } = useLocation();
-  const { weather, isLoading: weatherLoading, error: weatherError, refetchWeather, getForecastText } = useWeather();
+  const { weather, isLoading: weatherLoading, error: weatherError, refetchWeather } = useWeather();
   const { avatarReaction } = useOutfitLogic();
   
   const [showOutfitModal, setShowOutfitModal] = useState(false);
@@ -29,10 +28,10 @@ const HomeScreen = () => {
   const isMediumScreen = screenHeight < 800; // Fairphone 4 and similar
   
   const bodyParts = {
-    head: { name: 'Head', emoji: '🎩', icon: { name: 'face-man', library: 'MaterialCommunityIcons', color: Colors.primary } },
-    torso: { name: 'Torso', emoji: '👕', icon: { name: 'tshirt-crew', library: 'MaterialCommunityIcons', color: Colors.primary } },
-    legs: { name: 'Legs', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: Colors.primary } },
-    feet: { name: 'Feet', emoji: '👟', icon: { name: 'shoe-sneaker', library: 'MaterialCommunityIcons', color: Colors.primary } },
+    head: { name: 'Huvud', emoji: '🎩', icon: { name: 'face-man', library: 'MaterialCommunityIcons', color: Colors.primary } },
+    torso: { name: 'Kropp', emoji: '👕', icon: { name: 'tshirt-crew', library: 'MaterialCommunityIcons', color: Colors.primary } },
+    legs: { name: 'Ben', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: Colors.primary } },
+    feet: { name: 'Fötter', emoji: '👟', icon: { name: 'shoe-sneaker', library: 'MaterialCommunityIcons', color: Colors.primary } },
   };
   
   const handleOutfitIconPress = (bodyPart) => {
@@ -40,13 +39,6 @@ const HomeScreen = () => {
     setShowOutfitModal(true);
   };
   
-  const getForecastMessage = () => {
-    const forecastText = getForecastText();
-    if (forecastText) {
-      return `${forecastText} Vilka kläder tror du är bra för det här vädret?`;
-    }
-    return "Välj dina kläder för dagens väder! Vad tror du skulle vara bäst?";
-  };
 
   const renderLoadingState = () => {
     if (locationLoading || weatherLoading) {
@@ -93,7 +85,7 @@ const HomeScreen = () => {
 
   if ((locationError || weatherError) && !weather.condition) {
     return (
-      <SafeAreaView style={styles.containWeather & Clotheser}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.centerContent}>
           <Text style={styles.title}>Väder & Kläder</Text>
           {renderErrorState()}
@@ -120,25 +112,25 @@ const HomeScreen = () => {
     },
     
     title: {
-      fontSize: isSmallScreen ? screenWidth * 0.055 : isMediumScreen ? screenWidth * 0.06 : screenWidth * 0.07,
+      fontSize: isSmallScreen ? screenWidth * 0.045 : isMediumScreen ? screenWidth * 0.05 : screenWidth * 0.055,
       fontWeight: Fonts.weight.bold,
       color: Colors.text,
-      marginBottom: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.015,
-      marginTop: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.02,
+      marginBottom: isSmallScreen ? screenHeight * 0.003 : isMediumScreen ? screenHeight * 0.005 : screenHeight * 0.008,
+      marginTop: isSmallScreen ? screenHeight * 0.003 : isMediumScreen ? screenHeight * 0.005 : screenHeight * 0.008,
       textAlign: 'center',
     },
     
     subtitle: {
-      fontSize: isSmallScreen ? screenWidth * 0.035 : isMediumScreen ? screenWidth * 0.038 : screenWidth * 0.045,
+      fontSize: isSmallScreen ? screenWidth * 0.03 : isMediumScreen ? screenWidth * 0.032 : screenWidth * 0.035,
       fontWeight: Fonts.weight.medium,
       color: Colors.primary,
-      marginBottom: isSmallScreen ? screenHeight * 0.01 : isMediumScreen ? screenHeight * 0.012 : screenHeight * 0.025,
+      marginBottom: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.012,
       textAlign: 'center',
     },
     
     weatherDisplay: {
       width: '100%',
-      marginBottom: isSmallScreen ? screenHeight * 0.008 : isMediumScreen ? screenHeight * 0.01 : screenHeight * 0.02,
+      marginBottom: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.01,
     },
     
     avatarSection: {
@@ -167,6 +159,20 @@ const HomeScreen = () => {
     avatarMessage: {
       marginLeft: screenWidth * 0.03,
       flex: 1,
+    },
+    
+    clothingQuestionSection: {
+      alignItems: 'center',
+      marginBottom: isSmallScreen ? screenHeight * 0.008 : isMediumScreen ? screenHeight * 0.01 : screenHeight * 0.012,
+      marginTop: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.01,
+    },
+    
+    clothingQuestion: {
+      fontSize: isSmallScreen ? screenWidth * 0.032 : isMediumScreen ? screenWidth * 0.035 : screenWidth * 0.038,
+      fontWeight: Fonts.weight.medium,
+      color: Colors.text,
+      textAlign: 'center',
+      marginHorizontal: screenWidth * 0.05,
     },
     
     outfitSection: {
@@ -205,6 +211,12 @@ const HomeScreen = () => {
       marginTop: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.015,
       marginBottom: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.008 : screenHeight * 0.015,
     },
+    
+    customOutfitImage: {
+      width: isSmallScreen ? screenWidth * 0.08 : isMediumScreen ? screenWidth * 0.09 : screenWidth * 0.12,
+      height: isSmallScreen ? screenWidth * 0.08 : isMediumScreen ? screenWidth * 0.09 : screenWidth * 0.12,
+      borderRadius: Sizes.borderRadius.small,
+    },
   });
 
   const responsiveStyles = getResponsiveStyles();
@@ -227,38 +239,10 @@ const HomeScreen = () => {
           />
         )}
 
-        <View style={responsiveStyles.avatarSection}>
-          <View style={responsiveStyles.avatarRow}>
-            <View style={responsiveStyles.avatarsContainer}>
-              <Avatar 
-                size="small" 
-                showOutfitItems={false} 
-                weather={weather}
-              />
-              {weather.forecast4h && (
-                <>
-                  <MaterialIcons 
-                    name="arrow-forward" 
-                    size={isSmallScreen ? 14 : isMediumScreen ? 16 : 20} 
-                    color={Colors.primary} 
-                    style={responsiveStyles.arrow}
-                  />
-                  <Avatar 
-                    size="small" 
-                    showOutfitItems={false} 
-                    weather={weather.forecast4h}
-                    style={responsiveStyles.forecastAvatar}
-                  />
-                </>
-              )}
-            </View>
-            <MessageBubble
-              message={getForecastMessage()}
-              type="default"
-              visible={true}
-              style={responsiveStyles.avatarMessage}
-            />
-          </View>
+        <View style={responsiveStyles.clothingQuestionSection}>
+          <Text style={responsiveStyles.clothingQuestion}>
+            Vilka kläder tror du är bra för det här vädret?
+          </Text>
         </View>
 
         <View style={responsiveStyles.outfitSection}>
@@ -267,7 +251,13 @@ const HomeScreen = () => {
             onPress={() => handleOutfitIconPress('head')}
           >
             {state.outfit.head ? (
-              state.outfit.head.emoji ? (
+              state.outfit.head.isCustom && state.outfit.head.imageUri ? (
+                <Image 
+                  source={{ uri: state.outfit.head.imageUri }} 
+                  style={responsiveStyles.customOutfitImage}
+                  resizeMode="cover"
+                />
+              ) : state.outfit.head.emoji ? (
                 <Text style={responsiveStyles.outfitIcon}>{state.outfit.head.emoji}</Text>
               ) : (() => {
                 const iconData = state.outfit.head.icon;
@@ -290,7 +280,13 @@ const HomeScreen = () => {
             onPress={() => handleOutfitIconPress('torso')}
           >
             {state.outfit.torso ? (
-              state.outfit.torso.emoji ? (
+              state.outfit.torso.isCustom && state.outfit.torso.imageUri ? (
+                <Image 
+                  source={{ uri: state.outfit.torso.imageUri }} 
+                  style={responsiveStyles.customOutfitImage}
+                  resizeMode="cover"
+                />
+              ) : state.outfit.torso.emoji ? (
                 <Text style={responsiveStyles.outfitIcon}>{state.outfit.torso.emoji}</Text>
               ) : (() => {
                 const iconData = state.outfit.torso.icon;
@@ -313,7 +309,13 @@ const HomeScreen = () => {
             onPress={() => handleOutfitIconPress('legs')}
           >
             {state.outfit.legs ? (
-              state.outfit.legs.emoji ? (
+              state.outfit.legs.isCustom && state.outfit.legs.imageUri ? (
+                <Image 
+                  source={{ uri: state.outfit.legs.imageUri }} 
+                  style={responsiveStyles.customOutfitImage}
+                  resizeMode="cover"
+                />
+              ) : state.outfit.legs.emoji ? (
                 <Text style={responsiveStyles.outfitIcon}>{state.outfit.legs.emoji}</Text>
               ) : (() => {
                 const iconData = state.outfit.legs.icon;
@@ -336,7 +338,13 @@ const HomeScreen = () => {
             onPress={() => handleOutfitIconPress('feet')}
           >
             {state.outfit.feet ? (
-              state.outfit.feet.emoji ? (
+              state.outfit.feet.isCustom && state.outfit.feet.imageUri ? (
+                <Image 
+                  source={{ uri: state.outfit.feet.imageUri }} 
+                  style={responsiveStyles.customOutfitImage}
+                  resizeMode="cover"
+                />
+              ) : state.outfit.feet.emoji ? (
                 <Text style={responsiveStyles.outfitIcon}>{state.outfit.feet.emoji}</Text>
               ) : (() => {
                 const iconData = state.outfit.feet.icon;

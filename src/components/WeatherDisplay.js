@@ -46,46 +46,59 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
   };
 
 
+  const getTemperatureDescription = (temperature) => {
+    if (temperature < -10) return "väldigt kallt";
+    if (temperature < 0) return "kallt";
+    if (temperature < 10) return "lite kallt";
+    if (temperature < 20) return "skönt";
+    if (temperature < 25) return "varmt";
+    if (temperature < 30) return "ganska varmt";
+    return "väldigt varmt";
+  };
+
+  const getForecastText = () => {
+    if (!weather.forecast4h) return null;
+    
+    const forecastConditionText = {
+      sunny: "vara soligt",
+      cloudy: "vara molnigt", 
+      rainy: "regna",
+      snowy: "snöa",
+      stormy: "storma"
+    }[weather.forecast4h.condition] || "vara fint väder";
+    
+    const forecastTempDescription = getTemperatureDescription(weather.forecast4h.temperature);
+    
+    return `Det kommer att ${forecastConditionText} och vara ${forecastTempDescription} lite senare.`;
+  };
+
   return (
-    <Card style={[styles.container, style]} padding="lg">
-      <View style={styles.weatherHeader}>
-        <View style={styles.weatherMainInfo}>
-          {showLocation && weather.location && (
-            <>
-              <Text style={styles.locationText}>I </Text>
-              <TouchableOpacity
-                onPress={() => setShowMapModal(true)}
-                activeOpacity={0.7}
-                style={styles.locationButton}
-              >
-                <Text style={styles.locationButtonText}>
-                  {weather.location.split(',')[0]}
-                </Text>
-              </TouchableOpacity>
-              <Text style={styles.locationText}> är det{' '}</Text>
-            </>
-          )}
-          <Text style={[styles.weatherEmoji, { 
-            color: getWeatherColor(),
-            fontSize: isSmallScreen ? screenWidth * 0.04 : isMediumScreen ? screenWidth * 0.045 : screenWidth * 0.05,
-          }]}>
-            {weatherEmoji}
-          </Text>
-          <Text style={[styles.condition, { 
-            color: getWeatherColor(),
-            fontSize: isSmallScreen ? screenWidth * 0.032 : isMediumScreen ? screenWidth * 0.035 : screenWidth * 0.04,
-          }]}>
-            {WeatherConditionsSwedish[weather.condition] || weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1)}
-          </Text>
-          {showTemperature && (
-            <Text style={[styles.temperature, {
-              fontSize: isSmallScreen ? screenWidth * 0.032 : isMediumScreen ? screenWidth * 0.035 : screenWidth * 0.04,
-            }]}> {weather.temperature}°C</Text>
+    <Card style={[styles.container, style]} padding="sm">
+      {/* Weather Icons Row */}
+      <View style={styles.weatherIconsRow}>
+        <View style={styles.mainWeatherIcons}>
+          <View style={styles.currentWeatherIcon}>
+            <Text style={[styles.weatherEmoji, { 
+              color: getWeatherColor(),
+              fontSize: isSmallScreen ? screenWidth * 0.12 : isMediumScreen ? screenWidth * 0.14 : screenWidth * 0.16,
+            }]}>
+              {weatherEmoji}
+            </Text>
+          </View>
+          
+          {weather.forecast4h && (
+            <View style={styles.forecastTemperature}>
+              <Text style={[styles.temperatureNumber, { 
+                fontSize: isSmallScreen ? screenWidth * 0.12 : isMediumScreen ? screenWidth * 0.14 : screenWidth * 0.16,
+              }]}>
+                {weather.forecast4h.temperature}°
+              </Text>
+            </View>
           )}
         </View>
         
-        <View style={styles.headerActions}>
-          {onRefresh && (
+        {onRefresh && (
+          <View style={styles.refreshButtonContainer}>
             <Button 
               title="↻" 
               onPress={onRefresh}
@@ -93,13 +106,47 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
               size="small"
               style={styles.refreshButton}
               textStyle={{
-                fontSize: isSmallScreen ? 20 : isMediumScreen ? 24 : 28,
+                fontSize: isSmallScreen ? 16 : isMediumScreen ? 18 : 20,
                 color: Colors.primary,
               }}
             />
-          )}
-        </View>
+          </View>
+        )}
       </View>
+      
+      {/* Current Weather Text */}
+      <View style={styles.currentWeatherText}>
+        {showLocation && weather.location && (
+          <Text style={styles.weatherDescription}>
+            I{' '}
+            <Text 
+              style={styles.locationButtonText}
+              onPress={() => setShowMapModal(true)}
+            >
+              {weather.location.split(',')[0]}
+            </Text>
+            {' '}är det{' '}
+            <Text style={[styles.condition, { 
+              color: getWeatherColor(),
+            }]}>
+              {WeatherConditionsSwedish[weather.condition] || weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1)}
+            </Text>
+            {showTemperature && (
+              <Text style={styles.temperature}> och {getTemperatureDescription(weather.temperature)}</Text>
+            )}
+            .
+          </Text>
+        )}
+      </View>
+      
+      {/* Forecast Text */}
+      {weather.forecast4h && (
+        <View style={styles.forecastText}>
+          <Text style={styles.forecastDescription}>
+            {getForecastText()}
+          </Text>
+        </View>
+      )}
       
       <MapModal
         visible={showMapModal}
@@ -117,19 +164,46 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightBackground,
   },
   
-  weatherHeader: {
+  weatherIconsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: Sizes.margin.xs,
-    paddingBottom: Sizes.padding.xs,
+    width: '100%',
+    paddingHorizontal: Sizes.padding.md,
   },
   
-  weatherMainInfo: {
+  mainWeatherIcons: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    gap: Sizes.margin.lg,
+  },
+  
+  currentWeatherIcon: {
+    alignItems: 'center',
+  },
+  
+  forecastTemperature: {
+    alignItems: 'center',
+  },
+  
+  temperatureNumber: {
+    fontWeight: Fonts.weight.bold,
+    color: Colors.primary,
+  },
+  
+  weatherTextInfo: {
+    alignItems: 'center',
+    marginBottom: Sizes.margin.xs,
+  },
+  
+  locationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   
   weatherEmoji: {
@@ -140,7 +214,6 @@ const styles = StyleSheet.create({
   condition: {
     fontSize: Fonts.size.medium,
     fontWeight: Fonts.weight.bold,
-    marginRight: Sizes.margin.xs,
   },
   
   temperature: {
@@ -164,10 +237,44 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary + '40',
   },
   
+  currentWeatherText: {
+    alignItems: 'center',
+    marginBottom: Sizes.margin.sm,
+    paddingHorizontal: Sizes.padding.md,
+  },
+  
+  weatherDescription: {
+    fontSize: Fonts.size.medium,
+    color: Colors.text,
+    textAlign: 'center',
+    fontWeight: Fonts.weight.medium,
+    lineHeight: Fonts.lineHeight.medium,
+    flexWrap: 'wrap',
+  },
+  
+  forecastText: {
+    alignItems: 'center',
+    marginBottom: Sizes.margin.md,
+    paddingHorizontal: Sizes.padding.md,
+  },
+  
+  forecastDescription: {
+    fontSize: Fonts.size.medium,
+    color: Colors.text,
+    textAlign: 'center',
+    fontWeight: Fonts.weight.medium,
+    lineHeight: Fonts.lineHeight.medium,
+  },
+  
+  inlineLocationButton: {
+    paddingHorizontal: 2,
+  },
+  
   locationButtonText: {
     fontSize: Fonts.size.medium,
     color: Colors.primary,
     fontWeight: Fonts.weight.bold,
+    textDecorationLine: 'underline',
   },
   
   message: {
@@ -182,9 +289,10 @@ const styles = StyleSheet.create({
   
   
   
-  headerActions: {
-    flexDirection: 'row',
+  refreshButtonContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 40,
   },
   
   refreshButton: {

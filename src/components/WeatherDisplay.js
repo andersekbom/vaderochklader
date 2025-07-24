@@ -50,7 +50,7 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
     if (temperature < -10) return "väldigt kallt";
     if (temperature < 0) return "kallt";
     if (temperature < 10) return "lite kallt";
-    if (temperature < 20) return "skönt";
+    if (temperature < 20) return "ljummet";
     if (temperature < 25) return "varmt";
     if (temperature < 30) return "ganska varmt";
     return "väldigt varmt";
@@ -60,16 +60,16 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
     if (!weather.forecast4h) return null;
     
     const forecastConditionText = {
-      sunny: "vara soligt",
-      cloudy: "vara molnigt", 
+      sunny: "soligt",
+      cloudy: "molnigt", 
       rainy: "regna",
       snowy: "snöa",
       stormy: "storma"
-    }[weather.forecast4h.condition] || "vara fint väder";
+    }[weather.forecast4h.condition] || "fint väder";
     
     const forecastTempDescription = getTemperatureDescription(weather.forecast4h.temperature);
     
-    return `Det kommer att ${forecastConditionText} och vara ${forecastTempDescription} lite senare.`;
+    return `Senare: ${forecastConditionText} och ${forecastTempDescription}`;
   };
 
   return (
@@ -117,36 +117,31 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
       {/* Current Weather Text */}
       <View style={styles.currentWeatherText}>
         {showLocation && weather.location && (
-          <Text style={styles.weatherDescription}>
-            I{' '}
-            <Text 
-              style={styles.locationButtonText}
-              onPress={() => setShowMapModal(true)}
-            >
-              {weather.location.split(',')[0]}
+          <View>
+            <Text style={styles.weatherDescription}>
+              Nu i{' '}
+              <Text 
+                style={styles.locationButtonText}
+                onPress={() => setShowMapModal(true)}
+              >
+                {weather.location.split(',')[0]}
+              </Text>
+              :
             </Text>
-            {' '}är det{' '}
-            <Text style={[styles.condition, { 
-              color: getWeatherColor(),
-            }]}>
-              {WeatherConditionsSwedish[weather.condition] || weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1)}
+            <Text style={styles.weatherDescription}>
+              <Text style={[styles.condition, { 
+                color: getWeatherColor(),
+              }]}>
+                {WeatherConditionsSwedish[weather.condition] || weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1)}
+              </Text>
+              {showTemperature && (
+                <Text style={styles.temperature}> och {getTemperatureDescription(weather.temperature)}</Text>
+              )}
             </Text>
-            {showTemperature && (
-              <Text style={styles.temperature}> och {getTemperatureDescription(weather.temperature)}</Text>
-            )}
-            .
-          </Text>
+          </View>
         )}
       </View>
       
-      {/* Forecast Text */}
-      {weather.forecast4h && (
-        <View style={styles.forecastText}>
-          <Text style={styles.forecastDescription}>
-            {getForecastText()}
-          </Text>
-        </View>
-      )}
       
       <MapModal
         visible={showMapModal}
@@ -244,11 +239,11 @@ const styles = StyleSheet.create({
   },
   
   weatherDescription: {
-    fontSize: Fonts.size.medium,
+    fontSize: Fonts.size.large,
     color: Colors.text,
     textAlign: 'center',
-    fontWeight: Fonts.weight.medium,
-    lineHeight: Fonts.lineHeight.medium,
+    fontWeight: Fonts.weight.semibold,
+    lineHeight: Fonts.lineHeight.large,
     flexWrap: 'wrap',
   },
   
@@ -271,7 +266,7 @@ const styles = StyleSheet.create({
   },
   
   locationButtonText: {
-    fontSize: Fonts.size.medium,
+    fontSize: Fonts.size.large,
     color: Colors.primary,
     fontWeight: Fonts.weight.bold,
     textDecorationLine: 'underline',
@@ -308,6 +303,91 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     textAlign: 'center',
   },
+
+  weatherTimeline: {
+    alignItems: 'center',
+    marginBottom: Sizes.margin.sm,
+    paddingHorizontal: Sizes.padding.md,
+  },
+
+  timelineContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.lightBackground,
+    paddingHorizontal: Sizes.padding.md,
+    paddingVertical: Sizes.padding.sm,
+    borderRadius: Sizes.borderRadius.medium,
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+
+  timelineItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+
+  timelineLabel: {
+    fontSize: Fonts.size.tiny,
+    fontWeight: Fonts.weight.semibold,
+    color: Colors.text,
+    marginBottom: 2,
+    lineHeight: Fonts.lineHeight.tiny,
+  },
+
+  timelineTemp: {
+    fontSize: Fonts.size.medium,
+    fontWeight: Fonts.weight.bold,
+    color: Colors.primary,
+    marginTop: 2,
+    lineHeight: Fonts.lineHeight.medium,
+  },
+
+  timelineArrow: {
+    paddingHorizontal: Sizes.padding.sm,
+  },
+
+  arrowText: {
+    fontSize: Fonts.size.medium,
+    color: Colors.primary,
+    fontWeight: Fonts.weight.bold,
+  },
 });
 
 export default WeatherDisplay;
+
+/*
+Weather Timeline code - Hidden for now, may re-add later:
+
+{weather.forecast4h && (
+  <View style={styles.weatherTimeline}>
+    <View style={styles.timelineContainer}>
+      <View style={styles.timelineItem}>
+        <Text style={styles.timelineLabel}>Nu</Text>
+        <Text style={[styles.weatherEmoji, { 
+          color: getWeatherColor(),
+          fontSize: isSmallScreen ? screenWidth * 0.06 : isMediumScreen ? screenWidth * 0.07 : screenWidth * 0.08,
+        }]}>
+          {weatherEmoji}
+        </Text>
+        <Text style={styles.timelineTemp}>{weather.temperature}°</Text>
+      </View>
+      
+      <View style={styles.timelineArrow}>
+        <Text style={styles.arrowText}>→</Text>
+      </View>
+      
+      <View style={styles.timelineItem}>
+        <Text style={styles.timelineLabel}>+4h</Text>
+        <Text style={[styles.weatherEmoji, { 
+          color: getWeatherColor(),
+          fontSize: isSmallScreen ? screenWidth * 0.06 : isMediumScreen ? screenWidth * 0.07 : screenWidth * 0.08,
+        }]}>
+          {WeatherEmojis[weather.forecast4h.condition] || '🌤️'}
+        </Text>
+        <Text style={styles.timelineTemp}>{weather.forecast4h.temperature}°</Text>
+      </View>
+    </View>
+  </View>
+)}
+*/

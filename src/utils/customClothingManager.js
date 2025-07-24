@@ -87,7 +87,13 @@ export const getCustomItemsForBodyPart = async (bodyPart) => {
   }
 };
 
-// Delete custom clothing item
+/**
+ * Deletes a custom clothing item and its associated image file
+ * @param {string} bodyPart - The body part the item belongs to
+ * @param {string} itemId - The unique ID of the item to delete
+ * @returns {Promise<void>}
+ * @throws {Error} If deletion fails
+ */
 export const deleteCustomClothingItem = async (bodyPart, itemId) => {
   try {
     const existingItems = await getCustomClothingItems();

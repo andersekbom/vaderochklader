@@ -413,7 +413,7 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
             style={styles.actionButton}
           />
           <Button
-            title={language === 'sv' ? 'Rensa' : 'Clear'}
+            title={t('clear')}
             onPress={() => {
               clearOutfit();
               onClose();

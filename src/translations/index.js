@@ -46,6 +46,18 @@ export const translations = {
     error: 'Fel',
     couldNotDelete: 'Kunde inte ta bort klädesplagget.',
     
+    // OutfitSelector
+    chooseOutfit: 'Välj din outfit',
+    suggestClothes: 'Föreslå kläder',
+    clearAll: 'Rensa allt',
+    clear: 'Rensa',
+    
+    // CustomClothingCamera
+    selectImage: 'Välj bild',
+    selectFromGallery: 'Välj från galleri',
+    saved: 'Sparad!',
+    saving: 'Sparar...',
+    
     // Settings
     settings: 'Inställningar',
     language: 'Språk',
@@ -197,6 +209,18 @@ export const translations = {
     delete: 'Delete',
     error: 'Error',
     couldNotDelete: 'Could not delete the clothing item.',
+    
+    // OutfitSelector
+    chooseOutfit: 'Choose Your Outfit',
+    suggestClothes: 'Suggest Clothes',
+    clearAll: 'Clear All',
+    clear: 'Clear',
+    
+    // CustomClothingCamera
+    selectImage: 'Select Image',
+    selectFromGallery: 'Select from Gallery',
+    saved: 'Saved!',
+    saving: 'Saving...',
     
     // Settings
     settings: 'Settings',
@@ -350,6 +374,18 @@ export const translations = {
     error: 'Fehler',
     couldNotDelete: 'Kleidungsstück konnte nicht gelöscht werden.',
     
+    // OutfitSelector
+    chooseOutfit: 'Wählen Sie Ihr Outfit',
+    suggestClothes: 'Kleidung vorschlagen',
+    clearAll: 'Alles löschen',
+    clear: 'Löschen',
+    
+    // CustomClothingCamera
+    selectImage: 'Bild auswählen',
+    selectFromGallery: 'Aus Galerie auswählen',
+    saved: 'Gespeichert!',
+    saving: 'Speichert...',
+    
     // Settings
     settings: 'Einstellungen',
     language: 'Sprache',
@@ -502,6 +538,18 @@ export const translations = {
     error: 'Virhe',
     couldNotDelete: 'Vaatetta ei voitu poistaa.',
     
+    // OutfitSelector
+    chooseOutfit: 'Valitse asusi',
+    suggestClothes: 'Ehdota vaatteita',
+    clearAll: 'Tyhjennä kaikki',
+    clear: 'Tyhjennä',
+    
+    // CustomClothingCamera
+    selectImage: 'Valitse kuva',
+    selectFromGallery: 'Valitse galleriasta',
+    saved: 'Tallennettu!',
+    saving: 'Tallennetaan...',
+    
     // Settings
     settings: 'Asetukset',
     language: 'Kieli',
@@ -652,6 +700,18 @@ export const translations = {
     delete: 'Dustet',
     error: 'Meattáhus',
     couldNotDelete: 'Ii nagdan dustet gákti.',
+    
+    // OutfitSelector
+    chooseOutfit: 'Vállje du gákti',
+    suggestClothes: 'Árvalus gáktit',
+    clearAll: 'Suhte buot',
+    clear: 'Suhte',
+    
+    // CustomClothingCamera
+    selectImage: 'Vállje govva',
+    selectFromGallery: 'Vállje govvatšollás',
+    saved: 'Vurken!',
+    saving: 'Vurkejuvo...',
     
     // Settings
     settings: 'Heivehus',

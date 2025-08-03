@@ -17,6 +17,7 @@ import Sizes from '../constants/Sizes';
 import Button from './ui/Button';
 import Card from './ui/Card';
 import { saveCustomClothingItem } from '../utils/customClothingManager';
+import { useLanguage } from '../context/LanguageContext';
 
 const CustomClothingCamera = ({ 
   visible, 
@@ -25,6 +26,7 @@ const CustomClothingCamera = ({
   bodyPartName, 
   onItemCreated 
 }) => {
+  const { t } = useLanguage();
   const [itemName, setItemName] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,12 +84,12 @@ const CustomClothingCamera = ({
 
   const showImageSourceOptions = () => {
     Alert.alert(
-      'Välj bild',
+      t('selectImage'),
       'Hur vill du lägga till en bild av ditt klädesplagg?',
       [
         { text: 'Ta foto', onPress: takePhoto },
-        { text: 'Välj från galleri', onPress: pickFromGallery },
-        { text: 'Avbryt', style: 'cancel' },
+        { text: t('selectFromGallery'), onPress: pickFromGallery },
+        { text: t('cancel'), style: 'cancel' },
       ]
     );
   };
@@ -117,7 +119,7 @@ const CustomClothingCamera = ({
       );
 
       Alert.alert(
-        'Sparad!',
+        t('saved'),
         `${itemName} har sparats i din ${bodyPartName.toLowerCase()}-samling.`,
         [
           {
@@ -209,14 +211,14 @@ const CustomClothingCamera = ({
 
           <View style={styles.actionButtons}>
             <Button
-              title="Avbryt"
+              title={t('cancel')}
               onPress={handleClose}
               variant="secondary"
               style={[styles.button, { minWidth: screenWidth * 0.35 }]}
               textStyle={{ fontSize: getResponsiveFontSize(3.5) }}
             />
             <Button
-              title={isLoading ? "Sparar..." : "Spara"}
+              title={isLoading ? t('saving') : t('save')}
               onPress={saveCustomItem}
               disabled={isLoading}
               style={[styles.button, { minWidth: screenWidth * 0.35 }]}

@@ -15,8 +15,10 @@ import { BODY_PARTS_ARRAY } from '../constants/BodyParts';
 import Card from './ui/Card';
 import Button from './ui/Button';
 import { useOutfitLogic } from '../hooks/useOutfitLogic';
+import { useLanguage } from '../context/LanguageContext';
 
 const OutfitSelector = ({ style }) => {
+  const { t } = useLanguage();
   const { 
     outfit, 
     updateOutfitItem, 
@@ -79,7 +81,7 @@ const OutfitSelector = ({ style }) => {
         >
           <View style={styles.clothingItemContent}>
             <Text style={styles.clothingEmoji}>❌</Text>
-            <Text style={styles.clothingName}>Inget</Text>
+            <Text style={styles.clothingName}>{t('none')}</Text>
           </View>
         </TouchableOpacity>
         
@@ -115,21 +117,21 @@ const OutfitSelector = ({ style }) => {
 
   return (
     <Card style={[styles.container, style]} padding="md">
-      <Text style={styles.title}>Välj din outfit</Text>
+      <Text style={styles.title}>{t('chooseOutfit')}</Text>
       
       {renderBodyPartSelector()}
       {renderClothingItems()}
       
       <View style={styles.actionButtons}>
         <Button
-          title="Föreslå kläder"
+          title={t('suggestClothes')}
           onPress={applySuggestedOutfit}
           variant="primary"
           size="small"
           style={styles.actionButton}
         />
         <Button
-          title="Rensa allt"
+          title={t('clearAll')}
           onPress={clearOutfit}
           variant="secondary"
           size="small"

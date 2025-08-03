@@ -213,14 +213,12 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
     
     Alert.alert(
-      language === 'sv' ? 'Ta bort klädesplagg' : 'Delete clothing item',
-      language === 'sv' 
-        ? `Är du säker på att du vill ta bort "${item.name}"?`
-        : `Are you sure you want to delete "${item.name}"?`,
+      t('deleteClothingItem'),
+      `${t('deleteConfirm')} "${item.name}"?`,
       [
-        { text: language === 'sv' ? 'Avbryt' : 'Cancel', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
         {
-          text: language === 'sv' ? 'Ta bort' : 'Delete',
+          text: t('delete'),
           style: 'destructive',
           onPress: async () => {
             try {
@@ -235,10 +233,8 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
               refreshCustomItemsCache();
             } catch (error) {
               Alert.alert(
-                language === 'sv' ? 'Fel' : 'Error', 
-                language === 'sv' 
-                  ? (error.message || 'Kunde inte ta bort klädesplagget.')
-                  : (error.message || 'Could not delete the clothing item.')
+                t('error'), 
+                error.message || t('couldNotDelete')
               );
             }
           }
@@ -284,7 +280,7 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
           {/* Clear/None option */}
           <View style={styles.categorySection}>
             <Text style={styles.categoryTitle}>
-              {language === 'sv' ? '🚫 Ingen klädsel' : '🚫 No clothing'}
+              {t('noClothing')}
             </Text>
             <View style={styles.categoryItems}>
               <AnimatedClothingItem
@@ -294,7 +290,7 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
                 <View style={styles.clothingItemContent}>
                   <Ionicons name="close-circle-outline" size={32} color="#9E9E9E" />
                   <Text style={styles.clothingName}>
-                    {language === 'sv' ? 'Inget' : 'None'}
+                    {t('none')}
                   </Text>
                 </View>
               </AnimatedClothingItem>
@@ -339,7 +335,7 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
             {Object.keys(customItems).length > 0 && (
               <View style={styles.categorySection}>
                 <Text style={styles.categoryTitle}>
-                  {language === 'sv' ? '✨ Mina egna kläder' : '✨ My custom clothes'}
+                  {t('myCustomClothes')}
                 </Text>
                 <View style={styles.categoryItems}>
                   {Object.values(customItems).map((item) => (
@@ -363,7 +359,7 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
                         <Text style={styles.clothingName}>{item.name}</Text>
                         <Text style={styles.customItemBadge}>✨</Text>
                         <Text style={styles.deleteHint}>
-                          {language === 'sv' ? 'Håll för att ta bort' : 'Hold to delete'}
+                          {t('holdToDelete')}
                         </Text>
                       </View>
                     </AnimatedClothingItem>
@@ -375,7 +371,7 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
           {/* Add custom item section */}
           <View style={styles.categorySection}>
             <Text style={styles.categoryTitle}>
-              {language === 'sv' ? '📷 Lägg till egna kläder' : '📷 Add custom clothes'}
+              {t('addCustomClothes')}
             </Text>
             <View style={styles.categoryItems}>
               <AnimatedClothingItem
@@ -389,7 +385,7 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
                     color={Colors.primary} 
                   />
                   <Text style={styles.addCustomText}>
-                    {language === 'sv' ? 'Lägg till egen' : 'Add custom'}
+                    {t('addCustom')}
                   </Text>
                 </View>
               </AnimatedClothingItem>
@@ -407,7 +403,7 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
         
         <View style={styles.actionButtons}>
           <Button
-            title={language === 'sv' ? 'Välj åt mig' : 'Choose for me'}
+            title={t('chooseForMe')}
             onPress={() => {
               applySuggestedOutfit();
               onClose();

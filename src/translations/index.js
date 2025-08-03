@@ -33,6 +33,18 @@ export const translations = {
     // Outfit selection
     selectOutfit: 'Välj kläder för',
     noItemsAvailable: 'Inga kläder tillgängliga',
+    noClothing: '🚫 Ingen klädsel',
+    none: 'Inget',
+    myCustomClothes: '✨ Mina egna kläder',
+    addCustomClothes: '📷 Lägg till egna kläder',
+    addCustom: 'Lägg till egen',
+    chooseForMe: 'Välj åt mig',
+    holdToDelete: 'Håll för att ta bort',
+    deleteClothingItem: 'Ta bort klädesplagg',
+    deleteConfirm: 'Är du säker på att du vill ta bort',
+    delete: 'Ta bort',
+    error: 'Fel',
+    couldNotDelete: 'Kunde inte ta bort klädesplagget.',
     
     // Settings
     settings: 'Inställningar',
@@ -164,6 +176,18 @@ export const translations = {
     // Outfit selection
     selectOutfit: 'Select clothes for',
     noItemsAvailable: 'No clothes available',
+    noClothing: '🚫 No clothing',
+    none: 'None',
+    myCustomClothes: '✨ My custom clothes',
+    addCustomClothes: '📷 Add custom clothes',
+    addCustom: 'Add custom',
+    chooseForMe: 'Choose for me',
+    holdToDelete: 'Hold to delete',
+    deleteClothingItem: 'Delete clothing item',
+    deleteConfirm: 'Are you sure you want to delete',
+    delete: 'Delete',
+    error: 'Error',
+    couldNotDelete: 'Could not delete the clothing item.',
     
     // Settings
     settings: 'Settings',
@@ -295,6 +319,18 @@ export const translations = {
     // Outfit selection
     selectOutfit: 'Kleidung auswählen für',
     noItemsAvailable: 'Keine Kleidung verfügbar',
+    noClothing: '🚫 Keine Kleidung',
+    none: 'Keine',
+    myCustomClothes: '✨ Meine eigene Kleidung',
+    addCustomClothes: '📷 Eigene Kleidung hinzufügen',
+    addCustom: 'Eigene hinzufügen',
+    chooseForMe: 'Für mich wählen',
+    holdToDelete: 'Halten zum Löschen',
+    deleteClothingItem: 'Kleidungsstück löschen',
+    deleteConfirm: 'Sind Sie sicher, dass Sie löschen möchten',
+    delete: 'Löschen',
+    error: 'Fehler',
+    couldNotDelete: 'Kleidungsstück konnte nicht gelöscht werden.',
     
     // Settings
     settings: 'Einstellungen',

@@ -33,13 +33,6 @@ export const SimplifiedWeatherConditions = [
   'stormy'
 ];
 
-export const WeatherConditionsSwedish = {
-  sunny: 'soligt',
-  rainy: 'regnigt',
-  cloudy: 'molnigt',
-  snowy: 'snöigt',
-  stormy: 'stormigt'
-};
 
 export const WeatherEmojis = {
   sunny: '☀️',

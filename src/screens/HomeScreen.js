@@ -314,7 +314,7 @@ const HomeScreen = ({ onSettingsPress }) => {
             style={responsiveStyles.settingsButton}
             onPress={onSettingsPress}
           >
-            <MaterialIcons name="settings" size={24} color={Colors.primary} />
+            <MaterialIcons name="flag" size={24} color={Colors.primary} />
           </TouchableOpacity>
         </View>
         <Text style={responsiveStyles.subtitle}>{t('appSubtitle')}</Text>

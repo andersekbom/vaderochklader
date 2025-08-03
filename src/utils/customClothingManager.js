@@ -60,7 +60,7 @@ export const saveCustomClothingItem = async (bodyPart, itemData, imageUri) => {
     
     return customItem;
   } catch (error) {
-    console.error('Fel vid sparande av anpassat klädesplagg:', error);
+    console.error('Error saving custom clothing item:', error);
     throw new Error('Kunde inte spara det anpassade klädesplagget');
   }
 };
@@ -71,7 +71,7 @@ export const getCustomClothingItems = async () => {
     const items = await AsyncStorage.getItem(CUSTOM_CLOTHING_KEY);
     return items ? JSON.parse(items) : {};
   } catch (error) {
-    console.error('Fel vid hämtning av anpassade klädesplagg:', error);
+    console.error('Error loading custom clothing items:', error);
     return {};
   }
 };
@@ -82,7 +82,7 @@ export const getCustomItemsForBodyPart = async (bodyPart) => {
     const allItems = await getCustomClothingItems();
     return allItems[bodyPart] || {};
   } catch (error) {
-    console.error('Fel vid hämtning av anpassade klädesplagg för kroppsdel:', error);
+    console.error('Error loading custom clothing items for body part:', error);
     return {};
   }
 };
@@ -120,7 +120,7 @@ export const deleteCustomClothingItem = async (bodyPart, itemId) => {
       await AsyncStorage.setItem(CUSTOM_CLOTHING_KEY, JSON.stringify(existingItems));
     }
   } catch (error) {
-    console.error('Fel vid borttagning av anpassat klädesplagg:', error);
+    console.error('Error deleting custom clothing item:', error);
     throw new Error('Kunde inte ta bort det anpassade klädesplagget');
   }
 };
@@ -143,7 +143,7 @@ export const updateCustomClothingItem = async (bodyPart, itemId, updates) => {
     
     throw new Error('Anpassat klädesplagg hittades inte');
   } catch (error) {
-    console.error('Fel vid uppdatering av anpassat klädesplagg:', error);
+    console.error('Error updating custom clothing item:', error);
     throw error;
   }
 };
@@ -160,7 +160,7 @@ export const clearAllCustomItems = async () => {
     // Clear AsyncStorage
     await AsyncStorage.removeItem(CUSTOM_CLOTHING_KEY);
   } catch (error) {
-    console.error('Fel vid rensning av anpassade klädesplagg:', error);
+    console.error('Error clearing custom clothing items:', error);
     throw new Error('Kunde inte rensa anpassade klädesplagg');
   }
 };

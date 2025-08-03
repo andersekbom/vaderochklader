@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 
 const WeatherOutfitContext = createContext();
 
@@ -165,70 +165,70 @@ export function WeatherOutfitProvider({ children }) {
   const [state, dispatch] = useReducer(weatherOutfitReducer, initialState);
 
   const actions = {
-    setWeatherLoading: useCallback(() => {
+    setWeatherLoading: () => {
       dispatch({ type: actionTypes.SET_WEATHER_LOADING });
-    }, []),
+    },
 
-    setWeatherSuccess: useCallback((weatherData) => {
+    setWeatherSuccess: (weatherData) => {
       dispatch({ 
         type: actionTypes.SET_WEATHER_SUCCESS, 
         payload: weatherData 
       });
-    }, []),
+    },
 
-    setWeatherError: useCallback((error) => {
+    setWeatherError: (error) => {
       dispatch({ 
         type: actionTypes.SET_WEATHER_ERROR, 
         payload: error 
       });
-    }, []),
+    },
 
-    setLocationLoading: useCallback(() => {
+    setLocationLoading: () => {
       dispatch({ type: actionTypes.SET_LOCATION_LOADING });
-    }, []),
+    },
 
-    setLocationSuccess: useCallback((locationData) => {
+    setLocationSuccess: (locationData) => {
       dispatch({ 
         type: actionTypes.SET_LOCATION_SUCCESS, 
         payload: locationData 
       });
-    }, []),
+    },
 
-    setLocationError: useCallback((error) => {
+    setLocationError: (error) => {
       dispatch({ 
         type: actionTypes.SET_LOCATION_ERROR, 
         payload: error 
       });
-    }, []),
+    },
 
-    updateOutfit: useCallback((outfitChanges) => {
+    updateOutfit: (outfitChanges) => {
       dispatch({ 
         type: actionTypes.UPDATE_OUTFIT, 
         payload: outfitChanges 
       });
-    }, []),
+    },
 
-    setAvatarReaction: useCallback((reaction, message) => {
+    setAvatarReaction: (reaction, message) => {
       dispatch({ 
         type: actionTypes.SET_AVATAR_REACTION, 
         payload: { reaction, message } 
       });
-    }, []),
+    },
 
-    clearAvatarReaction: useCallback(() => {
+    clearAvatarReaction: () => {
       dispatch({ type: actionTypes.CLEAR_AVATAR_REACTION });
-    }, []),
+    },
 
-    setCurrentScreen: useCallback((screen) => {
+    setCurrentScreen: (screen) => {
       dispatch({ 
         type: actionTypes.SET_CURRENT_SCREEN, 
         payload: screen 
       });
-    }, []),
+    },
 
-    resetState: useCallback(() => {
+    resetState: () => {
       dispatch({ type: actionTypes.RESET_STATE });
-    }, []),
+    },
   };
 
   const value = {

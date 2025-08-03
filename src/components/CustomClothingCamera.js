@@ -41,8 +41,8 @@ const CustomClothingCamera = ({
     
     if (cameraStatus !== 'granted' || mediaStatus !== 'granted') {
       Alert.alert(
-        'Behörigheter krävs',
-        'Vi behöver tillgång till kameran och fotobiblioteket för att du ska kunna ta bilder på dina kläder.',
+        t('permissionsRequired'),
+        t('permissionsMessage'),
         [{ text: 'OK' }]
       );
       return false;
@@ -85,9 +85,9 @@ const CustomClothingCamera = ({
   const showImageSourceOptions = () => {
     Alert.alert(
       t('selectImage'),
-      'Hur vill du lägga till en bild av ditt klädesplagg?',
+      t('howToAddImage'),
       [
-        { text: 'Ta foto', onPress: takePhoto },
+        { text: t('takePhoto'), onPress: takePhoto },
         { text: t('selectFromGallery'), onPress: pickFromGallery },
         { text: t('cancel'), style: 'cancel' },
       ]
@@ -96,12 +96,12 @@ const CustomClothingCamera = ({
 
   const saveCustomItem = async () => {
     if (!itemName.trim()) {
-      Alert.alert('Fel', 'Vänligen ange ett namn för klädesplagget.');
+      Alert.alert(t('errorTitle'), t('pleaseEnterName'));
       return;
     }
 
     if (!selectedImage) {
-      Alert.alert('Fel', 'Vänligen välj en bild för klädesplagget.');
+      Alert.alert(t('errorTitle'), t('pleaseSelectImage'));
       return;
     }
 
@@ -120,7 +120,7 @@ const CustomClothingCamera = ({
 
       Alert.alert(
         t('saved'),
-        `${itemName} har sparats i din ${bodyPartName.toLowerCase()}-samling.`,
+        t('itemSavedMessage', { itemName, bodyPartName: bodyPartName.toLowerCase() }),
         [
           {
             text: 'OK',
@@ -132,7 +132,7 @@ const CustomClothingCamera = ({
         ]
       );
     } catch (error) {
-      Alert.alert('Fel', error.message || 'Kunde inte spara klädesplagget.');
+      Alert.alert(t('errorTitle'), error.message || t('couldNotSaveItem'));
     } finally {
       setIsLoading(false);
     }
@@ -161,7 +161,7 @@ const CustomClothingCamera = ({
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={[styles.title, { fontSize: getResponsiveFontSize(5) }]}>
-            Lägg till {bodyPartName}
+            {t('addClothingItem', { bodyPartName })}
           </Text>
           <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>✕</Text>
@@ -171,19 +171,19 @@ const CustomClothingCamera = ({
         <View style={styles.content}>
           <Card style={styles.formCard}>
             <Text style={[styles.label, { fontSize: getResponsiveFontSize(3.5) }]}>
-              Namn på klädesplagget:
+              {t('clothingItemName')}
             </Text>
             <TextInput
               style={[styles.textInput, { fontSize: getResponsiveFontSize(3.5) }]}
               value={itemName}
               onChangeText={setItemName}
-              placeholder="t.ex. Min favorit t-shirt"
+              placeholder={t('clothingItemPlaceholder')}
               placeholderTextColor={Colors.text + '60'}
               maxLength={50}
             />
 
             <Text style={[styles.label, { fontSize: getResponsiveFontSize(3.5) }]}>
-              Bild:
+              {t('image')}
             </Text>
             
             {selectedImage ? (
@@ -193,7 +193,7 @@ const CustomClothingCamera = ({
                   style={styles.changeImageButton}
                   onPress={showImageSourceOptions}
                 >
-                  <Text style={styles.changeImageButtonText}>Ändra bild</Text>
+                  <Text style={styles.changeImageButtonText}>{t('changeImage')}</Text>
                 </TouchableOpacity>
               </View>
             ) : (
@@ -203,7 +203,7 @@ const CustomClothingCamera = ({
               >
                 <Text style={styles.addImageButtonText}>📷</Text>
                 <Text style={[styles.addImageText, { fontSize: getResponsiveFontSize(3) }]}>
-                  Lägg till bild
+                  {t('addImage')}
                 </Text>
               </TouchableOpacity>
             )}

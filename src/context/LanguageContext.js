@@ -48,13 +48,23 @@ export function LanguageProvider({ children }) {
     }
   };
 
-  // Get translation for a key
-  const t = (key) => {
+  // Get translation for a key with variable substitution
+  const t = (key, variables = {}) => {
+    let translation;
     if (!translations[language] || !translations[language][key]) {
       // Fallback to Swedish if translation is missing
-      return translations.sv[key] || key;
+      translation = translations.sv[key] || key;
+    } else {
+      translation = translations[language][key];
     }
-    return translations[language][key];
+    
+    // Replace variables in the format {variableName}
+    Object.keys(variables).forEach(varName => {
+      const regex = new RegExp(`{${varName}}`, 'g');
+      translation = translation.replace(regex, variables[varName]);
+    });
+    
+    return translation;
   };
 
   // Get random reaction message based on reaction type

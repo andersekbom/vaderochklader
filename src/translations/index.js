@@ -46,10 +46,6 @@ export const translations = {
     error: 'Fel',
     couldNotDelete: 'Kunde inte ta bort klädesplagget.',
     
-    // OutfitSelector
-    chooseOutfit: 'Välj din outfit',
-    suggestClothes: 'Föreslå kläder',
-    clearAll: 'Rensa allt',
     clear: 'Rensa',
     
     // CustomClothingCamera
@@ -57,6 +53,21 @@ export const translations = {
     selectFromGallery: 'Välj från galleri',
     saved: 'Sparad!',
     saving: 'Sparar...',
+    addClothingItem: 'Lägg till {bodyPartName}',
+    clothingItemName: 'Namn på klädesplagget:',
+    clothingItemPlaceholder: 't.ex. Min favorit t-shirt',
+    image: 'Bild:',
+    changeImage: 'Ändra bild',
+    addImage: 'Lägg till bild',
+    permissionsRequired: 'Behörigheter krävs',
+    permissionsMessage: 'Vi behöver tillgång till kameran och fotobiblioteket för att du ska kunna ta bilder på dina kläder.',
+    howToAddImage: 'Hur vill du lägga till en bild av ditt klädesplagg?',
+    takePhoto: 'Ta foto',
+    errorTitle: 'Fel',
+    pleaseEnterName: 'Vänligen ange ett namn för klädesplagget.',
+    pleaseSelectImage: 'Vänligen välj en bild för klädesplagget.',
+    itemSavedMessage: '{itemName} har sparats i din {bodyPartName}-samling.',
+    couldNotSaveItem: 'Kunde inte spara klädesplagget.',
     
     // Settings
     settings: 'Inställningar',
@@ -105,25 +116,25 @@ export const translations = {
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfekt val! Du kommer att vara bekväm utomhus!",
-    perfectReaction2: "Bra outfit för det här vädret!",
+    perfectReaction2: "Bra klädsel för det här vädret!",
     perfectReaction3: "Du är helt redo för dagens väder!",
     perfectReaction4: "Det är precis vad jag skulle välja!",
     
     // Outfit reactions - good
     goodReaction1: "Det är ett bra val!",
-    goodReaction2: "Bra outfitval!",
+    goodReaction2: "Bra klädval!",
     goodReaction3: "Du kommer att vara bekväm i det!",
     
     // Outfit reactions - warning
     warningReaction1: "Hmm, det kanske inte är det bästa valet...",
-    warningReaction2: "Är du säker på den här outfiten?",
+    warningReaction2: "Är du säker på den här klädseln?",
     warningReaction3: "Det kan bli lite obekvämt...",
     
     // Outfit reactions - poor
     poorReaction1: "Oops! Dina fötter kan bli blöta med de sandalerna i regnet!",
     poorReaction2: "Brrr! Du kan bli kall utan jacka!",
     poorReaction3: "Du kan bli för varm i den vinterjackan en solig dag!",
-    poorReaction4: "De shortsen kanske inte håller dig tillräckligt varm!",
+    poorReaction4: "De korta byxorna kanske inte håller dig tillräckligt varm!",
     
     // Specific feedback
     wetFeetFeedback: "Oj, det blir kanske blött om fötterna med de sandalerna i regnet!",
@@ -155,7 +166,7 @@ export const translations = {
     winterCoat: "Vinterjacka",
     
     // Clothing items - Legs
-    shorts: "Shorts",
+    shorts: "Korta byxor",
     pants: "Byxor",
     jeans: "Jeans",
     warmPants: "Varma byxor",
@@ -210,10 +221,6 @@ export const translations = {
     error: 'Error',
     couldNotDelete: 'Could not delete the clothing item.',
     
-    // OutfitSelector
-    chooseOutfit: 'Choose Your Outfit',
-    suggestClothes: 'Suggest Clothes',
-    clearAll: 'Clear All',
     clear: 'Clear',
     
     // CustomClothingCamera
@@ -221,6 +228,21 @@ export const translations = {
     selectFromGallery: 'Select from Gallery',
     saved: 'Saved!',
     saving: 'Saving...',
+    addClothingItem: 'Add {bodyPartName}',
+    clothingItemName: 'Clothing item name:',
+    clothingItemPlaceholder: 'e.g. My favorite t-shirt',
+    image: 'Image:',
+    changeImage: 'Change image',
+    addImage: 'Add image',
+    permissionsRequired: 'Permissions required',
+    permissionsMessage: 'We need access to camera and photo library so you can take pictures of your clothes.',
+    howToAddImage: 'How would you like to add an image of your clothing item?',
+    takePhoto: 'Take photo',
+    errorTitle: 'Error',
+    pleaseEnterName: 'Please enter a name for the clothing item.',
+    pleaseSelectImage: 'Please select an image for the clothing item.',
+    itemSavedMessage: '{itemName} has been saved to your {bodyPartName} collection.',
+    couldNotSaveItem: 'Could not save the clothing item.',
     
     // Settings
     settings: 'Settings',
@@ -374,10 +396,6 @@ export const translations = {
     error: 'Fehler',
     couldNotDelete: 'Kleidungsstück konnte nicht gelöscht werden.',
     
-    // OutfitSelector
-    chooseOutfit: 'Wählen Sie Ihr Outfit',
-    suggestClothes: 'Kleidung vorschlagen',
-    clearAll: 'Alles löschen',
     clear: 'Löschen',
     
     // CustomClothingCamera
@@ -385,6 +403,21 @@ export const translations = {
     selectFromGallery: 'Aus Galerie auswählen',
     saved: 'Gespeichert!',
     saving: 'Speichert...',
+    addClothingItem: '{bodyPartName} hinzufügen',
+    clothingItemName: 'Name des Kleidungsstücks:',
+    clothingItemPlaceholder: 'z.B. Mein Lieblings-T-Shirt',
+    image: 'Bild:',
+    changeImage: 'Bild ändern',
+    addImage: 'Bild hinzufügen',
+    permissionsRequired: 'Berechtigungen erforderlich',
+    permissionsMessage: 'Wir benötigen Zugriff auf Kamera und Fotobibliothek, damit Sie Bilder Ihrer Kleidung aufnehmen können.',
+    howToAddImage: 'Wie möchten Sie ein Bild Ihres Kleidungsstücks hinzufügen?',
+    takePhoto: 'Foto aufnehmen',
+    errorTitle: 'Fehler',
+    pleaseEnterName: 'Bitte geben Sie einen Namen für das Kleidungsstück ein.',
+    pleaseSelectImage: 'Bitte wählen Sie ein Bild für das Kleidungsstück.',
+    itemSavedMessage: '{itemName} wurde in Ihrer {bodyPartName}-Sammlung gespeichert.',
+    couldNotSaveItem: 'Das Kleidungsstück konnte nicht gespeichert werden.',
     
     // Settings
     settings: 'Einstellungen',
@@ -433,25 +466,25 @@ export const translations = {
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfekte Wahl! Du wirst draußen bequem sein!",
-    perfectReaction2: "Tolles Outfit für dieses Wetter!",
+    perfectReaction2: "Tolle Kleidung für dieses Wetter!",
     perfectReaction3: "Du bist bereit für das heutige Wetter!",
     perfectReaction4: "Das ist genau das, was ich wählen würde!",
     
     // Outfit reactions - good
     goodReaction1: "Das ist eine gute Wahl!",
-    goodReaction2: "Gute Outfit-Wahl!",
+    goodReaction2: "Gute Kleidungswahl!",
     goodReaction3: "Du wirst dich darin wohlfühlen!",
     
     // Outfit reactions - warning
     warningReaction1: "Hmm, das ist vielleicht nicht die beste Wahl...",
-    warningReaction2: "Bist du sicher bei diesem Outfit?",
+    warningReaction2: "Bist du sicher bei dieser Kleidung?",
     warningReaction3: "Es könnte etwas ungemütlich werden...",
     
     // Outfit reactions - poor
     poorReaction1: "Hoppla! Deine Füße könnten mit den Sandalen im Regen nass werden!",
     poorReaction2: "Brrr! Du könntest ohne Jacke frieren!",
     poorReaction3: "Du könntest in der Winterjacke an einem sonnigen Tag zu heiß werden!",
-    poorReaction4: "Die Shorts halten dich vielleicht nicht warm genug!",
+    poorReaction4: "Die kurze Hose hält dich vielleicht nicht warm genug!",
     
     // Specific feedback
     wetFeetFeedback: "Oh, deine Füße könnten mit den Sandalen im Regen nass werden!",
@@ -483,7 +516,7 @@ export const translations = {
     winterCoat: "Winterjacke",
     
     // Clothing items - Legs
-    shorts: "Shorts",
+    shorts: "Kurze Hose",
     pants: "Hose",
     jeans: "Jeans",
     warmPants: "Warme Hose",
@@ -538,10 +571,6 @@ export const translations = {
     error: 'Virhe',
     couldNotDelete: 'Vaatetta ei voitu poistaa.',
     
-    // OutfitSelector
-    chooseOutfit: 'Valitse asusi',
-    suggestClothes: 'Ehdota vaatteita',
-    clearAll: 'Tyhjennä kaikki',
     clear: 'Tyhjennä',
     
     // CustomClothingCamera
@@ -549,6 +578,21 @@ export const translations = {
     selectFromGallery: 'Valitse galleriasta',
     saved: 'Tallennettu!',
     saving: 'Tallennetaan...',
+    addClothingItem: 'Lisää {bodyPartName}',
+    clothingItemName: 'Vaatekappale nimi:',
+    clothingItemPlaceholder: 'esim. Lempi t-paitani',
+    image: 'Kuva:',
+    changeImage: 'Vaihda kuva',
+    addImage: 'Lisää kuva',
+    permissionsRequired: 'Käyttöoikeudet vaaditaan',
+    permissionsMessage: 'Tarvitsemme kameran ja kuvakirjaston käyttöoikeuden, jotta voit ottaa kuvia vaatteistasi.',
+    howToAddImage: 'Miten haluat lisätä kuvan vaatekappaleestasi?',
+    takePhoto: 'Ota kuva',
+    errorTitle: 'Virhe',
+    pleaseEnterName: 'Anna vaatekappaleelle nimi.',
+    pleaseSelectImage: 'Valitse vaatekappaleelle kuva.',
+    itemSavedMessage: '{itemName} on tallennettu {bodyPartName}-kokoelmaasi.',
+    couldNotSaveItem: 'Vaatekappaletta ei voitu tallentaa.',
     
     // Settings
     settings: 'Asetukset',
@@ -614,7 +658,7 @@ export const translations = {
     poorReaction1: "Hups! Jalkasi saattavat kastua sandaaleissa sateessa!",
     poorReaction2: "Brrr! Saatat paleltua ilman takkia!",
     poorReaction3: "Saatat käydä liian kuumaksi talvitakissa aurinkoisena päivänä!",
-    poorReaction4: "Nuo shortsit eivät ehkä pidä sinua tarpeeksi lämpimänä!",
+    poorReaction4: "Nuo lyhyet housut eivät ehkä pidä sinua tarpeeksi lämpimänä!",
     
     // Specific feedback
     wetFeetFeedback: "Voi, jalkasi saattavat kastua sandaaleissa sateessa!",
@@ -646,7 +690,7 @@ export const translations = {
     winterCoat: "Talvitakki",
     
     // Clothing items - Legs
-    shorts: "Shortsit",
+    shorts: "Lyhyet housut",
     pants: "Housut",
     jeans: "Farkut",
     warmPants: "Lämpimät housut",
@@ -701,10 +745,6 @@ export const translations = {
     error: 'Meattáhus',
     couldNotDelete: 'Ii nagdan dustet gákti.',
     
-    // OutfitSelector
-    chooseOutfit: 'Vállje du gákti',
-    suggestClothes: 'Árvalus gáktit',
-    clearAll: 'Suhte buot',
     clear: 'Suhte',
     
     // CustomClothingCamera
@@ -712,6 +752,21 @@ export const translations = {
     selectFromGallery: 'Vállje govvatšollás',
     saved: 'Vurken!',
     saving: 'Vurkejuvo...',
+    addClothingItem: 'Lasit {bodyPartName}',
+    clothingItemName: 'Gákti namma:',
+    clothingItemPlaceholder: 'ovdamearka. Mu ráhkisoabbi páisa',
+    image: 'Govva:',
+    changeImage: 'Rievdat govva',
+    addImage: 'Lasit govva',
+    permissionsRequired: 'Vuoigatvuođat dárbbašuvvojit',
+    permissionsMessage: 'Mii dárbbašit govvakamára ja govvabiblioteahka beassanvuoigatvuođa jus háliidat váldit govaid iežat gáktis.',
+    howToAddImage: 'Mo háliidat lasihit govva iežat gáktis?',
+    takePhoto: 'Váldit govva',
+    errorTitle: 'Meattáhus',
+    pleaseEnterName: 'Buvtta buvttad gáktái nama.',
+    pleaseSelectImage: 'Buvtta válljet gáktái govva.',
+    itemSavedMessage: '{itemName} lea vurken du {bodyPartName}-čoakkádussii.',
+    couldNotSaveItem: 'Gákti ii sáhttán vurkejuvvot.',
     
     // Settings
     settings: 'Heivehus',

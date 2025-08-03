@@ -36,7 +36,7 @@ export function useOutfitLogic() {
       const items = await getCustomClothingItems();
       setCustomItems(items);
     } catch (error) {
-      console.error('Fel vid laddning av anpassade klädesplagg:', error);
+      console.error('Error loading custom clothing items:', error);
     }
   };
 

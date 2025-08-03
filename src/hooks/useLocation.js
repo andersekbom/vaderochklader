@@ -10,7 +10,7 @@ export function useLocation() {
       const { status } = await Location.requestForegroundPermissionsAsync();
       return status === 'granted';
     } catch (error) {
-      console.error('Fel vid begäran av platsåtkomst:', error);
+      console.error('Error requesting location permission:', error);
       return false;
     }
   }, []);
@@ -38,7 +38,7 @@ export function useLocation() {
       actions.setLocationSuccess(locationData);
       return locationData;
     } catch (error) {
-      console.error('Fel vid hämtning av aktuell plats:', error);
+      console.error('Error getting current location:', error);
       actions.setLocationError(error.message);
       return null;
     }

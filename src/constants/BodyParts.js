@@ -48,13 +48,3 @@ export const BODY_PARTS = {
   },
 };
 
-/**
- * Array of body parts for iteration in components
- * Useful for rendering lists of body parts
- */
-export const BODY_PARTS_ARRAY = [
-  { key: 'head', ...BODY_PARTS.head },
-  { key: 'torso', ...BODY_PARTS.torso },
-  { key: 'legs', ...BODY_PARTS.legs },
-  { key: 'feet', ...BODY_PARTS.feet },
-];

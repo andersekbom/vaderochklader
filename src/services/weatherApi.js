@@ -111,7 +111,7 @@ export async function fetchWeatherData(latitude, longitude) {
     const response = await fetch(weatherUrl);
     
     if (!response.ok) {
-      throw new Error(`SMHI API-fel: ${response.status} ${response.statusText}`);
+      throw new Error(`SMHI API error: ${response.status} ${response.statusText}`);
     }
     
     const data = await response.json();
@@ -170,7 +170,7 @@ export async function fetchWeatherData(latitude, longitude) {
     return weatherData;
     
   } catch (error) {
-    console.error('SMHI Väder API-fel:', error);
+    console.error('SMHI Weather API error:', error);
     
     // Fallback to basic weather if SMHI fails
     throw new Error(`Vädertjänstfel: ${error.message}`);
@@ -187,7 +187,7 @@ export async function fetchForecastData(latitude, longitude) {
     const response = await fetch(weatherUrl);
     
     if (!response.ok) {
-      throw new Error(`SMHI API-fel: ${response.status}`);
+      throw new Error(`SMHI API error: ${response.status}`);
     }
     
     const data = await response.json();
@@ -224,7 +224,7 @@ export async function fetchForecastData(latitude, longitude) {
     return forecast;
     
   } catch (error) {
-    console.error('SMHI Prognos API-fel:', error);
+    console.error('SMHI Forecast API error:', error);
     throw error;
   }
 }

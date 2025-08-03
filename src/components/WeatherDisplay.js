@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-nati
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import Sizes from '../constants/Sizes';
-import { WeatherEmojis, WeatherConditionsSwedish } from '../constants/WeatherConditions';
+import { WeatherEmojis } from '../constants/WeatherConditions';
 import Card from './ui/Card';
 import Button from './ui/Button';
 import MapModal from './MapModal';
@@ -58,22 +58,6 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
     return t('veryHot');
   };
 
-  const getForecastText = () => {
-    if (!weather.forecast4h) return null;
-    
-    const conditionMap = {
-      sunny: 'sunnySyno',
-      cloudy: 'cloudySyno', 
-      rainy: 'rainySyno',
-      snowy: 'snowySyno',
-      stormy: 'stormySyno'
-    };
-    
-    const forecastConditionText = t(conditionMap[weather.forecast4h.condition] || 'niceWeather');
-    const forecastTempDescription = getTemperatureDescription(weather.forecast4h.temperature);
-    
-    return `${t('later')}: ${forecastConditionText} ${t('and')} ${forecastTempDescription}`;
-  };
 
   return (
     <Card style={[styles.container, style]} padding="sm">
@@ -192,18 +176,6 @@ const styles = StyleSheet.create({
     color: Colors.primary,
   },
   
-  weatherTextInfo: {
-    alignItems: 'center',
-    marginBottom: Sizes.margin.xs,
-  },
-  
-  locationRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  
   weatherEmoji: {
     fontSize: Fonts.size.large,
     marginRight: Sizes.margin.xs,
@@ -220,11 +192,6 @@ const styles = StyleSheet.create({
     color: Colors.text,
   },
   
-  locationText: {
-    fontSize: Fonts.size.medium,
-    color: Colors.text,
-    fontWeight: Fonts.weight.medium,
-  },
   
   locationButton: {
     paddingHorizontal: Sizes.padding.xs,
@@ -250,23 +217,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   
-  forecastText: {
-    alignItems: 'center',
-    marginBottom: Sizes.margin.md,
-    paddingHorizontal: Sizes.padding.md,
-  },
-  
-  forecastDescription: {
-    fontSize: Fonts.size.medium,
-    color: Colors.text,
-    textAlign: 'center',
-    fontWeight: Fonts.weight.medium,
-    lineHeight: Fonts.lineHeight.medium,
-  },
-  
-  inlineLocationButton: {
-    paddingHorizontal: 2,
-  },
   
   locationButtonText: {
     fontSize: Fonts.size.large,
@@ -275,13 +225,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   
-  message: {
-    fontSize: Fonts.size.medium,
-    color: Colors.text,
-    textAlign: 'center',
-    marginBottom: Sizes.margin.sm,
-    lineHeight: Fonts.lineHeight.medium,
-  },
   
   
   
@@ -359,38 +302,3 @@ const styles = StyleSheet.create({
 
 export default WeatherDisplay;
 
-/*
-Weather Timeline code - Hidden for now, may re-add later:
-
-{weather.forecast4h && (
-  <View style={styles.weatherTimeline}>
-    <View style={styles.timelineContainer}>
-      <View style={styles.timelineItem}>
-        <Text style={styles.timelineLabel}>Nu</Text>
-        <Text style={[styles.weatherEmoji, { 
-          color: getWeatherColor(),
-          fontSize: isSmallScreen ? screenWidth * 0.06 : isMediumScreen ? screenWidth * 0.07 : screenWidth * 0.08,
-        }]}>
-          {weatherEmoji}
-        </Text>
-        <Text style={styles.timelineTemp}>{weather.temperature}°</Text>
-      </View>
-      
-      <View style={styles.timelineArrow}>
-        <Text style={styles.arrowText}>→</Text>
-      </View>
-      
-      <View style={styles.timelineItem}>
-        <Text style={styles.timelineLabel}>+4h</Text>
-        <Text style={[styles.weatherEmoji, { 
-          color: getWeatherColor(),
-          fontSize: isSmallScreen ? screenWidth * 0.06 : isMediumScreen ? screenWidth * 0.07 : screenWidth * 0.08,
-        }]}>
-          {WeatherEmojis[weather.forecast4h.condition] || '🌤️'}
-        </Text>
-        <Text style={styles.timelineTemp}>{weather.forecast4h.temperature}°</Text>
-      </View>
-    </View>
-  </View>
-)}
-*/

@@ -52,6 +52,8 @@ export const translations = {
     swedish: 'Svenska',
     english: 'Engelska',
     german: 'Tyska',
+    finnish: 'Finska',
+    sami: 'Samiska',
     
     // Weather forecast
     nowIn: 'Nu i',
@@ -202,6 +204,8 @@ export const translations = {
     swedish: 'Swedish',
     english: 'English',
     german: 'German',
+    finnish: 'Finnish',
+    sami: 'Sami',
     
     // Weather forecast
     nowIn: 'Now in',
@@ -352,6 +356,8 @@ export const translations = {
     swedish: 'Schwedisch',
     english: 'Englisch',
     german: 'Deutsch',
+    finnish: 'Finnisch',
+    sami: 'Samisch',
     
     // Weather forecast
     nowIn: 'Jetzt in',
@@ -452,6 +458,309 @@ export const translations = {
     shoes: "Schuhe",
     rainBoots: "Gummistiefel",
     winterBoots: "Winterstiefel",
+  },
+  
+  // Finnish translations
+  fi: {
+    // App title and general UI
+    appTitle: 'Sää & Vaatteet',
+    appSubtitle: 'Löydä oikeat vaatteet säähän!',
+    loading: 'Ladataan...',
+    retry: 'Yritä uudelleen',
+    save: 'Tallenna',
+    cancel: 'Peruuta',
+    close: 'Sulje',
+    
+    // Weather-related
+    fetchingLocation: 'Haetaan sijaintiasi...',
+    fetchingWeather: 'Ladataan säätietoja...',
+    weatherError: 'Säätietoja ei voitu hakea',
+    locationError: 'Sijaintia ei voitu määrittää',
+    
+    // Clothing question
+    clothingQuestion: 'Mitä vaatteita luulet olevan hyviä tähän säähän?',
+    
+    // Body parts
+    head: 'Pää',
+    torso: 'Yläkroppa',
+    legs: 'Jalat',
+    feet: 'Jalkaterät',
+    
+    // Outfit selection
+    selectOutfit: 'Valitse vaatteet',
+    noItemsAvailable: 'Ei vaatteita saatavilla',
+    noClothing: '🚫 Ei vaatteita',
+    none: 'Ei mitään',
+    myCustomClothes: '✨ Omat vaatteeni',
+    addCustomClothes: '📷 Lisää omia vaatteita',
+    addCustom: 'Lisää oma',
+    chooseForMe: 'Valitse puolestani',
+    holdToDelete: 'Pidä pohjassa poistaaksesi',
+    deleteClothingItem: 'Poista vaate',
+    deleteConfirm: 'Oletko varma että haluat poistaa',
+    delete: 'Poista',
+    error: 'Virhe',
+    couldNotDelete: 'Vaatetta ei voitu poistaa.',
+    
+    // Settings
+    settings: 'Asetukset',
+    language: 'Kieli',
+    swedish: 'Ruotsi',
+    english: 'Englanti',
+    german: 'Saksa',
+    finnish: 'Suomi',
+    
+    // Weather forecast
+    nowIn: 'Nyt paikassa',
+    later: 'Myöhemmin',
+    and: 'ja',
+    
+    // Temperature descriptions
+    veryCold: 'hyvin kylmä',
+    cold: 'kylmä',
+    bitCold: 'hieman kylmä',
+    mild: 'leuho',
+    warm: 'lämmin',
+    quiteWarm: 'melko lämmin',
+    veryHot: 'hyvin kuuma',
+    
+    // Seasonal clothing categories
+    summerClothes: '☀️ Kesävaatteet',
+    springClothes: '🌸 Kevätvaatteet',
+    autumnClothes: '🍂 Syysvaatteet',
+    winterClothes: '❄️ Talvivaatteet',
+    rainClothes: '🌧️ Sadevaatteet',
+    
+    // Weather forecast conditions
+    sunnySyno: 'aurinkoinen',
+    cloudySyno: 'pilvinen',
+    rainySyno: 'sateinen',
+    snowySyno: 'lumisade',
+    stormySyno: 'myrskyinen',
+    niceWeather: 'mukava sää',
+    
+    // Map interface
+    whereInSweden: 'Missä olet Ruotsissa? 🇸🇪',
+    youAreNear: '📍 Olet lähellä',
+    findStockholm: 'Suurilla kaupungeilla on hauskoja kuvakkeita! Löydätkö Tukholman? 🏦',
+    swedenMap: 'Ruotsin kartta 🇸🇪',
+    tapCityIcons: 'Napauta kaupunkien kuvakkeita saadaksesi lisätietoja! 🏦🚢🌉',
+    
+    // Outfit reactions - perfect
+    perfectReaction1: "Täydellinen valinta! Olet mukava ulkona!",
+    perfectReaction2: "Loistava asu tälle säällä!",
+    perfectReaction3: "Olet valmis tämän päivän säähän!",
+    perfectReaction4: "Se on juuri sitä mitä valitsisin!",
+    
+    // Outfit reactions - good
+    goodReaction1: "Se on hyvä valinta!",
+    goodReaction2: "Hyvä asuvalinta!",
+    goodReaction3: "Olet mukava siinä!",
+    
+    // Outfit reactions - warning
+    warningReaction1: "Hmm, se ei ehkä ole paras valinta...",
+    warningReaction2: "Oletko varma tästä asusta?",
+    warningReaction3: "Se saattaa olla hieman epämukava...",
+    
+    // Outfit reactions - poor
+    poorReaction1: "Hups! Jalkasi saattavat kastua sandaaleissa sateessa!",
+    poorReaction2: "Brrr! Saatat paleltua ilman takkia!",
+    poorReaction3: "Saatat käydä liian kuumaksi talvitakissa aurinkoisena päivänä!",
+    poorReaction4: "Nuo shortsit eivät ehkä pidä sinua tarpeeksi lämpimänä!",
+    
+    // Specific feedback
+    wetFeetFeedback: "Voi, jalkasi saattavat kastua sandaaleissa sateessa!",
+    coldSnowFeedback: "Brrr! Saatat paleltua tuolla valinnalla lumessa!",
+    hotCoatFeedback: "Saatat käydä liian kuumaksi talvitakissa noin lämpimänä päivänä!",
+    
+    // Weather conditions
+    sunny: "Aurinkoinen",
+    cloudy: "Pilvinen",
+    rainy: "Sateinen",
+    snowy: "Lumisade",
+    stormy: "Myrskyinen",
+    
+    // Temperature
+    temperature: "Lämpötila",
+    feelsLike: "Tuntuu kuin",
+    
+    // Clothing items - Head
+    cap: "Lippis",
+    beanie: "Pipo",
+    hood: "Huppu",
+    
+    // Clothing items - Torso
+    tShirt: "T-paita",
+    longSleeve: "Pitkähihainen",
+    sweater: "Pusero",
+    jacket: "Takki",
+    rainCoat: "Sadetakki",
+    winterCoat: "Talvitakki",
+    
+    // Clothing items - Legs
+    shorts: "Shortsit",
+    pants: "Housut",
+    jeans: "Farkut",
+    warmPants: "Lämpimät housut",
+    
+    // Clothing items - Feet
+    sandals: "Sandaalit",
+    sneakers: "Lenkkarit",
+    shoes: "Kengät",
+    rainBoots: "Kumisaappaat",
+    winterBoots: "Talvisaappaat",
+  },
+  
+  // Northern Sami (Davvisámegiella) translations
+  se: {
+    // App title and general UI
+    appTitle: 'Dálki & Gákti',
+    appSubtitle: 'Gávdno rivttes gáktit dálkái!',
+    loading: 'Viežžá...',
+    retry: 'Geahčal ođđasit',
+    save: 'Vurke',
+    cancel: 'Gaskkaldahte',
+    close: 'Gidde',
+    
+    // Weather-related
+    fetchingLocation: 'Ohcá du báikki...',
+    fetchingWeather: 'Viežžá dálkki...',
+    weatherError: 'Ii nagdan oažžut dálkkidieđuid',
+    locationError: 'Ii nagdan gávdnat du báikki',
+    
+    // Clothing question
+    clothingQuestion: 'Makkár gáktit don oaivvildat leat buorit dán dálkái?',
+    
+    // Body parts
+    head: 'Oaivi',
+    torso: 'Duššá',
+    legs: 'Juolggit',
+    feet: 'Juolggit',
+    
+    // Outfit selection
+    selectOutfit: 'Vállje gáktit',
+    noItemsAvailable: 'Eai gáktit gávdno',
+    noClothing: '🚫 Eai gáktit',
+    none: 'Makkár',
+    myCustomClothes: '✨ Mu gáktit',
+    addCustomClothes: '📷 Lasit iežas gáktit',
+    addCustom: 'Lasit iežas',
+    chooseForMe: 'Vállje mu ovddas',
+    holdToDelete: 'Čuožžu dustet',
+    deleteClothingItem: 'Dustet gákti',
+    deleteConfirm: 'Leatgo vissis ahte háliidat dustet',
+    delete: 'Dustet',
+    error: 'Meattáhus',
+    couldNotDelete: 'Ii nagdan dustet gákti.',
+    
+    // Settings
+    settings: 'Heivehus',
+    language: 'Giella',
+    swedish: 'Ruoŧagiella',
+    english: 'Eŋgelasgiella',
+    german: 'Duiskkagiella',
+    finnish: 'Suomagiella',
+    sami: 'Sámegiella',
+    
+    // Weather forecast
+    nowIn: 'Dál báikkis',
+    later: 'Maŋŋel',
+    and: 'ja',
+    
+    // Temperature descriptions
+    veryCold: 'hui jápmis',
+    cold: 'jápmis',
+    bitCold: 'veahá jápmis',
+    mild: 'lieggis',
+    warm: 'liekkas',
+    quiteWarm: 'ollu liekkas',
+    veryHot: 'hui beaggis',
+    
+    // Seasonal clothing categories
+    summerClothes: '☀️ Geasegáktit',
+    springClothes: '🌸 Giđđagáktit',
+    autumnClothes: '🍂 Čakčagáktit',
+    winterClothes: '❄️ Dálvegáktit',
+    rainClothes: '🌧️ Arvedgáktit',
+    
+    // Weather forecast conditions
+    sunnySyno: 'beaivválaš',
+    cloudySyno: 'balvasat',
+    rainySyno: 'arvedmeattáhat',
+    snowySyno: 'muohttameattáhat',
+    stormySyno: 'unna',
+    niceWeather: 'liekkas dálki',
+    
+    // Map interface
+    whereInSweden: 'Gos leat Ruoŧas? 🇸🇪',
+    youAreNear: '📍 Leat lahka',
+    findStockholm: 'Stuora gávpogiin leat miellagis skovvi! Gávnnatgo Stockholmma? 🏦',
+    swedenMap: 'Ruoŧa kárta 🇸🇪',
+    tapCityIcons: 'Coahkkal gávpotmearkki oažžut eanet dieđuid! 🏦🚢🌉',
+    
+    // Outfit reactions - perfect
+    perfectReaction1: "Perfekta válljen! Leat mukta olggos!",
+    perfectReaction2: "Buorre gákti dán dálkái!",
+    perfectReaction3: "Leat gerges odne dálkái!",
+    perfectReaction4: "Dat lea juste dat maid válljenin!",
+    
+    // Outfit reactions - good
+    goodReaction1: "Dat lea buorre válljen!",
+    goodReaction2: "Buorre gáktiválljen!",
+    goodReaction3: "Leat mukta das!",
+    
+    // Outfit reactions - warning
+    warningReaction1: "Hmm, dat ii veaigge leat buoremus válljen...",
+    warningReaction2: "Leatgo vissis dán gákti birra?",
+    warningReaction3: "Dat sáhttá leat veahá váttis...",
+    
+    // Outfit reactions - poor
+    poorReaction1: "Ai! Du juolggit sáhttet costot sandálain arvvas!",
+    poorReaction2: "Brrr! Sáhtat jápmit almmá duollji!",
+    poorReaction3: "Sáhtat šaddat liiga liekkasin dálveduolljis beaivválaš beaivvis!",
+    poorReaction4: "Dát šortat eai veaigge doalvo du doarvái liekkasin!",
+    
+    // Specific feedback
+    wetFeetFeedback: "Voi, du juolggit sáhttet costot sandálain arvvas!",
+    coldSnowFeedback: "Brrr! Sáhtat jápmit dáinna válljeniin muohtas!",
+    hotCoatFeedback: "Sáhtat šaddat liiga liekkasin dálveduolljis nu liekkas beaivvis!",
+    
+    // Weather conditions
+    sunny: "Beaivválaš",
+    cloudy: "Balvasat",
+    rainy: "Arvedmeattáhat",
+    snowy: "Muohttameattáhat",
+    stormy: "Unna",
+    
+    // Temperature
+    temperature: "Dálki",
+    feelsLike: "Dovddo nugo",
+    
+    // Clothing items - Head
+    cap: "Luhkka",
+    beanie: "Čalmmehahtti",
+    hood: "Háktu",
+    
+    // Clothing items - Torso
+    tShirt: "T-báidi",
+    longSleeve: "Guhkesáibá",
+    sweater: "Villapaita",
+    jacket: "Duolji",
+    rainCoat: "Arvedduolji",
+    winterCoat: "Dálveduolji",
+    
+    // Clothing items - Legs
+    shorts: "Oanehisgávnnahat",
+    pants: "Gávnnahat",
+    jeans: "Farkkut",
+    warmPants: "Liekkas gávnnahat",
+    
+    // Clothing items - Feet
+    sandals: "Sandálat",
+    sneakers: "Juoksucipo",
+    shoes: "Skuovvat",
+    rainBoots: "Arvedskuovvat",
+    winterBoots: "Dálveskuovvat",
   }
 };
 

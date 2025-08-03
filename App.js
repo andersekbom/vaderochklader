@@ -1,12 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { WeatherOutfitProvider } from './src/context/WeatherOutfitContext';
-import HomeScreen from './src/screens/HomeScreen';
+import { LanguageProvider } from './src/context/LanguageContext';
+import MainNavigator from './src/navigation/MainNavigator';
 
 export default function App() {
   return (
-    <WeatherOutfitProvider>
-      <HomeScreen />
-      <StatusBar style="auto" />
-    </WeatherOutfitProvider>
+    <LanguageProvider>
+      <WeatherOutfitProvider>
+        <MainNavigator />
+        <StatusBar style="auto" />
+      </WeatherOutfitProvider>
+    </LanguageProvider>
   );
 }

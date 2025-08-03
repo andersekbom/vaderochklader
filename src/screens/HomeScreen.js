@@ -6,7 +6,8 @@
  */
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, Dimensions, Animated } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Dimensions, Animated, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import Sizes from '../constants/Sizes';
@@ -15,18 +16,20 @@ import { useWeatherOutfit } from '../context/WeatherOutfitContext';
 import { useLocation } from '../hooks/useLocation';
 import { useWeather } from '../hooks/useWeather';
 import { useOutfitLogic } from '../hooks/useOutfitLogic';
+import { useLanguage } from '../context/LanguageContext';
 import Button from '../components/ui/Button';
 import WeatherDisplay from '../components/WeatherDisplay';
 import OutfitSelectionModal from '../components/OutfitSelectionModal';
 import MessageBubble from '../components/MessageBubble';
 import OutfitIcon from '../components/OutfitIcon';
 
-const HomeScreen = () => {
+const HomeScreen = ({ onSettingsPress }) => {
   // Context and hooks
   const { state } = useWeatherOutfit();
   const { isLoading: locationLoading, error: locationError } = useLocation();
   const { weather, isLoading: weatherLoading, error: weatherError, refetchWeather } = useWeather();
   const { avatarReaction } = useOutfitLogic();
+  const { t } = useLanguage();
   
   // Local state
   const [showOutfitModal, setShowOutfitModal] = useState(false);
@@ -62,12 +65,26 @@ const HomeScreen = () => {
       paddingBottom: isSmallScreen ? screenHeight * 0.008 : isMediumScreen ? screenHeight * 0.01 : screenHeight * 0.015,
     },
     
+    headerContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'relative',
+      width: '100%',
+      marginBottom: isSmallScreen ? screenHeight * 0.002 : isMediumScreen ? screenHeight * 0.003 : screenHeight * 0.005,
+      marginTop: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.015 : screenHeight * 0.01,
+    },
+    
+    settingsButton: {
+      position: 'absolute',
+      right: 0,
+      padding: Sizes.padding.xs,
+    },
+    
     title: {
       fontSize: isSmallScreen ? screenWidth * 0.042 : isMediumScreen ? screenWidth * 0.048 : screenWidth * 0.055,
       fontWeight: Fonts.weight.bold,
       color: Colors.text,
-      marginBottom: isSmallScreen ? screenHeight * 0.002 : isMediumScreen ? screenHeight * 0.003 : screenHeight * 0.005,
-      marginTop: isSmallScreen ? screenHeight * 0.005 : isMediumScreen ? screenHeight * 0.015 : screenHeight * 0.01,
       textAlign: 'center',
     },
     
@@ -208,7 +225,7 @@ const HomeScreen = () => {
     });
 
     const weatherEmojis = locationLoading ? ['📍', '🗺️'] : ['☀️', '☁️', '🌧️'];
-    const message = locationLoading ? 'Hämtar din plats...' : 'Laddar väder...';
+    const message = locationLoading ? t('fetchingLocation') : t('fetchingWeather');
 
     return (
       <View style={styles.loadingContainer}>
@@ -250,10 +267,10 @@ const HomeScreen = () => {
   const renderErrorState = () => (
     <View style={styles.errorContainer}>
       <Text style={styles.errorText}>
-        {locationError || weatherError}
+        {locationError ? t('locationError') : t('weatherError')}
       </Text>
       <Button 
-        title="Försök igen" 
+        title={t('retry')}
         onPress={refetchWeather}
         size="small"
         style={styles.retryButton}
@@ -266,7 +283,7 @@ const HomeScreen = () => {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.centerContent}>
-          <Text style={styles.title}>Väder & Kläder</Text>
+          <Text style={styles.title}>{t('appTitle')}</Text>
           {renderLoadingState()}
         </View>
       </SafeAreaView>
@@ -277,7 +294,7 @@ const HomeScreen = () => {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.centerContent}>
-          <Text style={styles.title}>Väder & Kläder</Text>
+          <Text style={styles.title}>{t('appTitle')}</Text>
           {renderErrorState()}
         </View>
       </SafeAreaView>
@@ -291,8 +308,16 @@ const HomeScreen = () => {
         contentContainerStyle={responsiveStyles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={responsiveStyles.title}>Väder & Kläder</Text>
-        <Text style={responsiveStyles.subtitle}>Hitta kläder för rätt väder!</Text>
+        <View style={responsiveStyles.headerContainer}>
+          <Text style={responsiveStyles.title}>{t('appTitle')}</Text>
+          <TouchableOpacity 
+            style={responsiveStyles.settingsButton}
+            onPress={onSettingsPress}
+          >
+            <MaterialIcons name="settings" size={24} color={Colors.primary} />
+          </TouchableOpacity>
+        </View>
+        <Text style={responsiveStyles.subtitle}>{t('appSubtitle')}</Text>
 
         {weather.condition && (
           <WeatherDisplay 
@@ -304,7 +329,7 @@ const HomeScreen = () => {
 
         <View style={responsiveStyles.clothingQuestionSection}>
           <Text style={responsiveStyles.clothingQuestion}>
-            Vilka kläder tror du är bra för det här vädret?
+            {t('clothingQuestion')}
           </Text>
         </View>
 
@@ -337,7 +362,7 @@ const HomeScreen = () => {
           visible={showOutfitModal}
           onClose={() => setShowOutfitModal(false)}
           bodyPart={selectedBodyPart}
-          bodyPartName={selectedBodyPart ? BODY_PARTS[selectedBodyPart].name : ''}
+          bodyPartName={selectedBodyPart ? t(selectedBodyPart) : ''}
           bodyPartIcon={selectedBodyPart ? BODY_PARTS[selectedBodyPart].icon : null}
         />
       </ScrollView>

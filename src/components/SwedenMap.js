@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Svg, { Path, Circle, Text as SvgText } from 'react-native-svg';
 import Colors from '../constants/Colors';
+import { useLanguage } from '../context/LanguageContext';
 
 const { width } = Dimensions.get('window');
 
 const SwedenMap = ({ userLocation, style }) => {
+  const { t } = useLanguage();
   const [selectedCity, setSelectedCity] = useState(null);
 
   // Simple Sweden outline path (simplified)
@@ -36,7 +38,7 @@ const SwedenMap = ({ userLocation, style }) => {
 
   return (
     <View style={[styles.container, style]}>
-      <Text style={styles.title}>Sweden Map 🇸🇪</Text>
+      <Text style={styles.title}>{t('swedenMap')}</Text>
       
       <Svg width="100%" height="400" viewBox="0 0 280 400">
         {/* Sweden outline */}

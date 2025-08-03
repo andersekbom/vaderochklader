@@ -4,8 +4,10 @@ import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 import Sizes from '../constants/Sizes';
 import SwedenMap from './SwedenMap';
+import { useLanguage } from '../context/LanguageContext';
 
 const MapModal = ({ visible, onClose, userLocation, locationName }) => {
+  const { t } = useLanguage();
   return (
     <Modal
       animationType="slide"
@@ -15,7 +17,7 @@ const MapModal = ({ visible, onClose, userLocation, locationName }) => {
     >
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Where are you in Sweden? 🇸🇪</Text>
+          <Text style={styles.title}>{t('whereInSweden')}</Text>
           <TouchableOpacity
             style={styles.closeButton}
             onPress={onClose}
@@ -34,14 +36,14 @@ const MapModal = ({ visible, onClose, userLocation, locationName }) => {
         {locationName && (
           <View style={styles.locationInfo}>
             <Text style={styles.locationText}>
-              📍 You are near {locationName}
+              {t('youAreNear')} {locationName}
             </Text>
           </View>
         )}
         
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            The big cities have fun icons! Can you find Stockholm? 🏛️
+            {t('findStockholm')}
           </Text>
         </View>
       </SafeAreaView>

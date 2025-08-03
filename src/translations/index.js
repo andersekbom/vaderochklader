@@ -82,6 +82,12 @@ export const translations = {
     stormySyno: 'storma',
     niceWeather: 'fint väder',
     
+    // Map interface
+    whereInSweden: 'Var är du i Sverige? 🇸🇪',
+    youAreNear: '📍 Du är nära',
+    findStockholm: 'De stora städerna har roliga ikoner! Kan du hitta Stockholm? 🏦',
+    swedenMap: 'Sverige Karta 🇸🇪',
+    
     // Outfit reactions - perfect
     perfectReaction1: "Perfekt val! Du kommer att vara bekväm utomhus!",
     perfectReaction2: "Bra outfit för det här vädret!",
@@ -225,6 +231,12 @@ export const translations = {
     stormySyno: 'stormy',
     niceWeather: 'nice weather',
     
+    // Map interface
+    whereInSweden: 'Where are you in Sweden? 🇸🇪',
+    youAreNear: '📍 You are near',
+    findStockholm: 'The big cities have fun icons! Can you find Stockholm? 🏦',
+    swedenMap: 'Sweden Map 🇸🇪',
+    
     // Outfit reactions - perfect
     perfectReaction1: "Perfect choice! You'll be comfortable outside!",
     perfectReaction2: "Great outfit for this weather!",
@@ -367,6 +379,12 @@ export const translations = {
     snowySyno: 'Schneefall',
     stormySyno: 'stürmisch',
     niceWeather: 'schönes Wetter',
+    
+    // Map interface
+    whereInSweden: 'Wo sind Sie in Schweden? 🇸🇪',
+    youAreNear: '📍 Sie sind in der Nähe von',
+    findStockholm: 'Die großen Städte haben lustige Symbole! Können Sie Stockholm finden? 🏦',
+    swedenMap: 'Schweden Karte 🇸🇪',
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfekte Wahl! Du wirst draußen bequem sein!",

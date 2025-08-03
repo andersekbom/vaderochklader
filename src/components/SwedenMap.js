@@ -120,7 +120,7 @@ const SwedenMap = ({ userLocation, style }) => {
       )}
       
       <Text style={styles.instructions}>
-        Tap the city icons to learn more! 🏛️🚢🌉
+        {t('tapCityIcons')}
       </Text>
     </View>
   );

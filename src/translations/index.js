@@ -87,6 +87,7 @@ export const translations = {
     youAreNear: '📍 Du är nära',
     findStockholm: 'De stora städerna har roliga ikoner! Kan du hitta Stockholm? 🏦',
     swedenMap: 'Sverige Karta 🇸🇪',
+    tapCityIcons: 'Tryck på stadikonerna för att lära dig mer! 🏦😢🌉',
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfekt val! Du kommer att vara bekväm utomhus!",
@@ -236,6 +237,7 @@ export const translations = {
     youAreNear: '📍 You are near',
     findStockholm: 'The big cities have fun icons! Can you find Stockholm? 🏦',
     swedenMap: 'Sweden Map 🇸🇪',
+    tapCityIcons: 'Tap the city icons to learn more! 🏦😢🌉',
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfect choice! You'll be comfortable outside!",
@@ -385,6 +387,7 @@ export const translations = {
     youAreNear: '📍 Sie sind in der Nähe von',
     findStockholm: 'Die großen Städte haben lustige Symbole! Können Sie Stockholm finden? 🏦',
     swedenMap: 'Schweden Karte 🇸🇪',
+    tapCityIcons: 'Tippen Sie auf die Stadticons, um mehr zu erfahren! 🏦😢🌉',
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfekte Wahl! Du wirst draußen bequem sein!",

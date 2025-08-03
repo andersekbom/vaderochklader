@@ -43,8 +43,9 @@ export const OutfitItems = {
 };
 
 /**
- * Feedback messages for outfit choices in Swedish
- * Organized by rating level for appropriate responses to children
+ * Feedback messages for outfit choices
+ * These are now handled by the translation system
+ * This is kept for backward compatibility
  */
 export const OutfitReactions = {
   perfect: [
@@ -198,7 +199,8 @@ export function evaluateOutfitChoice(outfitItem, condition, temperature) {
   const reactionMessages = OutfitReactions[rating];
   let message = getRandomMessage(reactionMessages);
 
-  // Add specific feedback for poor choices
+  // Specific feedback messages are now handled by the translation system
+  // This is kept for backward compatibility with the existing code
   if (rating === 'poor') {
     if (condition === 'rainy' && outfitItem.id === 'sandals') {
       message = "Oj, det blir kanske blött om fötterna med de sandalerna i regnet!";

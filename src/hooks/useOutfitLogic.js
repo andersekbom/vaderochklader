@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useWeatherOutfit } from '../context/WeatherOutfitContext';
 import { useWeather } from './useWeather';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   suggestOutfitForWeather, 
   evaluateCompleteOutfit, 
@@ -22,6 +23,7 @@ import { getCustomClothingItems } from '../utils/customClothingManager';
 export function useOutfitLogic() {
   const { state, actions } = useWeatherOutfit();
   const { weather } = useWeather();
+  const { getReactionMessage } = useLanguage();
   const [customItems, setCustomItems] = useState({});
   
   // Load custom items on mount
@@ -61,9 +63,11 @@ export function useOutfitLogic() {
       }
       else if (evaluation.rating === 'warning') reactionType = 'warning';
       
-      actions.setAvatarReaction(reactionType, evaluation.message);
+      // Use the translated reaction message
+      const message = getReactionMessage(evaluation.rating);
+      actions.setAvatarReaction(reactionType, message);
     }
-  }, [state.outfit, actions, weather.condition, weather.temperature]);
+  }, [state.outfit, actions, weather.condition, weather.temperature, getReactionMessage]);
 
   /**
    * Generates outfit suggestions based on current weather
@@ -86,9 +90,9 @@ export function useOutfitLogic() {
     const suggestions = suggestOutfit();
     if (suggestions) {
       actions.updateOutfit(suggestions);
-      actions.setAvatarReaction('happy', 'Perfekt! Den här outfiten är fantastisk för dagens väder!');
+      actions.setAvatarReaction('happy', getReactionMessage('perfect'));
     }
-  }, [suggestOutfit, actions]);
+  }, [suggestOutfit, actions, getReactionMessage]);
 
   const evaluateCurrentOutfit = useCallback(() => {
     if (!weather.condition || weather.temperature === null) {

@@ -8,9 +8,11 @@ import Card from './ui/Card';
 import Button from './ui/Button';
 import MapModal from './MapModal';
 import { useLocation } from '../hooks/useLocation';
+import { useLanguage } from '../context/LanguageContext';
 
 const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature = true, onRefresh }) => {
   const { location } = useLocation();
+  const { t, language } = useLanguage();
   const [showMapModal, setShowMapModal] = useState(false);
   
   // Get screen dimensions for responsive sizing
@@ -21,7 +23,7 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
   if (!weather.condition) {
     return (
       <Card style={[styles.container, style]}>
-        <Text style={styles.loadingText}>Laddar väder...</Text>
+        <Text style={styles.loadingText}>{t('fetchingWeather')}</Text>
       </Card>
     );
   }
@@ -47,29 +49,39 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
 
 
   const getTemperatureDescription = (temperature) => {
-    if (temperature < -10) return "väldigt kallt";
-    if (temperature < 0) return "kallt";
-    if (temperature < 10) return "lite kallt";
-    if (temperature < 20) return "ljummet";
-    if (temperature < 25) return "varmt";
-    if (temperature < 30) return "ganska varmt";
-    return "väldigt varmt";
+    // Temperature descriptions are kept in Swedish for simplicity
+    // These are descriptive terms that don't need translation in the current scope
+    if (temperature < -10) return language === 'sv' ? "väldigt kallt" : "very cold";
+    if (temperature < 0) return language === 'sv' ? "kallt" : "cold";
+    if (temperature < 10) return language === 'sv' ? "lite kallt" : "a bit cold";
+    if (temperature < 20) return language === 'sv' ? "ljummet" : "mild";
+    if (temperature < 25) return language === 'sv' ? "varmt" : "warm";
+    if (temperature < 30) return language === 'sv' ? "ganska varmt" : "quite warm";
+    return language === 'sv' ? "väldigt varmt" : "very hot";
   };
 
   const getForecastText = () => {
     if (!weather.forecast4h) return null;
     
-    const forecastConditionText = {
+    const forecastConditionText = language === 'sv' ? {
       sunny: "soligt",
       cloudy: "molnigt", 
       rainy: "regna",
       snowy: "snöa",
       stormy: "storma"
-    }[weather.forecast4h.condition] || "fint väder";
+    }[weather.forecast4h.condition] || "fint väder" : {
+      sunny: "sunny",
+      cloudy: "cloudy", 
+      rainy: "rainy",
+      snowy: "snowy",
+      stormy: "stormy"
+    }[weather.forecast4h.condition] || "nice weather";
     
     const forecastTempDescription = getTemperatureDescription(weather.forecast4h.temperature);
     
-    return `Senare: ${forecastConditionText} och ${forecastTempDescription}`;
+    return language === 'sv' ? 
+      `Senare: ${forecastConditionText} och ${forecastTempDescription}` : 
+      `Later: ${forecastConditionText} and ${forecastTempDescription}`;
   };
 
   return (
@@ -119,7 +131,7 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
         {showLocation && weather.location && (
           <View>
             <Text style={styles.weatherDescription}>
-              Nu i{' '}
+              {language === 'sv' ? 'Nu i' : 'Now in'}{' '}
               <Text 
                 style={styles.locationButtonText}
                 onPress={() => setShowMapModal(true)}
@@ -132,10 +144,12 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
               <Text style={[styles.condition, { 
                 color: getWeatherColor(),
               }]}>
-                {WeatherConditionsSwedish[weather.condition] || weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1)}
+                {language === 'sv' 
+                  ? (WeatherConditionsSwedish[weather.condition] || weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1))
+                  : (weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1))}
               </Text>
               {showTemperature && (
-                <Text style={styles.temperature}> och {getTemperatureDescription(weather.temperature)}</Text>
+                <Text style={styles.temperature}> {language === 'sv' ? 'och' : 'and'} {getTemperatureDescription(weather.temperature)}</Text>
               )}
             </Text>
           </View>

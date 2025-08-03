@@ -12,33 +12,33 @@
  */
 export const OutfitItems = {
   head: {
-    cap: { id: 'cap', name: 'Keps', emoji: '🧢', icon: { name: 'hat-cap', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['sunny'], temperature: [15, 35] },
-    beanie: { id: 'beanie', name: 'Mössa', emoji: '🧶', icon: { name: 'hat-winter', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['cloudy', 'snowy'], temperature: [-10, 10] },
-    hood: { id: 'hood', name: 'Luva', emoji: '🧥', icon: { name: 'hoodie', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['rainy', 'stormy'], temperature: [0, 20] },
+    cap: { id: 'cap', nameKey: 'cap', emoji: '🧢', icon: { name: 'hat-cap', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['sunny'], temperature: [15, 35] },
+    beanie: { id: 'beanie', nameKey: 'beanie', emoji: '🧶', icon: { name: 'hat-winter', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['cloudy', 'snowy'], temperature: [-10, 10] },
+    hood: { id: 'hood', nameKey: 'hood', emoji: '🧥', icon: { name: 'hoodie', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['rainy', 'stormy'], temperature: [0, 20] },
   },
   
   torso: {
-    t_shirt: { id: 't_shirt', name: 'T-shirt', emoji: '👕', icon: { name: 'tshirt-crew-outline', library: 'MaterialCommunityIcons', color: '#4CAF50' }, weather: ['sunny'], temperature: [20, 35] },
-    long_sleeve: { id: 'long_sleeve', name: 'Långärmad', emoji: '👕', icon: { name: 'tshirt-crew-outline', library: 'MaterialCommunityIcons', color: '#FF9800' }, weather: ['cloudy', 'sunny'], temperature: [15, 25] },
-    sweater: { id: 'sweater', name: 'Tjöja', emoji: '🧥', icon: { name: 'sweater-outline', library: 'MaterialCommunityIcons', color: '#9C27B0' }, weather: ['cloudy', 'rainy'], temperature: [5, 15] },
-    jacket: { id: 'jacket', name: 'Jacka', emoji: '🧥', icon: { name: 'jacket', library: 'MaterialCommunityIcons', color: '#3F51B5' }, weather: ['rainy', 'stormy', 'snowy'], temperature: [-5, 15] },
-    rain_coat: { id: 'rain_coat', name: 'Regnjacka', emoji: '🧥', icon: { name: 'raincoat', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['rainy', 'stormy'], temperature: [5, 20] },
-    winter_coat: { id: 'winter_coat', name: 'Vinterjacka', emoji: '🧥', icon: { name: 'coat', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy'], temperature: [-20, 5] },
+    t_shirt: { id: 't_shirt', nameKey: 'tShirt', emoji: '👕', icon: { name: 'tshirt-crew-outline', library: 'MaterialCommunityIcons', color: '#4CAF50' }, weather: ['sunny'], temperature: [20, 35] },
+    long_sleeve: { id: 'long_sleeve', nameKey: 'longSleeve', emoji: '👕', icon: { name: 'tshirt-crew-outline', library: 'MaterialCommunityIcons', color: '#FF9800' }, weather: ['cloudy', 'sunny'], temperature: [15, 25] },
+    sweater: { id: 'sweater', nameKey: 'sweater', emoji: '🧥', icon: { name: 'sweater-outline', library: 'MaterialCommunityIcons', color: '#9C27B0' }, weather: ['cloudy', 'rainy'], temperature: [5, 15] },
+    jacket: { id: 'jacket', nameKey: 'jacket', emoji: '🧥', icon: { name: 'jacket', library: 'MaterialCommunityIcons', color: '#3F51B5' }, weather: ['rainy', 'stormy', 'snowy'], temperature: [-5, 15] },
+    rain_coat: { id: 'rain_coat', nameKey: 'rainCoat', emoji: '🧥', icon: { name: 'raincoat', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['rainy', 'stormy'], temperature: [5, 20] },
+    winter_coat: { id: 'winter_coat', nameKey: 'winterCoat', emoji: '🧥', icon: { name: 'coat', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy'], temperature: [-20, 5] },
   },
   
   legs: {
-    shorts: { id: 'shorts', name: 'Shorts', emoji: '🩳', icon: { name: 'shorts', library: 'MaterialCommunityIcons', color: '#FF5722' }, weather: ['sunny'], temperature: [20, 35] },
-    pants: { id: 'pants', name: 'Byxor', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['cloudy', 'rainy', 'sunny'], temperature: [10, 25] },
-    jeans: { id: 'jeans', name: 'Jeans', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#3F51B5' }, weather: ['cloudy', 'rainy'], temperature: [5, 20] },
-    warm_pants: { id: 'warm_pants', name: 'Varma byxor', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy', 'stormy'], temperature: [-10, 10] },
+    shorts: { id: 'shorts', nameKey: 'shorts', emoji: '🩳', icon: { name: 'shorts', library: 'MaterialCommunityIcons', color: '#FF5722' }, weather: ['sunny'], temperature: [20, 35] },
+    pants: { id: 'pants', nameKey: 'pants', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['cloudy', 'rainy', 'sunny'], temperature: [10, 25] },
+    jeans: { id: 'jeans', nameKey: 'jeans', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#3F51B5' }, weather: ['cloudy', 'rainy'], temperature: [5, 20] },
+    warm_pants: { id: 'warm_pants', nameKey: 'warmPants', emoji: '👖', icon: { name: 'human-male-boy', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy', 'stormy'], temperature: [-10, 10] },
   },
   
   feet: {
-    sandals: { id: 'sandals', name: 'Sandaler', emoji: '🩴', icon: { name: 'flip-flops', library: 'MaterialCommunityIcons', color: '#FF9800' }, weather: ['sunny'], temperature: [22, 35] },
-    sneakers: { id: 'sneakers', name: 'Skor', emoji: '👟', icon: { name: 'shoe-sneaker', library: 'MaterialCommunityIcons', color: '#4CAF50' }, weather: ['sunny', 'cloudy'], temperature: [15, 30] },
-    shoes: { id: 'shoes', name: 'Finskor', emoji: '👞', icon: { name: 'shoe-formal', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['cloudy', 'rainy'], temperature: [10, 25] },
-    rain_boots: { id: 'rain_boots', name: 'Regnstövlar', emoji: '🥾', icon: { name: 'boot', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['rainy', 'stormy'], temperature: [5, 20] },
-    winter_boots: { id: 'winter_boots', name: 'Vinterstövlar', emoji: '🥾', icon: { name: 'snowshoe', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy'], temperature: [-20, 5] },
+    sandals: { id: 'sandals', nameKey: 'sandals', emoji: '🩴', icon: { name: 'flip-flops', library: 'MaterialCommunityIcons', color: '#FF9800' }, weather: ['sunny'], temperature: [22, 35] },
+    sneakers: { id: 'sneakers', nameKey: 'sneakers', emoji: '👟', icon: { name: 'shoe-sneaker', library: 'MaterialCommunityIcons', color: '#4CAF50' }, weather: ['sunny', 'cloudy'], temperature: [15, 30] },
+    shoes: { id: 'shoes', nameKey: 'shoes', emoji: '👞', icon: { name: 'shoe-formal', library: 'MaterialCommunityIcons', color: '#795548' }, weather: ['cloudy', 'rainy'], temperature: [10, 25] },
+    rain_boots: { id: 'rain_boots', nameKey: 'rainBoots', emoji: '🥾', icon: { name: 'boot', library: 'MaterialCommunityIcons', color: '#2196F3' }, weather: ['rainy', 'stormy'], temperature: [5, 20] },
+    winter_boots: { id: 'winter_boots', nameKey: 'winterBoots', emoji: '🥾', icon: { name: 'snowshoe', library: 'MaterialCommunityIcons', color: '#607D8B' }, weather: ['snowy'], temperature: [-20, 5] },
   },
 };
 

@@ -53,23 +53,23 @@ const OutfitSelectionModal = ({ visible, onClose, bodyPart, bodyPartName, bodyPa
   const categorizeItems = (items) => {
     const categories = {
       summer: { 
-        title: language === 'sv' ? '☀️ Sommarkläder' : '☀️ Summer clothes', 
+        title: t('summerClothes'), 
         items: {} 
       },
       spring: { 
-        title: language === 'sv' ? '🌸 Vårkläder' : '🌸 Spring clothes', 
+        title: t('springClothes'), 
         items: {} 
       },
       autumn: { 
-        title: language === 'sv' ? '🍂 Höstkläder' : '🍂 Autumn clothes', 
+        title: t('autumnClothes'), 
         items: {} 
       },
       winter: { 
-        title: language === 'sv' ? '❄️ Vinterkläder' : '❄️ Winter clothes', 
+        title: t('winterClothes'), 
         items: {} 
       },
       rain: { 
-        title: language === 'sv' ? '🌧️ Regnkläder' : '🌧️ Rain clothes', 
+        title: t('rainClothes'), 
         items: {} 
       }
     };

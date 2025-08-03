@@ -23,7 +23,7 @@ import { getCustomClothingItems } from '../utils/customClothingManager';
 export function useOutfitLogic() {
   const { state, actions } = useWeatherOutfit();
   const { weather } = useWeather();
-  const { getReactionMessage } = useLanguage();
+  const { getReactionMessage, t } = useLanguage();
   const [customItems, setCustomItems] = useState({});
   
   // Load custom items on mount
@@ -123,9 +123,18 @@ export function useOutfitLogic() {
     const defaultItems = OutfitItems[bodyPart] || {};
     const customBodyPartItems = customItems[bodyPart] || {};
     
+    // Add translated names to default items
+    const translatedDefaultItems = {};
+    Object.entries(defaultItems).forEach(([key, item]) => {
+      translatedDefaultItems[key] = {
+        ...item,
+        name: item.nameKey ? t(item.nameKey) : item.name || key
+      };
+    });
+    
     // Combine default and custom items
-    return { ...defaultItems, ...customBodyPartItems };
-  }, [customItems]);
+    return { ...translatedDefaultItems, ...customBodyPartItems };
+  }, [customItems, t]);
 
   const getOutfitSummary = useCallback(() => {
     const { outfit } = state;
@@ -137,7 +146,7 @@ export function useOutfitLogic() {
       }
     });
     
-    return wornItems.length > 0 ? wornItems.join(', ') : 'Inga kläder valda';
+    return wornItems.length > 0 ? wornItems.join(', ') : t('noItemsAvailable');
   }, [state.outfit]);
 
   // Auto-suggest outfit when weather data becomes available

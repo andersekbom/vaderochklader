@@ -41,6 +41,35 @@ export const translations = {
     english: 'Engelska',
     german: 'Tyska',
     
+    // Weather forecast
+    nowIn: 'Nu i',
+    later: 'Senare',
+    and: 'och',
+    
+    // Temperature descriptions
+    veryCold: 'väldigt kallt',
+    cold: 'kallt',
+    bitCold: 'lite kallt',
+    mild: 'ljummet',
+    warm: 'varmt',
+    quiteWarm: 'ganska varmt',
+    veryHot: 'väldigt varmt',
+    
+    // Seasonal clothing categories
+    summerClothes: '☀️ Sommarkläder',
+    springClothes: '🌸 Vårkläder',
+    autumnClothes: '🍂 Höstkläder',
+    winterClothes: '❄️ Vinterkläder',
+    rainClothes: '🌧️ Regnkläder',
+    
+    // Weather forecast conditions
+    sunnySyno: 'soligt',
+    cloudySyno: 'molnigt',
+    rainySyno: 'regna',
+    snowySyno: 'snöa',
+    stormySyno: 'storma',
+    niceWeather: 'fint väder',
+    
     // Outfit reactions - perfect
     perfectReaction1: "Perfekt val! Du kommer att vara bekväm utomhus!",
     perfectReaction2: "Bra outfit för det här vädret!",
@@ -143,6 +172,35 @@ export const translations = {
     english: 'English',
     german: 'German',
     
+    // Weather forecast
+    nowIn: 'Now in',
+    later: 'Later',
+    and: 'and',
+    
+    // Temperature descriptions
+    veryCold: 'very cold',
+    cold: 'cold',
+    bitCold: 'a bit cold',
+    mild: 'mild',
+    warm: 'warm',
+    quiteWarm: 'quite warm',
+    veryHot: 'very hot',
+    
+    // Seasonal clothing categories
+    summerClothes: '☀️ Summer clothes',
+    springClothes: '🌸 Spring clothes',
+    autumnClothes: '🍂 Autumn clothes',
+    winterClothes: '❄️ Winter clothes',
+    rainClothes: '🌧️ Rain clothes',
+    
+    // Weather forecast conditions
+    sunnySyno: 'sunny',
+    cloudySyno: 'cloudy',
+    rainySyno: 'rainy',
+    snowySyno: 'snowy',
+    stormySyno: 'stormy',
+    niceWeather: 'nice weather',
+    
     // Outfit reactions - perfect
     perfectReaction1: "Perfect choice! You'll be comfortable outside!",
     perfectReaction2: "Great outfit for this weather!",
@@ -244,6 +302,35 @@ export const translations = {
     swedish: 'Schwedisch',
     english: 'Englisch',
     german: 'Deutsch',
+    
+    // Weather forecast
+    nowIn: 'Jetzt in',
+    later: 'Später',
+    and: 'und',
+    
+    // Temperature descriptions
+    veryCold: 'sehr kalt',
+    cold: 'kalt',
+    bitCold: 'etwas kalt',
+    mild: 'mild',
+    warm: 'warm',
+    quiteWarm: 'ziemlich warm',
+    veryHot: 'sehr heiß',
+    
+    // Seasonal clothing categories
+    summerClothes: '☀️ Sommerkleidung',
+    springClothes: '🌸 Frühlingskleidung',
+    autumnClothes: '🍂 Herbstkleidung',
+    winterClothes: '❄️ Winterkleidung',
+    rainClothes: '🌧️ Regenkleidung',
+    
+    // Weather forecast conditions
+    sunnySyno: 'sonnig',
+    cloudySyno: 'bewölkt',
+    rainySyno: 'regnerisch',
+    snowySyno: 'Schneefall',
+    stormySyno: 'stürmisch',
+    niceWeather: 'schönes Wetter',
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfekte Wahl! Du wirst draußen bequem sein!",

@@ -49,39 +49,30 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
 
 
   const getTemperatureDescription = (temperature) => {
-    // Temperature descriptions are kept in Swedish for simplicity
-    // These are descriptive terms that don't need translation in the current scope
-    if (temperature < -10) return language === 'sv' ? "väldigt kallt" : "very cold";
-    if (temperature < 0) return language === 'sv' ? "kallt" : "cold";
-    if (temperature < 10) return language === 'sv' ? "lite kallt" : "a bit cold";
-    if (temperature < 20) return language === 'sv' ? "ljummet" : "mild";
-    if (temperature < 25) return language === 'sv' ? "varmt" : "warm";
-    if (temperature < 30) return language === 'sv' ? "ganska varmt" : "quite warm";
-    return language === 'sv' ? "väldigt varmt" : "very hot";
+    if (temperature < -10) return t('veryCold');
+    if (temperature < 0) return t('cold');
+    if (temperature < 10) return t('bitCold');
+    if (temperature < 20) return t('mild');
+    if (temperature < 25) return t('warm');
+    if (temperature < 30) return t('quiteWarm');
+    return t('veryHot');
   };
 
   const getForecastText = () => {
     if (!weather.forecast4h) return null;
     
-    const forecastConditionText = language === 'sv' ? {
-      sunny: "soligt",
-      cloudy: "molnigt", 
-      rainy: "regna",
-      snowy: "snöa",
-      stormy: "storma"
-    }[weather.forecast4h.condition] || "fint väder" : {
-      sunny: "sunny",
-      cloudy: "cloudy", 
-      rainy: "rainy",
-      snowy: "snowy",
-      stormy: "stormy"
-    }[weather.forecast4h.condition] || "nice weather";
+    const conditionMap = {
+      sunny: 'sunnySyno',
+      cloudy: 'cloudySyno', 
+      rainy: 'rainySyno',
+      snowy: 'snowySyno',
+      stormy: 'stormySyno'
+    };
     
+    const forecastConditionText = t(conditionMap[weather.forecast4h.condition] || 'niceWeather');
     const forecastTempDescription = getTemperatureDescription(weather.forecast4h.temperature);
     
-    return language === 'sv' ? 
-      `Senare: ${forecastConditionText} och ${forecastTempDescription}` : 
-      `Later: ${forecastConditionText} and ${forecastTempDescription}`;
+    return `${t('later')}: ${forecastConditionText} ${t('and')} ${forecastTempDescription}`;
   };
 
   return (
@@ -131,7 +122,7 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
         {showLocation && weather.location && (
           <View>
             <Text style={styles.weatherDescription}>
-              {language === 'sv' ? 'Nu i' : 'Now in'}{' '}
+              {t('nowIn')}{' '}
               <Text 
                 style={styles.locationButtonText}
                 onPress={() => setShowMapModal(true)}
@@ -144,12 +135,10 @@ const WeatherDisplay = ({ weather, style, showLocation = true, showTemperature =
               <Text style={[styles.condition, { 
                 color: getWeatherColor(),
               }]}>
-                {language === 'sv' 
-                  ? (WeatherConditionsSwedish[weather.condition] || weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1))
-                  : (weather.condition.charAt(0).toUpperCase() + weather.condition.slice(1))}
+                {t(weather.condition)}
               </Text>
               {showTemperature && (
-                <Text style={styles.temperature}> {language === 'sv' ? 'och' : 'and'} {getTemperatureDescription(weather.temperature)}</Text>
+                <Text style={styles.temperature}> {t('and')} {getTemperatureDescription(weather.temperature)}</Text>
               )}
             </Text>
           </View>

@@ -55,7 +55,7 @@ const SettingsScreen = ({ onClose }) => {
                     language === lang && styles.selectedLanguageText,
                   ]}
                 >
-                  {t(lang === 'sv' ? 'swedish' : 'english')}
+                  {t(lang === 'sv' ? 'swedish' : lang === 'en' ? 'english' : 'german')}
                 </Text>
                 {language === lang && (
                   <MaterialIcons 

@@ -39,6 +39,7 @@ export const translations = {
     language: 'Språk',
     swedish: 'Svenska',
     english: 'Engelska',
+    german: 'Tyska',
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfekt val! Du kommer att vara bekväm utomhus!",
@@ -140,6 +141,7 @@ export const translations = {
     language: 'Language',
     swedish: 'Swedish',
     english: 'English',
+    german: 'German',
     
     // Outfit reactions - perfect
     perfectReaction1: "Perfect choice! You'll be comfortable outside!",
@@ -204,6 +206,108 @@ export const translations = {
     shoes: "Shoes",
     rainBoots: "Rain boots",
     winterBoots: "Winter boots",
+  },
+  
+  // German translations
+  de: {
+    // App title and general UI
+    appTitle: 'Wetter & Kleidung',
+    appSubtitle: 'Finde die richtige Kleidung für das Wetter!',
+    loading: 'Laden...',
+    retry: 'Erneut versuchen',
+    save: 'Speichern',
+    cancel: 'Abbrechen',
+    close: 'Schließen',
+    
+    // Weather-related
+    fetchingLocation: 'Standort wird ermittelt...',
+    fetchingWeather: 'Wetter wird geladen...',
+    weatherError: 'Wetterinformationen konnten nicht abgerufen werden',
+    locationError: 'Standort konnte nicht ermittelt werden',
+    
+    // Clothing question
+    clothingQuestion: 'Welche Kleidung denkst du ist gut für dieses Wetter?',
+    
+    // Body parts
+    head: 'Kopf',
+    torso: 'Oberkörper',
+    legs: 'Beine',
+    feet: 'Füße',
+    
+    // Outfit selection
+    selectOutfit: 'Kleidung auswählen für',
+    noItemsAvailable: 'Keine Kleidung verfügbar',
+    
+    // Settings
+    settings: 'Einstellungen',
+    language: 'Sprache',
+    swedish: 'Schwedisch',
+    english: 'Englisch',
+    german: 'Deutsch',
+    
+    // Outfit reactions - perfect
+    perfectReaction1: "Perfekte Wahl! Du wirst draußen bequem sein!",
+    perfectReaction2: "Tolles Outfit für dieses Wetter!",
+    perfectReaction3: "Du bist bereit für das heutige Wetter!",
+    perfectReaction4: "Das ist genau das, was ich wählen würde!",
+    
+    // Outfit reactions - good
+    goodReaction1: "Das ist eine gute Wahl!",
+    goodReaction2: "Gute Outfit-Wahl!",
+    goodReaction3: "Du wirst dich darin wohlfühlen!",
+    
+    // Outfit reactions - warning
+    warningReaction1: "Hmm, das ist vielleicht nicht die beste Wahl...",
+    warningReaction2: "Bist du sicher bei diesem Outfit?",
+    warningReaction3: "Es könnte etwas ungemütlich werden...",
+    
+    // Outfit reactions - poor
+    poorReaction1: "Hoppla! Deine Füße könnten mit den Sandalen im Regen nass werden!",
+    poorReaction2: "Brrr! Du könntest ohne Jacke frieren!",
+    poorReaction3: "Du könntest in der Winterjacke an einem sonnigen Tag zu heiß werden!",
+    poorReaction4: "Die Shorts halten dich vielleicht nicht warm genug!",
+    
+    // Specific feedback
+    wetFeetFeedback: "Oh, deine Füße könnten mit den Sandalen im Regen nass werden!",
+    coldSnowFeedback: "Brrr! Mit dieser Wahl könntest du im Schnee frieren!",
+    hotCoatFeedback: "Du könntest in der Winterjacke an so einem warmen Tag zu heiß werden!",
+    
+    // Weather conditions
+    sunny: "Sonnig",
+    cloudy: "Bewölkt",
+    rainy: "Regnerisch",
+    snowy: "Schneefall",
+    stormy: "Stürmisch",
+    
+    // Temperature
+    temperature: "Temperatur",
+    feelsLike: "Gefühlt wie",
+    
+    // Clothing items - Head
+    cap: "Kappe",
+    beanie: "Mütze",
+    hood: "Kapuze",
+    
+    // Clothing items - Torso
+    tShirt: "T-Shirt",
+    longSleeve: "Langarm",
+    sweater: "Pullover",
+    jacket: "Jacke",
+    rainCoat: "Regenjacke",
+    winterCoat: "Winterjacke",
+    
+    // Clothing items - Legs
+    shorts: "Shorts",
+    pants: "Hose",
+    jeans: "Jeans",
+    warmPants: "Warme Hose",
+    
+    // Clothing items - Feet
+    sandals: "Sandalen",
+    sneakers: "Turnschuhe",
+    shoes: "Schuhe",
+    rainBoots: "Gummistiefel",
+    winterBoots: "Winterstiefel",
   }
 };
 

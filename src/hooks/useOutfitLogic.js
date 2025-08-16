@@ -23,7 +23,7 @@ import { getCustomClothingItems } from '../utils/customClothingManager';
 export function useOutfitLogic() {
   const { state, actions } = useWeatherOutfit();
   const { weather } = useWeather();
-  const { getReactionMessage, t } = useLanguage();
+  const { getReactionMessage, t, language } = useLanguage();
   const [customItems, setCustomItems] = useState({});
   
   // Load custom items on mount
@@ -162,6 +162,19 @@ export function useOutfitLogic() {
       }
     }
   }, [weather.condition, weather.temperature, state.outfit, suggestOutfit, actions]);
+
+  // Regenerate avatar reaction message when language changes
+  useEffect(() => {
+    if (state.avatar.reaction && state.avatar.message && weather.condition && weather.temperature !== null) {
+      // Re-evaluate the current outfit to get the rating
+      const evaluation = evaluateCompleteOutfit(state.outfit, weather.condition, weather.temperature);
+      if (evaluation && evaluation.overallRating) {
+        // Generate a new message in the current language
+        const newMessage = getReactionMessage(evaluation.overallRating);
+        actions.setAvatarReaction(state.avatar.reaction, newMessage);
+      }
+    }
+  }, [language, state.avatar.reaction, state.outfit, weather.condition, weather.temperature, getReactionMessage, actions]);
 
   return {
     outfit: state.outfit,

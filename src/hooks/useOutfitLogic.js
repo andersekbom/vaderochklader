@@ -8,7 +8,7 @@
  * @returns {Object} Outfit logic functions and state
  */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { useWeatherOutfit } from '../context/WeatherOutfitContext';
 import { useWeather } from './useWeather';
 import { useLanguage } from '../context/LanguageContext';
@@ -25,6 +25,7 @@ export function useOutfitLogic() {
   const { weather } = useWeather();
   const { getReactionMessage, t, language } = useLanguage();
   const [customItems, setCustomItems] = useState({});
+  const lastLanguageRef = useRef(language);
   
   // Load custom items on mount
   useEffect(() => {
@@ -165,16 +166,19 @@ export function useOutfitLogic() {
 
   // Regenerate avatar reaction message when language changes
   useEffect(() => {
-    if (state.avatar.reaction && state.avatar.message && weather.condition && weather.temperature !== null) {
+    // Only regenerate if the language actually changed and we have an avatar message
+    if (language !== lastLanguageRef.current && state.avatar.message && weather.condition && weather.temperature !== null && state.outfit) {
       // Re-evaluate the current outfit to get the rating
       const evaluation = evaluateCompleteOutfit(state.outfit, weather.condition, weather.temperature);
-      if (evaluation && evaluation.overallRating) {
+      if (evaluation && evaluation.overall && evaluation.overall.rating) {
         // Generate a new message in the current language
-        const newMessage = getReactionMessage(evaluation.overallRating);
+        const newMessage = getReactionMessage(evaluation.overall.rating);
         actions.setAvatarReaction(state.avatar.reaction, newMessage);
       }
+      // Update the ref to track the current language
+      lastLanguageRef.current = language;
     }
-  }, [language, state.avatar.reaction, state.outfit, weather.condition, weather.temperature, getReactionMessage, actions]);
+  }, [language, state.avatar.message, weather.condition, weather.temperature, state.outfit, getReactionMessage, actions]);
 
   return {
     outfit: state.outfit,

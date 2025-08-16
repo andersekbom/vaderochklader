@@ -21,7 +21,7 @@ const initialState = {
   },
   avatar: {
     reaction: null,
-    message: null,
+    messageRating: null, // Store the rating type instead of translated message
   },
   location: {
     latitude: null,
@@ -131,7 +131,7 @@ function weatherOutfitReducer(state, action) {
         avatar: {
           ...state.avatar,
           reaction: action.payload.reaction,
-          message: action.payload.message,
+          messageRating: action.payload.messageRating,
         },
       };
 
@@ -141,7 +141,7 @@ function weatherOutfitReducer(state, action) {
         avatar: {
           ...state.avatar,
           reaction: null,
-          message: null,
+          messageRating: null,
         },
       };
 
@@ -209,10 +209,10 @@ export function WeatherOutfitProvider({ children }) {
       });
     },
 
-    setAvatarReaction: (reaction, message) => {
+    setAvatarReaction: (reaction, messageRating) => {
       dispatch({ 
         type: actionTypes.SET_AVATAR_REACTION, 
-        payload: { reaction, message } 
+        payload: { reaction, messageRating } 
       });
     },
 

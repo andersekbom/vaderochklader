@@ -8,7 +8,7 @@
  * @returns {Object} Outfit logic functions and state
  */
 
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useWeatherOutfit } from '../context/WeatherOutfitContext';
 import { useWeather } from './useWeather';
 import { useLanguage } from '../context/LanguageContext';
@@ -23,21 +23,13 @@ import { getCustomClothingItems } from '../utils/customClothingManager';
 export function useOutfitLogic() {
   const { state, actions } = useWeatherOutfit();
   const { weather } = useWeather();
-  const { getReactionMessage, t, language } = useLanguage();
+  const { t } = useLanguage();
   const [customItems, setCustomItems] = useState({});
-  const lastLanguageRef = useRef(null);
   
   // Load custom items on mount
   useEffect(() => {
     loadCustomItems();
   }, []);
-  
-  // Initialize language ref on first render
-  useEffect(() => {
-    if (lastLanguageRef.current === null) {
-      lastLanguageRef.current = language;
-    }
-  }, [language]);
   
   const loadCustomItems = async () => {
     try {
@@ -71,11 +63,10 @@ export function useOutfitLogic() {
       }
       else if (evaluation.rating === 'warning') reactionType = 'warning';
       
-      // Use the translated reaction message
-      const message = getReactionMessage(evaluation.rating);
-      actions.setAvatarReaction(reactionType, message);
+      // Store the rating type instead of translated message
+      actions.setAvatarReaction(reactionType, evaluation.rating);
     }
-  }, [state.outfit, actions, weather.condition, weather.temperature, getReactionMessage]);
+  }, [state.outfit, actions, weather.condition, weather.temperature]);
 
   /**
    * Generates outfit suggestions based on current weather
@@ -98,9 +89,9 @@ export function useOutfitLogic() {
     const suggestions = suggestOutfit();
     if (suggestions) {
       actions.updateOutfit(suggestions);
-      actions.setAvatarReaction('happy', getReactionMessage('perfect'));
+      actions.setAvatarReaction('happy', 'perfect');
     }
-  }, [suggestOutfit, actions, getReactionMessage]);
+  }, [suggestOutfit, actions]);
 
   const evaluateCurrentOutfit = useCallback(() => {
     if (!weather.condition || weather.temperature === null) {
@@ -171,21 +162,6 @@ export function useOutfitLogic() {
     }
   }, [weather.condition, weather.temperature, state.outfit, suggestOutfit, actions]);
 
-  // Regenerate avatar reaction message when language changes
-  useEffect(() => {
-    // Only regenerate if the language actually changed and we have an avatar message
-    if (language !== lastLanguageRef.current && state.avatar.message && weather.condition && weather.temperature !== null && state.outfit) {
-      // Re-evaluate the current outfit to get the rating
-      const evaluation = evaluateCompleteOutfit(state.outfit, weather.condition, weather.temperature);
-      if (evaluation && evaluation.overall && evaluation.overall.rating) {
-        // Generate a new message in the current language
-        const newMessage = getReactionMessage(evaluation.overall.rating);
-        actions.setAvatarReaction(state.avatar.reaction, newMessage);
-      }
-      // Update the ref to track the current language
-      lastLanguageRef.current = language;
-    }
-  }, [language, state.avatar.message, weather.condition, weather.temperature, state.outfit, getReactionMessage, actions]);
 
   return {
     outfit: state.outfit,

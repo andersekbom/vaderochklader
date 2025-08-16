@@ -29,7 +29,7 @@ const HomeScreen = ({ onSettingsPress }) => {
   const { isLoading: locationLoading, error: locationError } = useLocation();
   const { weather, isLoading: weatherLoading, error: weatherError, refetchWeather } = useWeather();
   const { avatarReaction } = useOutfitLogic();
-  const { t } = useLanguage();
+  const { t, getReactionMessage } = useLanguage();
   
   // Local state
   const [showOutfitModal, setShowOutfitModal] = useState(false);
@@ -349,9 +349,9 @@ const HomeScreen = ({ onSettingsPress }) => {
         </View>
 
         {/* Outfit feedback message */}
-        {avatarReaction.message && (
+        {avatarReaction.messageRating && (
           <MessageBubble
-            message={avatarReaction.message}
+            message={getReactionMessage(avatarReaction.messageRating)}
             type={avatarReaction.reaction === 'poor' ? 'warning' : 'default'}
             visible={true}
             style={responsiveStyles.outfitFeedback}

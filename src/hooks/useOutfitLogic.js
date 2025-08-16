@@ -25,12 +25,19 @@ export function useOutfitLogic() {
   const { weather } = useWeather();
   const { getReactionMessage, t, language } = useLanguage();
   const [customItems, setCustomItems] = useState({});
-  const lastLanguageRef = useRef(language);
+  const lastLanguageRef = useRef(null);
   
   // Load custom items on mount
   useEffect(() => {
     loadCustomItems();
   }, []);
+  
+  // Initialize language ref on first render
+  useEffect(() => {
+    if (lastLanguageRef.current === null) {
+      lastLanguageRef.current = language;
+    }
+  }, [language]);
   
   const loadCustomItems = async () => {
     try {

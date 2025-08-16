@@ -19,9 +19,11 @@ const SettingsScreen = ({ onClose }) => {
 
   const handleLanguageChange = async (newLanguage) => {
     await changeLanguage(newLanguage);
-    // Close the settings screen immediately after language change
-    actions.setCurrentScreen('home');
-    if (onClose) onClose();
+    // Wait a bit for the language change to propagate before closing
+    setTimeout(() => {
+      actions.setCurrentScreen('home');
+      if (onClose) onClose();
+    }, 100);
   };
 
   return (
@@ -61,7 +63,9 @@ const SettingsScreen = ({ onClose }) => {
                   {t(lang === 'sv' ? 'swedish' : 
                      lang === 'en' ? 'english' : 
                      lang === 'de' ? 'german' :
-                     lang === 'fi' ? 'finnish' : 'sami')}
+                     lang === 'fi' ? 'finnish' : 
+                     lang === 'se' ? 'sami' :
+                     lang === 'ko' ? 'korean' : 'sami')}
                 </Text>
                 {language === lang && (
                   <MaterialIcons 

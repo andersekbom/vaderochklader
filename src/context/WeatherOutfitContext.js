@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import { useLanguage } from './LanguageContext';
 
 const WeatherOutfitContext = createContext();
 
@@ -246,7 +247,7 @@ export function WeatherOutfitProvider({ children }) {
 export function useWeatherOutfit() {
   const context = useContext(WeatherOutfitContext);
   if (context === undefined) {
-    throw new Error('useWeatherOutfit måste användas inom en WeatherOutfitProvider');
+    throw new Error('useWeatherOutfit must be used within a WeatherOutfitProvider');
   }
   return context;
 }

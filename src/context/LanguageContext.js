@@ -25,8 +25,12 @@ export function LanguageProvider({ children }) {
     const loadLanguage = async () => {
       try {
         const savedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+        console.log('Loaded saved language from AsyncStorage:', savedLanguage);
         if (savedLanguage) {
           setLanguage(savedLanguage);
+          console.log('Set language to:', savedLanguage);
+        } else {
+          console.log('No saved language found, using default:', DEFAULT_LANGUAGE);
         }
       } catch (error) {
         console.error('Error loading language preference:', error);
@@ -41,8 +45,13 @@ export function LanguageProvider({ children }) {
   // Change language and save preference
   const changeLanguage = async (newLanguage) => {
     try {
+      console.log('Changing language to:', newLanguage);
       await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
       setLanguage(newLanguage);
+      console.log('Language changed and saved to:', newLanguage);
+      
+      // Note: Avatar reaction will be cleared by the SettingsScreen
+      // when it closes, so we don't need to do it here
     } catch (error) {
       console.error('Error saving language preference:', error);
     }
@@ -50,11 +59,14 @@ export function LanguageProvider({ children }) {
 
   // Get translation for a key with variable substitution
   const t = (key, variables = {}) => {
+    console.log('Translation requested for key:', key, 'language:', language);
     let translation;
     if (!translations[language] || !translations[language][key]) {
       // Fallback to Swedish if translation is missing
+      console.log('Translation not found for language:', language, 'falling back to Swedish');
       translation = translations.sv[key] || key;
     } else {
+      console.log('Translation found for language:', language);
       translation = translations[language][key];
     }
     
@@ -64,16 +76,21 @@ export function LanguageProvider({ children }) {
       translation = translation.replace(regex, variables[varName]);
     });
     
+    console.log('Final translation:', translation);
     return translation;
   };
 
   // Get random reaction message based on reaction type
   const getReactionMessage = (reactionType) => {
+    console.log('getReactionMessage called with:', reactionType, 'current language:', language);
     const keys = reactionTranslationKeys[reactionType];
     if (!keys || keys.length === 0) return '';
     
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    return t(randomKey);
+    console.log('Selected translation key:', randomKey, 'for language:', language);
+    const translation = t(randomKey);
+    console.log('Translation result:', translation);
+    return translation;
   };
 
   // Get weather condition translation

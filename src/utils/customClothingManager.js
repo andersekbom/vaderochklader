@@ -61,7 +61,7 @@ export const saveCustomClothingItem = async (bodyPart, itemData, imageUri) => {
     return customItem;
   } catch (error) {
     console.error('Error saving custom clothing item:', error);
-    throw new Error('Kunde inte spara det anpassade klädesplagget');
+    throw new Error('Could not save the custom clothing item');
   }
 };
 
@@ -121,7 +121,7 @@ export const deleteCustomClothingItem = async (bodyPart, itemId) => {
     }
   } catch (error) {
     console.error('Error deleting custom clothing item:', error);
-    throw new Error('Kunde inte ta bort det anpassade klädesplagget');
+    throw new Error('Could not delete the custom clothing item');
   }
 };
 
@@ -141,7 +141,7 @@ export const updateCustomClothingItem = async (bodyPart, itemId, updates) => {
       return existingItems[bodyPart][itemId];
     }
     
-    throw new Error('Anpassat klädesplagg hittades inte');
+    throw new Error('Custom clothing item not found');
   } catch (error) {
     console.error('Error updating custom clothing item:', error);
     throw error;
@@ -161,7 +161,7 @@ export const clearAllCustomItems = async () => {
     await AsyncStorage.removeItem(CUSTOM_CLOTHING_KEY);
   } catch (error) {
     console.error('Error clearing custom clothing items:', error);
-    throw new Error('Kunde inte rensa anpassade klädesplagg');
+    throw new Error('Could not clear custom clothing items');
   }
 };
 

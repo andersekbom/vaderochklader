@@ -141,6 +141,14 @@ export const translations = {
     coldSnowFeedback: "Brrr! Du kan bli kall med det valet i snön!",
     hotCoatFeedback: "Du kan bli för varm i den vinterjackan en så varm dag!",
     
+    // Error messages
+    locationAccessDenied: "Platsåtkomst nekad",
+    weatherOutfitContextError: "useWeatherOutfit måste användas inom en WeatherOutfitProvider",
+    couldNotSaveCustomItem: "Kunde inte spara det anpassade klädesplagget",
+    couldNotDeleteCustomItem: "Kunde inte ta bort det anpassade klädesplagget",
+    customItemNotFound: "Anpassat klädesplagg hittades inte",
+    couldNotClearCustomItems: "Kunde inte rensa anpassade klädesplagg",
+    
     // Weather conditions
     sunny: "Soligt",
     cloudy: "Molnigt",
@@ -315,6 +323,14 @@ export const translations = {
     wetFeetFeedback: "Oh, your feet might get wet with those sandals in the rain!",
     coldSnowFeedback: "Brrr! You might get cold with that choice in the snow!",
     hotCoatFeedback: "You might get too hot in that winter coat on such a warm day!",
+    
+    // Error messages
+    locationAccessDenied: "Location access denied",
+    weatherOutfitContextError: "useWeatherOutfit must be used within a WeatherOutfitProvider",
+    couldNotSaveCustomItem: "Could not save the custom clothing item",
+    couldNotDeleteCustomItem: "Could not delete the custom clothing item",
+    customItemNotFound: "Custom clothing item not found",
+    couldNotClearCustomItems: "Could not clear custom clothing items",
     
     // Weather conditions
     sunny: "Sunny",
@@ -491,6 +507,14 @@ export const translations = {
     coldSnowFeedback: "Brrr! Mit dieser Wahl könntest du im Schnee frieren!",
     hotCoatFeedback: "Du könntest in der Winterjacke an so einem warmen Tag zu heiß werden!",
     
+    // Error messages
+    locationAccessDenied: "Standortzugriff verweigert",
+    weatherOutfitContextError: "useWeatherOutfit muss innerhalb eines WeatherOutfitProviders verwendet werden",
+    couldNotSaveCustomItem: "Das benutzerdefinierte Kleidungsstück konnte nicht gespeichert werden",
+    couldNotDeleteCustomItem: "Das benutzerdefinierte Kleidungsstück konnte nicht gelöscht werden",
+    customItemNotFound: "Benutzerdefiniertes Kleidungsstück nicht gefunden",
+    couldNotClearCustomItems: "Benutzerdefinierte Kleidungsstücke konnten nicht gelöscht werden",
+    
     // Weather conditions
     sunny: "Sonnig",
     cloudy: "Bewölkt",
@@ -664,6 +688,14 @@ export const translations = {
     wetFeetFeedback: "Voi, jalkasi saattavat kastua sandaaleissa sateessa!",
     coldSnowFeedback: "Brrr! Saatat paleltua tuolla valinnalla lumessa!",
     hotCoatFeedback: "Saatat käydä liian kuumaksi talvitakissa noin lämpimänä päivänä!",
+    
+    // Error messages
+    locationAccessDenied: "Sijainnin käyttö estetty",
+    weatherOutfitContextError: "useWeatherOutfit täytyy käyttää WeatherOutfitProviderin sisällä",
+    couldNotSaveCustomItem: "Mukautettua vaatetta ei voitu tallentaa",
+    couldNotDeleteCustomItem: "Mukautettua vaatetta ei voitu poistaa",
+    customItemNotFound: "Mukautettua vaatetta ei löytynyt",
+    couldNotClearCustomItems: "Mukautettuja vaatteita ei voitu tyhjentää",
     
     // Weather conditions
     sunny: "Aurinkoinen",
@@ -839,6 +871,14 @@ export const translations = {
     wetFeetFeedback: "Voi, du juolggit sáhttet costot sandálain arvvas!",
     coldSnowFeedback: "Brrr! Sáhtat jápmit dáinna válljeniin muohtas!",
     hotCoatFeedback: "Sáhtat šaddat liiga liekkasin dálveduolljis nu liekkas beaivvis!",
+    
+    // Error messages
+    locationAccessDenied: "Báikki geatni lea giddejuvvon",
+    weatherOutfitContextError: "useWeatherOutfit ferte leat WeatherOutfitProvider siskkobealde",
+    couldNotSaveCustomItem: "Ii nagdan vurket dán áššá",
+    couldNotDeleteCustomItem: "Ii nagdan sihkkut dán áššá",
+    customItemNotFound: "Ášši ii gávdnon",
+    couldNotClearCustomItems: "Ii nagdan čájehit áššiid",
     
     // Weather conditions
     sunny: "Beaivválaš",

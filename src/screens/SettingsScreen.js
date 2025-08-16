@@ -19,6 +19,9 @@ const SettingsScreen = ({ onClose }) => {
 
   const handleLanguageChange = async (newLanguage) => {
     await changeLanguage(newLanguage);
+    // Close the settings screen immediately after language change
+    actions.setCurrentScreen('home');
+    if (onClose) onClose();
   };
 
   return (

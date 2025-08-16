@@ -2,8 +2,7 @@
  * Outfit Matcher Utility
  * 
  * Provides clothing item data and logic for matching outfits to weather conditions.
- * Includes outfit suggestions, evaluation, and feedback messages in Swedish for
- * kindergarten children.
+ * Includes outfit suggestions, evaluation, and feedback messages using the i18n system.
  */
 
 /**
@@ -43,45 +42,55 @@ export const OutfitItems = {
 };
 
 /**
- * Feedback messages for outfit choices
- * These are now handled by the translation system
- * This is kept for backward compatibility
+ * Evaluates a single outfit item choice for weather appropriateness
+ * @param {Object} outfitItem - The clothing item to evaluate
+ * @param {string} condition - Current weather condition
+ * @param {number} temperature - Current temperature in Celsius
+ * @returns {Object} Evaluation with rating, message, and reasons
  */
-export const OutfitReactions = {
-  perfect: [
-    "Perfekt val! Du kommer att vara bekväm utomhus!",
-    "Bra outfit för det här vädret!",
-    "Du är helt redo för dagens väder!",
-    "Det är precis vad jag skulle välja!",
-  ],
-  
-  good: [
-    "Det är ett bra val!",
-    "Bra outfitval!",
-    "Du kommer att vara bekväm i det!",
-  ],
-  
-  warning: [
-    "Hmm, det kanske inte är det bästa valet...",
-    "Är du säker på den här outfiten?",
-    "Det kan bli lite obekvämt...",
-  ],
-  
-  poor: [
-    "Oops! Dina fötter kan bli blöta med de sandalerna i regnet!",
-    "Brrr! Du kan bli kall utan jacka!",
-    "Du kan bli för varm i den vinterjackan en solig dag!",
-    "De shortsen kanske inte håller dig tillräckligt varm!",
-  ],
-};
+export function evaluateOutfitChoice(outfitItem, condition, temperature) {
+  if (!outfitItem) {
+    return { rating: 'good', message: null, reasons: [] };
+  }
 
-/**
- * Gets a random message from an array of messages
- * @param {Array<string>} messageArray - Array of possible messages
- * @returns {string} Random message from the array
- */
-function getRandomMessage(messageArray) {
-  return messageArray[Math.floor(Math.random() * messageArray.length)];
+  let rating = 'good';
+  const reasons = [];
+
+  // Get temperature range for this item
+  const itemTempRange = outfitItem.temperature;
+
+  // Check weather condition appropriateness
+  if (outfitItem.weather && !outfitItem.weather.includes(condition)) {
+    if ((condition === 'rainy' && outfitItem.id === 'sandals') ||
+        (condition === 'snowy' && outfitItem.id === 'sandals') ||
+        (condition === 'rainy' && outfitItem.id === 't_shirt')) {
+      rating = 'poor';
+      reasons.push(`not suitable for ${condition} weather`);
+    } else {
+      rating = 'warning';
+      reasons.push(`might not be ideal for ${condition} weather`);
+    }
+  }
+
+  // Check temperature appropriateness
+  if (itemTempRange && (temperature < itemTempRange[0] || temperature > itemTempRange[1])) {
+    if (temperature < itemTempRange[0] - 10 || temperature > itemTempRange[1] + 10) {
+      rating = 'poor';
+      reasons.push(`temperature is too ${temperature < itemTempRange[0] ? 'cold' : 'hot'}`);
+    } else {
+      if (rating === 'good') rating = 'warning';
+      reasons.push(`temperature might be uncomfortable`);
+    }
+  }
+
+  // If no issues, it's perfect
+  if (reasons.length === 0) {
+    rating = 'perfect';
+  }
+
+  // Return rating and reasons - the actual message will be handled by the translation system
+  // in the useOutfitLogic hook using getReactionMessage()
+  return { rating, message: null, reasons };
 }
 
 /**
@@ -153,68 +162,6 @@ export function suggestOutfitForWeather(condition, temperature) {
 }
 
 /**
- * Evaluates how appropriate a single clothing item is for the weather
- * @param {Object|null} outfitItem - The clothing item to evaluate
- * @param {string} condition - Current weather condition
- * @param {number} temperature - Current temperature in Celsius
- * @returns {Object} Evaluation result with rating, message, and reasons
- */
-export function evaluateOutfitChoice(outfitItem, condition, temperature) {
-  if (!outfitItem) return { rating: 'good', message: getRandomMessage(OutfitReactions.good) };
-
-  const { weather: itemWeather, temperature: itemTempRange } = outfitItem;
-  
-  let rating = 'good';
-  let reasons = [];
-
-  // Check weather appropriateness
-  if (itemWeather && !itemWeather.includes(condition)) {
-    if ((condition === 'rainy' && outfitItem.id === 'sandals') ||
-        (condition === 'snowy' && outfitItem.id === 'sandals') ||
-        (condition === 'rainy' && outfitItem.id === 't_shirt')) {
-      rating = 'poor';
-      reasons.push(`not suitable for ${condition} weather`);
-    } else {
-      rating = 'warning';
-      reasons.push(`might not be ideal for ${condition} weather`);
-    }
-  }
-
-  // Check temperature appropriateness
-  if (itemTempRange && (temperature < itemTempRange[0] || temperature > itemTempRange[1])) {
-    if (temperature < itemTempRange[0] - 10 || temperature > itemTempRange[1] + 10) {
-      rating = 'poor';
-      reasons.push(`temperature is too ${temperature < itemTempRange[0] ? 'cold' : 'hot'}`);
-    } else {
-      if (rating === 'good') rating = 'warning';
-      reasons.push(`temperature might be uncomfortable`);
-    }
-  }
-
-  // If no issues, it's perfect
-  if (reasons.length === 0) {
-    rating = 'perfect';
-  }
-
-  const reactionMessages = OutfitReactions[rating];
-  let message = getRandomMessage(reactionMessages);
-
-  // Specific feedback messages are now handled by the translation system
-  // This is kept for backward compatibility with the existing code
-  if (rating === 'poor') {
-    if (condition === 'rainy' && outfitItem.id === 'sandals') {
-      message = "Oj, det blir kanske blött om fötterna med de sandalerna i regnet!";
-    } else if (condition === 'snowy' && ['sandals', 't_shirt', 'shorts'].includes(outfitItem.id)) {
-      message = "Brrr! Du kan bli kall med det valet i snön!";
-    } else if (temperature > 25 && outfitItem.id === 'winter_coat') {
-      message = "Du kan bli för varm i den vinterjackan en så varm dag!";
-    }
-  }
-
-  return { rating, message, reasons };
-}
-
-/**
  * Evaluates a complete outfit (all body parts) for weather appropriateness
  * @param {Object} outfit - Complete outfit object with items for each body part
  * @param {string} condition - Current weather condition
@@ -238,27 +185,10 @@ export function evaluateCompleteOutfit(outfit, condition, temperature) {
     }
   });
 
-  // Create overall message
-  let overallMessage;
-  switch (overallRating) {
-    case 'perfect':
-      overallMessage = getRandomMessage(OutfitReactions.perfect);
-      break;
-    case 'good':
-      overallMessage = getRandomMessage(OutfitReactions.good);
-      break;
-    case 'warning':
-      overallMessage = getRandomMessage(OutfitReactions.warning);
-      break;
-    case 'poor':
-      overallMessage = getRandomMessage(OutfitReactions.poor);
-      break;
-    default:
-      overallMessage = getRandomMessage(OutfitReactions.good);
-  }
-
+  // Return evaluations without messages - messages are handled by the translation system
+  // in the useOutfitLogic hook using getReactionMessage()
   return {
-    overall: { rating: overallRating, message: overallMessage },
+    overall: { rating: overallRating, message: null },
     individual: evaluations,
   };
 }

@@ -1,9 +1,11 @@
 import { useEffect, useCallback } from 'react';
 import * as Location from 'expo-location';
 import { useWeatherOutfit } from '../context/WeatherOutfitContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export function useLocation() {
   const { state, actions } = useWeatherOutfit();
+  const { t } = useLanguage();
 
   const requestLocationPermission = useCallback(async () => {
     try {
@@ -21,7 +23,7 @@ export function useLocation() {
       
       const hasPermission = await requestLocationPermission();
       if (!hasPermission) {
-        throw new Error('Platsåtkomst nekad');
+        throw new Error(t('locationAccessDenied'));
       }
 
       const location = await Location.getCurrentPositionAsync({
@@ -42,7 +44,7 @@ export function useLocation() {
       actions.setLocationError(error.message);
       return null;
     }
-  }, [actions, requestLocationPermission]);
+  }, [actions, requestLocationPermission, t]);
 
   useEffect(() => {
     if (!state.location.latitude && !state.location.loading) {

@@ -106,7 +106,7 @@ export async function fetchWeatherData(latitude, longitude) {
     // SMHI Point Weather API - get current weather
     const weatherUrl = `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${nearestPoint.lon}/lat/${nearestPoint.lat}/data.json`;
     
-    console.log('Hämtar SMHI väderdata från:', weatherUrl);
+    console.log('Fetching SMHI weather data from:', weatherUrl);
     
     const response = await fetch(weatherUrl);
     
@@ -120,7 +120,7 @@ export async function fetchWeatherData(latitude, longitude) {
     const currentForecast = data.timeSeries[0];
     
     if (!currentForecast) {
-      throw new Error('Ingen väderdata tillgänglig från SMHI');
+      throw new Error('No weather data available from SMHI');
     }
     
     // Extract temperature (parameter "t" - air temperature in Celsius)
@@ -132,7 +132,7 @@ export async function fetchWeatherData(latitude, longitude) {
     const weatherSymbolCode = weatherSymbolParam ? weatherSymbolParam.values[0] : 1;
     
     // Convert SMHI weather symbol to readable condition
-    const rawCondition = SMHI_WEATHER_SYMBOLS[weatherSymbolCode] || 'okända väderförhållanden';
+    const rawCondition = SMHI_WEATHER_SYMBOLS[weatherSymbolCode] || 'unknown weather conditions';
     const condition = simplifyWeatherCondition(rawCondition);
     
     // Get 4-hour forecast
@@ -144,7 +144,7 @@ export async function fetchWeatherData(latitude, longitude) {
       
       if (forecast4hSymbolParam) {
         const forecast4hSymbol = forecast4hSymbolParam.values[0];
-        const forecast4hRawCondition = SMHI_WEATHER_SYMBOLS[forecast4hSymbol] || 'okända väderförhållanden';
+        const forecast4hRawCondition = SMHI_WEATHER_SYMBOLS[forecast4hSymbol] || 'unknown weather conditions';
         
         forecast4h = {
           condition: simplifyWeatherCondition(forecast4hRawCondition),
@@ -166,14 +166,14 @@ export async function fetchWeatherData(latitude, longitude) {
       },
     };
 
-    console.log('SMHI väderdata bearbetad:', weatherData);
+    console.log('SMHI weather data processed:', weatherData);
     return weatherData;
     
   } catch (error) {
     console.error('SMHI Weather API error:', error);
     
     // Fallback to basic weather if SMHI fails
-    throw new Error(`Vädertjänstfel: ${error.message}`);
+    throw new Error(`Weather service error: ${error.message}`);
   }
 }
 
@@ -206,7 +206,7 @@ export async function fetchForecastData(latitude, longitude) {
         
         const weatherSymbolParam = dayForecast.parameters.find(p => p.name === 'Wsymb2');
         const weatherSymbolCode = weatherSymbolParam ? weatherSymbolParam.values[0] : 1;
-        const rawCondition = SMHI_WEATHER_SYMBOLS[weatherSymbolCode] || 'okända väderförhållanden';
+        const rawCondition = SMHI_WEATHER_SYMBOLS[weatherSymbolCode] || 'unknown weather conditions';
         
         forecast.push({
           day: i + 1,

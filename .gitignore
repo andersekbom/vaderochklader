@@ -2,26 +2,65 @@
 
 # dependencies
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnp
+.pnp.js
 
 # Expo
 .expo/
+.expo-shared/
 dist/
 web-build/
 expo-env.d.ts
 
 # Native
-.kotlin/
 *.orig.*
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
+*.keystore
+!debug.keystore
+
+# Android
+android/app/build/
+android/app/release/
+android/.gradle/
+android/build/
+android/local.properties
+*.apk
+*.aab
+.kotlin/
+
+# iOS
+ios/Pods/
+ios/build/
+ios/*.xcworkspace
+!ios/*.xcworkspace/contents.xcworkspacedata
+ios/*.xcuserdata
+ios/*.xcuserdatad
+ios/.xcodebuild/
+Podfile.lock
+*.ipa
+*.dSYM.zip
+*.mobileprovision
+*.p12
 
 # Metro
 .metro-health-check*
+.metro/
 
-# debug
+# Testing
+coverage/
+.nyc_output/
+__tests__/coverage/
+
+# Debug
 npm-debug.*
 yarn-debug.*
 yarn-error.*
@@ -29,9 +68,47 @@ yarn-error.*
 # macOS
 .DS_Store
 *.pem
+.AppleDouble
+.LSOverride
 
-# local env files
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# Environment variables
+.env
 .env*.local
+.env.development
+.env.production
+.env.test
 
-# typescript
+# TypeScript
 *.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~.nib
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+*.log
+*.tmp
+*.temp
+.cache/
+
+# EAS Build
+.easignore
+eas-build-*.tar.gz

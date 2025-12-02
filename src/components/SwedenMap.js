@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import Svg, { Path, Circle, Text as SvgText } from 'react-native-svg';
+import Svg, { Circle, Text as SvgText, G } from 'react-native-svg';
 import Colors from '../constants/Colors';
 import { useLanguage } from '../context/LanguageContext';
+import SwedenSvg from '../../assets/se.svg';
 
 const { width } = Dimensions.get('window');
 
@@ -10,25 +11,24 @@ const SwedenMap = ({ userLocation, style }) => {
   const { t } = useLanguage();
   const [selectedCity, setSelectedCity] = useState(null);
 
-  // Simple Sweden outline path (simplified)
-  const swedenPath = "M150,50 L170,45 L185,60 L190,80 L185,120 L180,160 L170,200 L160,240 L150,280 L140,320 L130,340 L120,320 L110,280 L100,240 L90,200 L85,160 L80,120 L85,80 L95,60 L110,45 L130,50 Z";
-
-  // City positions on our custom map (relative to SVG coordinates)
+  // City positions based on actual Swedish geography
+  // Using viewBox 0 0 1000 1000 from the SVG file
   const cities = [
-    { name: 'Stockholm', x: 165, y: 140, emoji: '🏛️', lat: 59.3293, lng: 18.0649 },
-    { name: 'Göteborg', x: 110, y: 180, emoji: '🚢', lat: 57.7089, lng: 11.9746 },
-    { name: 'Malmö', x: 125, y: 220, emoji: '🌉', lat: 55.6050, lng: 13.0007 },
-    { name: 'Uppsala', x: 160, y: 120, emoji: '🎓', lat: 59.8586, lng: 17.6389 },
-    { name: 'Linköping', x: 150, y: 170, emoji: '✈️', lat: 58.5877, lng: 16.1542 },
-    { name: 'Västerås', x: 145, y: 130, emoji: '⚡', lat: 59.6099, lng: 16.5448 },
-    { name: 'Örebro', x: 140, y: 150, emoji: '🏰', lat: 59.2741, lng: 15.2066 },
+    { name: 'Stockholm', x: 720, y: 450, emoji: '🏛️', lat: 59.3293, lng: 18.0649 },
+    { name: 'Göteborg', x: 280, y: 650, emoji: '🚢', lat: 57.7089, lng: 11.9746 },
+    { name: 'Malmö', x: 350, y: 920, emoji: '🌉', lat: 55.6050, lng: 13.0007 },
+    { name: 'Uppsala', x: 680, y: 390, emoji: '🎓', lat: 59.8586, lng: 17.6389 },
+    { name: 'Linköping', x: 595, y: 540, emoji: '✈️', lat: 58.5877, lng: 16.1542 },
+    { name: 'Västerås', x: 615, y: 420, emoji: '⚡', lat: 59.6099, lng: 16.5448 },
+    { name: 'Örebro', x: 575, y: 480, emoji: '🏰', lat: 59.2741, lng: 15.2066 },
   ];
 
-  // Convert lat/lng to SVG coordinates (simple approximation for Sweden)
+  // Convert lat/lng to SVG coordinates for 1000x1000 viewBox
   const latLngToSvg = (lat, lng) => {
-    // Sweden bounds: lat 55-69, lng 11-24
-    const x = ((lng - 11) / (24 - 11)) * 120 + 80; // Map to x: 80-200
-    const y = ((69 - lat) / (69 - 55)) * 300 + 50;  // Map to y: 50-350 (inverted)
+    // Sweden geographical bounds from the SVG
+    // Approximate mapping to 1000x1000 viewBox
+    const x = ((lng - 10.9) / (24.2 - 10.9)) * 500 + 250;
+    const y = ((69.1 - lat) / (69.1 - 55.3)) * 900 + 50;
     return { x, y };
   };
 
@@ -39,71 +39,64 @@ const SwedenMap = ({ userLocation, style }) => {
   return (
     <View style={[styles.container, style]}>
       <Text style={styles.title}>{t('swedenMap')}</Text>
-      
-      <Svg width="100%" height="400" viewBox="0 0 280 400">
-        {/* Sweden outline */}
-        <Path
-          d={swedenPath}
-          fill="#b8e6b8"
-          stroke="#4a90e2"
-          strokeWidth="3"
-        />
-        
-        {/* Water around Sweden */}
-        <Circle cx="50" cy="100" r="8" fill="#a2d2ff" />
-        <Circle cx="60" cy="150" r="6" fill="#a2d2ff" />
-        <Circle cx="40" cy="200" r="10" fill="#a2d2ff" />
-        <Circle cx="220" cy="120" r="12" fill="#a2d2ff" />
-        <Circle cx="230" cy="180" r="8" fill="#a2d2ff" />
-        
-        {/* Cities */}
-        {cities.map((city, index) => (
-          <React.Fragment key={index}>
-            <Circle
-              cx={city.x}
-              cy={city.y}
-              r="15"
-              fill={Colors.background}
-              stroke={Colors.primary}
-              strokeWidth="2"
-              onPress={() => setSelectedCity(city)}
-            />
-            <SvgText
-              x={city.x}
-              y={city.y + 5}
-              fontSize="12"
-              textAnchor="middle"
-              fill={Colors.text}
-              onPress={() => setSelectedCity(city)}
-            >
-              {city.emoji}
-            </SvgText>
-          </React.Fragment>
-        ))}
-        
-        {/* User location */}
-        {userPosition && (
-          <>
-            <Circle
-              cx={userPosition.x}
-              cy={userPosition.y}
-              r="20"
-              fill={Colors.primary}
-              stroke={Colors.background}
-              strokeWidth="3"
-            />
-            <SvgText
-              x={userPosition.x}
-              y={userPosition.y + 6}
-              fontSize="16"
-              textAnchor="middle"
-              fill="white"
-            >
-              📍
-            </SvgText>
-          </>
-        )}
-      </Svg>
+
+      <View style={styles.mapContainer}>
+        <Svg width="100%" height="100%" viewBox="0 0 1000 1000">
+          {/* Sweden map from SVG file */}
+          <SwedenSvg width="1000" height="1000" />
+
+          {/* Overlay with cities and user location */}
+          <G>
+            {/* Cities */}
+            {cities.map((city, index) => (
+              <React.Fragment key={index}>
+                <Circle
+                  cx={city.x}
+                  cy={city.y}
+                  r="40"
+                  fill={Colors.background}
+                  stroke={Colors.primary}
+                  strokeWidth="4"
+                  onPress={() => setSelectedCity(city)}
+                />
+                <SvgText
+                  x={city.x}
+                  y={city.y + 12}
+                  fontSize="28"
+                  textAnchor="middle"
+                  fill={Colors.text}
+                  onPress={() => setSelectedCity(city)}
+                >
+                  {city.emoji}
+                </SvgText>
+              </React.Fragment>
+            ))}
+
+            {/* User location */}
+            {userPosition && (
+              <>
+                <Circle
+                  cx={userPosition.x}
+                  cy={userPosition.y}
+                  r="50"
+                  fill={Colors.primary}
+                  stroke={Colors.background}
+                  strokeWidth="6"
+                />
+                <SvgText
+                  x={userPosition.x}
+                  y={userPosition.y + 15}
+                  fontSize="36"
+                  textAnchor="middle"
+                  fill="white"
+                >
+                  📍
+                </SvgText>
+              </>
+            )}
+          </G>
+        </Svg>
+      </View>
       
       {selectedCity && (
         <View style={styles.cityInfo}>
@@ -134,13 +127,18 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: 'center',
   },
-  
+
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.text,
     marginBottom: 12,
     textAlign: 'center',
+  },
+
+  mapContainer: {
+    width: '100%',
+    height: 400,
   },
   
   cityInfo: {

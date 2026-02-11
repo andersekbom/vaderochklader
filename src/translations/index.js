@@ -77,6 +77,7 @@ export const translations = {
     german: 'Tyska',
     finnish: 'Finska',
     sami: 'Samiska',
+    korean: 'Koreanska',
     
     // Weather forecast
     nowIn: 'Nu i',
@@ -260,6 +261,7 @@ export const translations = {
     german: 'German',
     finnish: 'Finnish',
     sami: 'Sami',
+    korean: 'Korean',
     
     // Weather forecast
     nowIn: 'Now in',
@@ -443,6 +445,7 @@ export const translations = {
     german: 'Deutsch',
     finnish: 'Finnisch',
     sami: 'Samisch',
+    korean: 'Koreanisch',
     
     // Weather forecast
     nowIn: 'Jetzt in',
@@ -625,6 +628,8 @@ export const translations = {
     english: 'Englanti',
     german: 'Saksa',
     finnish: 'Suomi',
+    sami: 'Saame',
+    korean: 'Korea',
     
     // Weather forecast
     nowIn: 'Nyt paikassa',
@@ -808,6 +813,7 @@ export const translations = {
     german: 'Duiskkagiella',
     finnish: 'Suomagiella',
     sami: 'Sámegiella',
+    korean: 'Goreagiella',
     
     // Weather forecast
     nowIn: 'Dál báikkis',
@@ -1062,6 +1068,12 @@ export const translations = {
     rainy: "비",
     snowy: "눈",
     stormy: "폭풍",
+    sunnySyno: "맑음",
+    cloudySyno: "흐림",
+    rainySyno: "비",
+    snowySyno: "눈",
+    stormySyno: "폭풍",
+    niceWeather: "좋은 날씨",
     
     // Temperature
     temperature: "온도",

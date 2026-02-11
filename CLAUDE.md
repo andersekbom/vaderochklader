@@ -97,12 +97,13 @@ The app uses a hybrid approach:
 
 ## Internationalization
 
-The app supports **5 languages** with complete translation coverage:
+The app supports **6 languages** with complete translation coverage:
 - **Swedish** (sv) - Primary language
 - **English** (en) - Default fallback
 - **German** (de) - Full support
 - **Finnish** (fi) - Minority language support
 - **Northern Sami** (se) - Indigenous language support
+- **Korean** (ko) - Full support
 
 ### Translation System
 - React Context-based i18n with `LanguageContext`

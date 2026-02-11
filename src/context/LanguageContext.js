@@ -105,7 +105,7 @@ export function LanguageProvider({ children }) {
     getReactionMessage,
     getWeatherCondition,
     isLoading,
-    availableLanguages: ['sv', 'en', 'de', 'fi', 'se'],
+    availableLanguages: ['sv', 'en', 'de', 'fi', 'se', 'ko'],
   };
 
   return (

@@ -916,6 +916,182 @@ export const translations = {
     shoes: "Skuovvat",
     rainBoots: "Arvedskuovvat",
     winterBoots: "Dálveskuovvat",
+  },
+  
+  // Korean translations
+  ko: {
+    // App title and general UI
+    appTitle: '날씨 & 옷차림',
+    appSubtitle: '날씨에 맞는 옷을 찾아보세요!',
+    loading: '로딩 중...',
+    retry: '다시 시도',
+    save: '저장',
+    cancel: '취소',
+    close: '닫기',
+    
+    // Weather-related
+    fetchingLocation: '위치를 가져오는 중...',
+    fetchingWeather: '날씨를 로딩하는 중...',
+    weatherError: '날씨 정보를 가져올 수 없습니다',
+    locationError: '위치를 가져올 수 없습니다',
+    
+    // Clothing question
+    clothingQuestion: '이 날씨에 어떤 옷이 좋을 것 같나요?',
+    
+    // Body parts
+    head: '머리',
+    torso: '상체',
+    legs: '다리',
+    feet: '발',
+    
+    // Outfit selection
+    selectOutfit: '옷을 선택하세요',
+    noItemsAvailable: '사용 가능한 옷이 없습니다',
+    noClothing: '🚫 옷 없음',
+    none: '없음',
+    myCustomClothes: '✨ 내가 만든 옷',
+    addCustomClothes: '📷 옷 추가하기',
+    addCustom: '추가하기',
+    chooseForMe: '나를 위해 선택해주세요',
+    holdToDelete: '삭제하려면 길게 누르세요',
+    deleteClothingItem: '옷 삭제',
+    deleteConfirm: '정말로 삭제하시겠습니까',
+    delete: '삭제',
+    error: '오류',
+    couldNotDelete: '옷을 삭제할 수 없습니다.',
+    
+    clear: '지우기',
+    
+    // CustomClothingCamera
+    selectImage: '이미지 선택',
+    selectFromGallery: '갤러리에서 선택',
+    saved: '저장됨!',
+    saving: '저장 중...',
+    addClothingItem: '{bodyPartName} 추가',
+    clothingItemName: '옷 이름:',
+    clothingItemPlaceholder: '예: 내가 좋아하는 티셔츠',
+    image: '이미지:',
+    changeImage: '이미지 변경',
+    addImage: '이미지 추가',
+    permissionsRequired: '권한이 필요합니다',
+    permissionsMessage: '옷 사진을 찍을 수 있도록 카메라와 사진 라이브러리 접근 권한이 필요합니다.',
+    howToAddImage: '옷 이미지를 어떻게 추가하시겠습니까?',
+    takePhoto: '사진 찍기',
+    errorTitle: '오류',
+    pleaseEnterName: '옷 이름을 입력해주세요.',
+    pleaseSelectImage: '옷 이미지를 선택해주세요.',
+    itemSavedMessage: '{itemName}이(가) {bodyPartName} 컬렉션에 저장되었습니다.',
+    couldNotSaveItem: '옷을 저장할 수 없습니다.',
+    
+    // Settings
+    settings: '설정',
+    language: '언어',
+    swedish: '스웨덴어',
+    english: '영어',
+    german: '독일어',
+    finnish: '핀란드어',
+    sami: '사미어',
+    korean: '한국어',
+    
+    // Weather forecast
+    nowIn: '지금',
+    later: '나중에',
+    and: '그리고',
+    
+    // Temperature descriptions
+    veryCold: '매우 추움',
+    cold: '추움',
+    bitCold: '조금 추움',
+    mild: '따뜻함',
+    warm: '따뜻함',
+    quiteWarm: '꽤 따뜻함',
+    veryHot: '매우 더움',
+    
+    // Seasonal clothing categories
+    summerClothes: '☀️ 여름 옷',
+    springClothes: '🌸 봄 옷',
+    autumnClothes: '🍂 가을 옷',
+    winterClothes: '❄️ 겨울 옷',
+    rainClothes: '🌧️ 비 옷',
+    
+    // Map interface
+    whereInSweden: '스웨덴 어디에 계신가요? 🇸🇪',
+    youAreNear: '📍 가까운 곳',
+    findStockholm: '큰 도시들은 재미있는 아이콘을 가지고 있습니다! 스톡홀름을 찾을 수 있나요? 🏦',
+    swedenMap: '스웨덴 지도 🇸🇪',
+    tapCityIcons: '도시 아이콘을 탭하여 더 자세히 알아보세요! 🏦🚢🌉',
+    
+    // Outfit reactions - perfect
+    perfectReaction1: "완벽한 선택! 밖에서 편안할 거예요!",
+    perfectReaction2: "이 날씨에 딱 맞는 옷차림이에요!",
+    perfectReaction3: "오늘 날씨에 완벽하게 준비되었어요!",
+    perfectReaction4: "정말 제가 선택했을 것 같아요!",
+    
+    // Outfit reactions - good
+    goodReaction1: "좋은 선택이에요!",
+    goodReaction2: "좋은 옷차림이에요!",
+    goodReaction3: "그 옷을 입으면 편안할 거예요!",
+    
+    // Outfit reactions - warning
+    warningReaction1: "흠, 그게 최고의 선택은 아닐 수도 있어요...",
+    warningReaction2: "이 옷차림에 확신하시나요?",
+    warningReaction3: "조금 불편할 수도 있어요...",
+    
+    // Outfit reactions - poor
+    poorReaction1: "앗! 그 샌들로 비 오는 날이면 발이 젖을 수도 있어요!",
+    poorReaction2: "으으! 재킷 없으면 추울 수도 있어요!",
+    poorReaction3: "맑은 날에 그 겨울 코트를 입으면 너무 더울 수도 있어요!",
+    poorReaction4: "그 반바지로는 충분히 따뜻하지 않을 수도 있어요!",
+    
+    // Specific feedback
+    wetFeetFeedback: "아, 그 샌들로 비 오는 날이면 발이 젖을 수도 있어요!",
+    coldSnowFeedback: "으으! 그 선택으로 눈 속에서 추울 수도 있어요!",
+    hotCoatFeedback: "그렇게 더운 날에 그 겨울 코트를 입으면 너무 더울 수도 있어요!",
+    
+    // Error messages
+    locationAccessDenied: "위치 접근이 거부되었습니다",
+    weatherOutfitContextError: "useWeatherOutfit은 WeatherOutfitProvider 내에서 사용되어야 합니다",
+    couldNotSaveCustomItem: "맞춤 옷을 저장할 수 없습니다",
+    couldNotDeleteCustomItem: "맞춤 옷을 삭제할 수 없습니다",
+    customItemNotFound: "맞춤 옷을 찾을 수 없습니다",
+    couldNotClearCustomItems: "맞춤 옷을 지울 수 없습니다",
+    
+    // Weather conditions
+    sunny: "맑음",
+    cloudy: "흐림",
+    rainy: "비",
+    snowy: "눈",
+    stormy: "폭풍",
+    
+    // Temperature
+    temperature: "온도",
+    feelsLike: "체감 온도",
+    
+    // Clothing items - Head
+    cap: "모자",
+    beanie: "비니",
+    hood: "후드",
+    
+    // Clothing items - Torso
+    tShirt: "티셔츠",
+    longSleeve: "긴팔",
+    sweater: "스웨터",
+    jacket: "재킷",
+    rainCoat: "우비",
+    winterCoat: "겨울 코트",
+    
+    // Clothing items - Legs
+    shorts: "반바지",
+    pants: "바지",
+    jeans: "청바지",
+    warmPants: "따뜻한 바지",
+    
+    // Clothing items - Feet
+    sandals: "샌들",
+    sneakers: "운동화",
+    shoes: "구두",
+    rainBoots: "장화",
+    winterBoots: "겨울 부츠",
   }
 };
 
